@@ -57,11 +57,11 @@ h1 {
 input {
     height: 30px;
     padding-left: 15px;
-    background-color: #E4EFFF;
+    background-color: white;
     border: none;
     border-radius: 5px;
-    box-shadow: inset 2px 2px 5px #5b6066,
-            inset -2px -2px 5px #ffffff;
+    box-shadow: inset 1px 1px 3px #5b6066,
+            inset -1px -1px 3px #ffffff;
 }
 
 input[type="date"]{
@@ -243,45 +243,10 @@ details {
     margin-bottom: 20px;
   }
    
-  /* select {
-    appearance: none;
-    width: 300px;
-    padding: 11px 15px;
-    padding-right: 1em;
+  select {
     border: none;
-    outline: 0;
-    background: #fff;
-    background-image: none;
-    box-shadow: none;
-    text-indent: 0.01px;
-    text-overflow: ellipsis;
-    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px;
+    box-shadow: inset 1px 1px 3px #5b6066,
+            inset -1px -1px 3px #ffffff;
   }
-   
-  select::before {
-    position: absolute;
-    top: 18px;
-    right: 16px;
-    width: 0;
-    height: 0;
-    border-width: 10px 5px 0 5px;
-    border-style: solid;
-    border-color: #eee transparent transparent transparent;
-    content: "";
-    pointer-events: none;
-  }
-   
-  select::-ms-expand {
-    display: none;
-  }
-
-  .neumorphism .select::before {
-    border-color: #5c5c5c transparent transparent transparent; // 三角形
-  }
-   
-  .neumorphism .select select {
-    background: #eee;
-    border-radius: 10px;
-    color: #595959;
-    box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
-  } */

@@ -58,6 +58,7 @@
     margin-right: 40px;
     font-size: 40px;
     text-align: center;
+    color: #555;
     background-color: #E4EFFF;
     width: 60px;
     height: 60px;
@@ -71,6 +72,7 @@
     margin-left: 40px;
     font-size: 40px;
     text-align: center;
+    color: #555;
     background-color: #E4EFFF;
     width: 60px;
     height: 60px;
@@ -107,13 +109,15 @@
     text-align: center;
     border: 1px solid lightgray;
     border-radius: 5px;
-    background-color: #f3f8ff;
+    background-color: white;
+    font-weight: bold;
 }
 
 .calendar-header th.isInvalid,
 .calendar-cells td.isInvalid{
-    background-color: #aaaaaa;
-    color: white;
+    background-color: #a2a2aa;
+    color: rgb(209, 209, 209) !important;
+    font-weight: normal;
 }
 
 .calendar-cells td.isReserved{
@@ -129,6 +133,9 @@
     border: 1px solid black;
     border-radius: 25px;
     color: white;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: normal;
     background-color: #ff4c4c;
     border: none;
     width: 20px;
