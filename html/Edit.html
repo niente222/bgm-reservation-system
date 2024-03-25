@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>予約編集ページ</title>
+        <title>イベント編集ページ</title>
+        <link href="../css/common/reset.css" rel="stylesheet">
+        <link href="../css/common/common.css" rel="stylesheet">
+        <link href="../css/common/header.css" rel="stylesheet">
+        <link href="../css/common/footer.css" rel="stylesheet">
+        <link href="../css/common/form.css" rel="stylesheet">
         <link href="../css/calendar.css" rel="stylesheet">
         <link href="../css/make.css" rel="stylesheet">
     </head>
     <body>
-        <h1>予約編集ページ</h1>
+        <h1>イベント編集ページ</h1>
         <div class="contents">
             <div class="form-area">
                 <div class="form event-title">
-                    <p class="form-title">タイトル</p>
+                    <p class="form-title">イベントタイトル</p>
                     <input type="text">
                 </div>
                 <div class="form period">
@@ -20,7 +25,7 @@
                             <p>開始日</p>
                             <input type="date" id="input-period-start-date">
                         </div>
-                        <p>～</p>
+                        <p class="tilde">～</p>
                         <div class="end-date">
                             <p>最終日</p>
                             <input type="date" id="input-period-end-date">
@@ -30,7 +35,7 @@
                 <div class="form reservation-slot-time">
                     <p class="form-title">一枠の時間</p>
                     <div class="input-fields">
-                        <input type="text">分
+                        <input type="text"><p>分</p>
                     </div>
                 </div>
                 <div class="form ">
@@ -64,51 +69,66 @@
                         <p class="form-title">受付時間</p>
                         <div class="input-fields">
                             <input type="time" class="default-start-reception-time">
-                            <p>～</p>
+                            <p class="tilde">～</p>
                             <input type="time" class="default-end-reception-time">
                             <button class="remove-row-default-reception-time-button remove-row-button">×</button>
                         </div>
                     </div>
                     <div class="form-row-default-reception-time">
-                        <button id="add-row-default-reception-time-button">+</button>
+                        <button id="add-row-default-reception-time-button" class="add-row-button">+</button>
                     </div>
                 </div>
+                
                 <p class="form-title">詳細オプション</p>
-                <details class="individual-day-of-week">
-                    <summary>個別の曜日に受付時間を指定</summary>
-                    <div class="form-row-individual-day-of-week">
-                        <select class="individual-day-of-week-pulldown">
-                            <option value="1" selected>月</option>
-                            <option value="2">火</option>
-                            <option value="3">水</option>
-                            <option value="4">木</option>
-                            <option value="5">金</option>
-                            <option value="6">土</option>
-                            <option value="0">日</option>
-                        </select>
-                        <input type="time" class="individual-day-of-week-start-reception-time">
-                        <p>～</p>
-                        <input type="time" class="individual-day-of-week-end-reception-time">
-                    </div>
-                    <button id="add-row-individual-day-of-week-button">+</button>
-                </details>
-                <details class="individual-date">
-                    <summary>特定の日に受付時間を指定</summary>
-                    <div class="form-row-individual-date form-additional-row">
-                        <input type="date" class="input-individual-date">
-                        <input type="time" class="individual-date-start-reception-time">
-                        <p>～</p>
-                        <input type="time" class="individual-date-end-reception-time">
-                    </div>
-                    <button id="add-row-individual-date-button">+</button>
-                </details>
-                <details class="individual-exclusion-date">
-                    <summary>特定の日を除外する</summary>
-                    <div class="form-row-individual-exclusion-date">
-                        <input type="date" class="input-individual-exclusion-date">
-                    </div>
-                    <button id="add-row-individual-exclusion-date-button">+</button>
-                </details>
+                <div class="detail-form-area">
+                    <details class="form individual-day-of-week">
+                        <summary>個別の曜日に受付時間を指定</summary>
+                        <div class="form-row-individual-day-of-week form-additional-row">
+                            <div class="input-fields">
+                                <select class="individual-day-of-week-pulldown">
+                                    <option value="1" selected>月</option>
+                                    <option value="2">火</option>
+                                    <option value="3">水</option>
+                                    <option value="4">木</option>
+                                    <option value="5">金</option>
+                                    <option value="6">土</option>
+                                    <option value="0">日</option>
+                                </select>
+                                <input type="time" class="individual-day-of-week-start-reception-time">
+                                <p class="tilde">～</p>
+                                <input type="time" class="individual-day-of-week-end-reception-time">
+                            </div>
+                        </div>
+                        <div class="form-row-individual-day-of-week">
+                            <button id="add-row-individual-day-of-week-button" class="add-row-button">+</button>
+                        </div>
+                    </details>
+                    <details class="form  individual-date">
+                        <summary>特定の日に受付時間を指定</summary>
+                        <div class="form-row-individual-date form-additional-row">
+                            <div class="input-fields">
+                                <input type="date" class="input-individual-date">
+                                <input type="time" class="individual-date-start-reception-time">
+                                <p class="tilde">～</p>
+                                <input type="time" class="individual-date-end-reception-time">
+                            </div>
+                        </div>
+                        <div class="form-row-individual-date form-additional-row">
+                            <button id="add-row-individual-date-button" class="add-row-button">+</button>
+                        </div>
+                    </details>
+                    <details class="form individual-exclusion-date">
+                        <summary>特定の日を除外する</summary>
+                        <div class="form-row-individual-exclusion-date form-additional-row">
+                            <div class="input-fields">
+                                <input type="date" class="input-individual-exclusion-date">
+                            </div>
+                        </div>
+                        <div class="form-row-individual-date form-additional-row">
+                            <button id="add-row-individual-exclusion-date-button" class="add-row-button">+</button>
+                        </div>
+                    </details>
+                </div>
             </div>
 
             <div class="preview-area">
@@ -125,7 +145,9 @@
             </div>
         </div>
         <div class="event-make-button">
-            <a href="./Completed.html">予約を更新する</a>
+            <a href="./Completed.html">
+                <p>予約を更新する</p>
+            </a>
         </div>
     </body>
     

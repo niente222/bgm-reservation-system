@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+body {
+    background-color: #E4EFFF;
+}
+
+h1 {
+    text-align: center;
+}
+
+.contents {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+    margin: 100px auto;
+}
