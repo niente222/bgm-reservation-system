@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+/* プレビューエリア */
+.contents {
+    position: relative;
+}
+
+.preview-area {
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+    background-color: #E4EFFF;
+    border-radius: 25px;
+    box-shadow: 39px 39px 79px #c2cbd9,
+            -25px -25px 79px #ffffff;
+    padding: 20px;
+}
+
+.event-period-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-title-label {
+    text-align: center;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.preview-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.preview-title p{
+    margin-block-start: -5px;
+    margin-block-end: -5px;
+}
+
+#preview-calendat-year-label {
+    font-size: 40px;
+}
+
+#preview-calendat-month-label {
+    font-size: 32px;
+}
+
+.previous-month-button {
+    margin-right: 40px;
+    font-size: 40px;
+    text-align: center;
+    background-color: #E4EFFF;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    border: none;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
+}
+
+.next-month-button {
+    margin-left: 40px;
+    font-size: 40px;
+    text-align: center;
+    background-color: #E4EFFF;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    border: none;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
+}
+
+#calendar {
+    position: sticky;
+    top: 192px;
+}
+
+#calendar table {
+    border-spacing: 10px;
+    height: fit-content;
+}
+
+#calendar tr th:first-child,
+#calendar tr td:first-child{
+    color: #ff8888;
+}
+
+#calendar tr th:nth-child(7),
+#calendar tr td:nth-child(7){
+    color: #888bff;
+}
+
+.calendar-header th,
+.calendar-cells td{
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: #f3f8ff;
+}
+
+.calendar-header th.isInvalid,
+.calendar-cells td.isInvalid{
+    background-color: #aaaaaa;
+    color: white;
+}
+
+.calendar-cells td.isReserved{
+    background-color: #FDFFA3;
+}
+
+.calendar-cell {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 25px;
+    color: white;
+    background-color: #ff4c4c;
+    border: none;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>予約編集ページ</title>
+        <link href="../css/calendar.css" rel="stylesheet">
+        <link href="../css/make.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>予約編集ページ</h1>
+        <div class="contents">
+            <div class="form-area">
+                <div class="form event-title">
+                    <p class="form-title">タイトル</p>
+                    <input type="text">
+                </div>
+                <div class="form period">
+                    <p class="form-title">期間</p>
+                    <div class="input-fields">
+                        <div class="start-date">
+                            <p>開始日</p>
+                            <input type="date" id="input-period-start-date">
+                        </div>
+                        <p>～</p>
+                        <div class="end-date">
+                            <p>最終日</p>
+                            <input type="date" id="input-period-end-date">
+                        </div>
+                    </div>
+                </div>
+                <div class="form reservation-slot-time">
+                    <p class="form-title">一枠の時間</p>
+                    <div class="input-fields">
+                        <input type="text">分
+                    </div>
+                </div>
+                <div class="form ">
+                    <p class="form-title">実施曜日</p>
+                    <div class="input-fields">
+                        <div id="day-toggle-0" class="day-toggle">
+                            <div class="day-toggle-label">日</div>
+                        </div>
+                        <div id="day-toggle-1" class="day-toggle">
+                            <div class="day-toggle-label">月</div>
+                        </div>
+                        <div id="day-toggle-2" class="day-toggle">
+                            <div class="day-toggle-label">火</div>
+                        </div>
+                        <div id="day-toggle-3" class="day-toggle">
+                            <div class="day-toggle-label">水</div>
+                        </div>
+                        <div id="day-toggle-4" class="day-toggle">
+                            <div class="day-toggle-label">木</div>
+                        </div>
+                        <div id="day-toggle-5" class="day-toggle">
+                            <div class="day-toggle-label">金</div>
+                        </div>
+                        <div id="day-toggle-6" class="day-toggle">
+                            <div class="day-toggle-label">土</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form default-reception-time">
+                    <div class="form-row-default-reception-time form-additional-row">
+                        <p class="form-title">受付時間</p>
+                        <div class="input-fields">
+                            <input type="time" class="default-start-reception-time">
+                            <p>～</p>
+                            <input type="time" class="default-end-reception-time">
+                            <button class="remove-row-default-reception-time-button remove-row-button">×</button>
+                        </div>
+                    </div>
+                    <div class="form-row-default-reception-time">
+                        <button id="add-row-default-reception-time-button">+</button>
+                    </div>
+                </div>
+                <p class="form-title">詳細オプション</p>
+                <details class="individual-day-of-week">
+                    <summary>個別の曜日に受付時間を指定</summary>
+                    <div class="form-row-individual-day-of-week">
+                        <select class="individual-day-of-week-pulldown">
+                            <option value="1" selected>月</option>
+                            <option value="2">火</option>
+                            <option value="3">水</option>
+                            <option value="4">木</option>
+                            <option value="5">金</option>
+                            <option value="6">土</option>
+                            <option value="0">日</option>
+                        </select>
+                        <input type="time" class="individual-day-of-week-start-reception-time">
+                        <p>～</p>
+                        <input type="time" class="individual-day-of-week-end-reception-time">
+                    </div>
+                    <button id="add-row-individual-day-of-week-button">+</button>
+                </details>
+                <details class="individual-date">
+                    <summary>特定の日に受付時間を指定</summary>
+                    <div class="form-row-individual-date form-additional-row">
+                        <input type="date" class="input-individual-date">
+                        <input type="time" class="individual-date-start-reception-time">
+                        <p>～</p>
+                        <input type="time" class="individual-date-end-reception-time">
+                    </div>
+                    <button id="add-row-individual-date-button">+</button>
+                </details>
+                <details class="individual-exclusion-date">
+                    <summary>特定の日を除外する</summary>
+                    <div class="form-row-individual-exclusion-date">
+                        <input type="date" class="input-individual-exclusion-date">
+                    </div>
+                    <button id="add-row-individual-exclusion-date-button">+</button>
+                </details>
+            </div>
+
+            <div class="preview-area">
+                <div class="preview-header">
+                    <button class="previous-month-button">◀</button>
+                    <div class="preview-title">
+                        <p id="preview-calendat-year-label">2024</p>
+                        <p id="preview-calendat-month-label">3月</p>
+                    </div>
+                    <button class="next-month-button">▶</button>
+                </div>
+                <div id="calendar">
+                </div>
+            </div>
+        </div>
+        <div class="event-make-button">
+            <a href="./Completed.html">予約を更新する</a>
+        </div>
+    </body>
+    
+    <script type="module" src="../js/make/makeController.js"></script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>予約ページ</title>
+        <link href="../css/calendar.css" rel="stylesheet">
+        <link href="../css/reserve.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>予約ページ</h1>
+        <div class="contents">
+            <div class="reservation-slot-area">
+                <h2>2024/3/26</h2>
+                <div class="reservation-slot-board">
+                    <div class="reservation-slot-list">
+                        <label><input type="radio">9:00 ～ 9:30</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-area">
+                <div class="event-period-label">
+                    <p class="event-period-start-date">2024/3/18</p>
+                    ～
+                    <p class="event-period-end-date">2024/4/5</p>
+                </div>
+                <div class="event-title-label">
+                    <p class="enent-title">第五回キャリアコンサルタント</p>
+                </div>
+                <div class="preview-header">
+                    <button class="previous-month-button">◀</button>
+                    <div class="preview-title">
+                        <p id="preview-calendat-year-label">2024</p>
+                        <p id="preview-calendat-month-label">3月</p>
+                    </div>
+                    <button class="next-month-button">▶</button>
+                </div>
+                <div id="calendar">
+                </div>
+            </div>
+        </div>
+        <div class="form-area">
+            <div class="form">
+                <p class="form-title">氏名</p>
+                <input type="text">
+            </div>
+            <div class="form">
+                <p class="form-title">連絡先</p>
+                <input type="text">
+            </div>
+            <div class="form">
+                <p class="form-title">備考</p>
+                <textarea></textarea>
+            </div>
+            <a href="./Reserved.html" class="event-make-button">
+                <p>予約する</p>
+            </a>
+        </div>
+    </body>
+    
+    <script type="module" src="../js/show/showController.js"></script>
+</html>

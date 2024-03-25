@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+h1 {
+    text-align: center;
+}
+
+.contents {
+    width: fit-content;
+    display: flex;
+    margin: 50px auto;
+}
+
+.reservation-slot-board {
+    border: 1px solid black;
+    width: 500px;
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.reservation-slot-list {
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+}
+
+.event-make-button {
+    background-color: violet;
+    text-align: center;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-area {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: bold;
+}

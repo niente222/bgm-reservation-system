@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+h1 {
+    text-align: center;
+}
+
+.contents {
+    width: fit-content;
+    display: flex;
+    margin: 50px auto;
+}
+
+.reservation-board {
+    border: 1px solid black;
+    width: 500px;
+    height: 1200px;
+    overflow-y: scroll;
+}
+
+.reservation-data {
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+}
+
+.delete-button-area {
+    flex-basis: 10%;
+}
+
+.reservation-time-area {
+    flex-basis: 20%;
+}
+
+.reserver-data-area {
+    flex-basis: 60%;
+}
