@@ -139,14 +139,19 @@ window.onload = function() {
 
     calendarController.createCalendar();
 
-    //以下はイベント編集画面の処理
-    //デバッグ時のみイベント作成画面で試す
-    setFormInit(1);
+    
 
-    fetch('/data')
+    const eventId = '1';
+
+fetch(`/data?eventId=${eventId}`)
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));
+
+
+  //以下はイベント編集画面の処理
+    //デバッグ時のみイベント作成画面で試す
+    setFormInit(1);
 }
 
 function changePeriodStartDate(){
