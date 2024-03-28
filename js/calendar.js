@@ -92,7 +92,7 @@ export function showPrevMonth(){
     createCalendar();
 
     //プレビューカレンダーを表示 予約データは変わらないため更新は不要
-    pudatePreviewCalendar();
+    updatePreviewCalendar();
 }
 
 export function showNextMonth(){
@@ -100,10 +100,10 @@ export function showNextMonth(){
     createCalendar(targetDate);
 
     //プレビューカレンダーを表示 予約データは変わらないため更新は不要
-    pudatePreviewCalendar();
+    updatePreviewCalendar();
 }
 
-export function pudatePreviewCalendar(){
+export function updatePreviewCalendar(){
 
     const reservationData = reservationDataController.getReservationData();
 

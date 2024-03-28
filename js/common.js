@@ -52,3 +52,9 @@ export function getDayOfWeekOfDate(str) {
         return null;
     };
   }
+
+
+//
+export function convertDateToYYYYMMDD(date) {
+  return date.replace(/-/g, "");
+}

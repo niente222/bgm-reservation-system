@@ -21,11 +21,11 @@ var defaultReceptionDayOfWeekIdList = [];
 //valid=true invalid=false
 var isValidDayOfWeekList = new Array(true, true, true, true, true, true, true);
 
-export function setPeriodStartDate(inputPeriodStartDate) {
+export function setPropertyPeriodStartDate(inputPeriodStartDate) {
     periodStartDate = inputPeriodStartDate;
 }
 
-export function setPeriodEndDate(inputPeriodEndDate) {
+export function setPropertyPeriodEndDate(inputPeriodEndDate) {
     periodEndDate = inputPeriodEndDate;
 }
 

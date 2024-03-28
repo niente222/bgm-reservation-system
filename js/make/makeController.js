@@ -1,5 +1,5 @@
 import * as calendarController from '../calendar.js';
-import * as formController from './form.js';
+import * as eventFormController from './eventForm.js';
 import * as reservationDataController from './reservationData.js';
 
 
@@ -22,11 +22,11 @@ window.onload = function() {
     });
 
     document.getElementById('input-period-start-date').addEventListener('change', function() {
-        setPeriodStartDate();
+        changePeriodStartDate();
     });
 
     document.getElementById('input-period-end-date').addEventListener('change', function() {
-        setPeriodEndDate();
+        changePeriodEndDate();
     });
 
     document.querySelectorAll('.day-toggle').forEach(function(button) {
@@ -42,30 +42,28 @@ window.onload = function() {
 
             //プレビューカレンダーを更新
             reservationDataController.updateReservationData();
-            calendarController.pudatePreviewCalendar();
+            calendarController.updatePreviewCalendar();
         });
     });
 
     document.querySelectorAll('.default-start-reception-time').forEach(function(button) {
         button.addEventListener('change', function() {
-            //reservationDataController.setDefaultStartReceptionTime(this.value.replace(/:/g, ""));
             //プレビューカレンダーを更新
             reservationDataController.updateReservationData();
-            calendarController.pudatePreviewCalendar();
+            calendarController.updatePreviewCalendar();
         });
     });
 
     document.querySelectorAll('.default-end-reception-time').forEach(function(button) {
         button.addEventListener('change', function() {
-            //reservationDataController.setDefaultEndReceptionTime(this.value.replace(/:/g, ""));
             //プレビューカレンダーを更新
             reservationDataController.updateReservationData();
-            calendarController.pudatePreviewCalendar();
+            calendarController.updatePreviewCalendar();
         });
     });
 
     document.getElementById('add-row-default-reception-time-button').addEventListener('click', function() {
-        formController.addFormRowReceptionTime();
+        eventFormController.addFormRowReceptionTime();
     });
 
     //曜日別受付時間
@@ -74,7 +72,7 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.querySelector('.individual-day-of-week-start-reception-time').addEventListener('change', function() {
@@ -82,7 +80,7 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.querySelector('.individual-day-of-week-end-reception-time').addEventListener('change', function() {
@@ -90,11 +88,11 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.getElementById('add-row-individual-day-of-week-button').addEventListener('click', function() {
-        formController.addFormRowIndividualDayOfWeek();
+        eventFormController.addFormRowIndividualDayOfWeek();
     });
 
     //特定指定日受付時間
@@ -103,7 +101,7 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.querySelector('.individual-date-start-reception-time').addEventListener('change', function() {
@@ -111,7 +109,7 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.querySelector('.individual-date-end-reception-time').addEventListener('change', function() {
@@ -119,11 +117,11 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.getElementById('add-row-individual-date-button').addEventListener('click', function() {
-        formController.addFormRowIndividualDate();
+        eventFormController.addFormRowIndividualDate();
     });
 
     //除外日
@@ -132,34 +130,65 @@ window.onload = function() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     document.getElementById('add-row-individual-exclusion-date-button').addEventListener('click', function() {
-        formController.addFormRowIndividualExclusionDate();
+        eventFormController.addFormRowIndividualExclusionDate();
     });
 
     calendarController.createCalendar();
+
+    //以下はイベント編集画面の処理
+    //デバッグ時のみイベント作成画面で試す
+    setFormInit(1);
 }
 
-
-
-
-
-function setPeriodStartDate(){
+function changePeriodStartDate(){
     const periodStartDate = document.getElementById('input-period-start-date').value.replace(/-/g, "");
-    reservationDataController.setPeriodStartDate(periodStartDate);
+    reservationDataController.setPropertyPeriodStartDate(periodStartDate);
 
     //プレビューカレンダーを更新
     reservationDataController.updateReservationData();
-    calendarController.pudatePreviewCalendar();
+    calendarController.updatePreviewCalendar();
 }
 
-function setPeriodEndDate(){
+function changePeriodEndDate(){
     const periodEndDate = document.getElementById('input-period-end-date').value.replace(/-/g, "");
-    reservationDataController.setPeriodEndDate(periodEndDate);
+    reservationDataController.setPropertyPeriodEndDate(periodEndDate);
 
     //プレビューカレンダーを更新
     reservationDataController.updateReservationData();
-    calendarController.pudatePreviewCalendar();
+    calendarController.updatePreviewCalendar();
+}
+
+function setFormInit(eventId){
+    const eventInfo = [
+        {
+          event_id: '1',
+          event_title: '第五回キャリアコンサルタント',
+          reservation_slot_time: '15',
+          start_day: '2024-03-19',
+          end_day: '2024-04-10'
+        }
+      ];
+
+    //イベント情報取得
+    //イベントTとイベント詳細Tを結合してデータ取得
+    // データが取得できない場合はエラー
+    if ( eventInfo.length != 1) {
+        return;
+    }
+
+    //取得出来たらほかの3テーブルも取得 それぞれwhere=イベントidで取得
+
+    //イベントタイトルを設定
+    eventFormController.setEventTitle(eventInfo[0].event_title);
+    
+    //開始日、終了日を設定
+    eventFormController.setPeriodStartDate(eventInfo[0].start_day);
+    eventFormController.setPeriodEndDate(eventInfo[0].end_day);
+
+    //一枠の時間を設定
+    eventFormController.setReservationSlotTime(eventInfo[0].reservation_slot_time);
 }

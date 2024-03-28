@@ -1,6 +1,7 @@
 import * as calendarController from '../calendar.js';
 import * as reservationDataController from './reservationData.js';
 
+// 行追加系
 export function addFormRowReceptionTime() {
     const formContainer = document.querySelector('.form.default-reception-time');
 
@@ -69,7 +70,7 @@ export function addFormRowIndividualDayOfWeek() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     startTimeInput.addEventListener('change', function() {
@@ -77,7 +78,7 @@ export function addFormRowIndividualDayOfWeek() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     endTimeInput.addEventListener('change', function() {
@@ -85,7 +86,7 @@ export function addFormRowIndividualDayOfWeek() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     // 削除ボタンを生成
@@ -132,7 +133,7 @@ export function addFormRowIndividualDate() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     startTimeInput.addEventListener('change', function() {
@@ -140,7 +141,7 @@ export function addFormRowIndividualDate() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     endTimeInput.addEventListener('change', function() {
@@ -148,7 +149,7 @@ export function addFormRowIndividualDate() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     // 削除ボタンを生成
@@ -190,7 +191,7 @@ export function addFormRowIndividualExclusionDate() {
 
         //プレビューカレンダーを更新
         reservationDataController.updateReservationData();
-        calendarController.pudatePreviewCalendar();
+        calendarController.updatePreviewCalendar();
     });
 
     // 削除ボタンを生成
@@ -210,4 +211,43 @@ export function addFormRowIndividualExclusionDate() {
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-exclusion-date-button');
     formContainer.insertBefore(newRow, addButton.parentNode);
+}
+
+//値設定系
+export function setEventTitle(eventTitle) {
+    const form = document.querySelector('.form.event-title input');
+    form.value = eventTitle;
+}
+
+export function setPeriodStartDate(startDate) {
+    const form = document.getElementById('input-period-start-date')
+    form.value = startDate;
+
+    // 'change' イベントを手動で作成
+    var event = new Event('change', {
+        'bubbles': true,
+        'cancelable': true
+    });
+
+    // イベントを input 要素にディスパッチ
+    form.dispatchEvent(event);
+}
+
+export function setPeriodEndDate(endDate) {
+    const form = document.getElementById('input-period-end-date')
+    form.value = endDate;
+
+    // 'change' イベントを手動で作成
+    var event = new Event('change', {
+        'bubbles': true,
+        'cancelable': true
+    });
+
+    // イベントを input 要素にディスパッチ
+    form.dispatchEvent(event);
+}
+
+export function setReservationSlotTime(reservationSlotTime) {
+    const form = document.querySelector('.form.reservation-slot-time .input-fields input');
+    form.value = reservationSlotTime;
 }
