@@ -183,8 +183,8 @@ function setEventInfo(eventInfo) {
     eventFormController.setEventTitle(eventInfo.event_title);
 
     // 開始日、終了日を設定
-    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventInfo.start_day));
-    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventInfo.end_day));
+    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventInfo.start_date));
+    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventInfo.end_date));
 
     // 一枠の時間を設定
     eventFormController.setReservationSlotTime(eventInfo.reservation_slot_time);
