@@ -1,4 +1,5 @@
 import * as calendarController from '../calendar.js';
+import * as common from '../common.js';
 import * as eventFormController from './eventForm.js';
 import * as reservationDataController from './reservationData.js';
 
@@ -182,9 +183,8 @@ function setEventInfo(eventInfo) {
     eventFormController.setEventTitle(eventInfo.event_title);
 
     // 開始日、終了日を設定
-    console.log(eventInfo.start_day);
-    eventFormController.setPeriodStartDate(eventInfo.start_day);
-    eventFormController.setPeriodEndDate(eventInfo.end_day);
+    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventInfo.start_day));
+    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventInfo.end_day));
 
     // 一枠の時間を設定
     eventFormController.setReservationSlotTime(eventInfo.reservation_slot_time);
