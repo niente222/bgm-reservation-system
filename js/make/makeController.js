@@ -165,21 +165,12 @@ function changePeriodEndDate(){
 
 function setFormInit(eventId){
 
+    let eventInfo = [];
+
       fetch(`/data?eventId=${eventId}`)
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => eventInfo = data[0])
       .catch(error => console.error('Error:', error));
-
-      
-    const eventInfo = [
-        {
-            event_id: '1',
-            event_title: '第五回キャリアコンサルタント',
-            reservation_slot_time: '15',
-            start_day: '2024-03-19',
-            end_day: '2024-04-10'
-        }
-    ];
 
     //イベント情報取得
     //イベントTとイベント詳細Tを結合してデータ取得
