@@ -142,7 +142,7 @@ window.onload = function() {
     //以下はイベント編集画面の処理
     //デバッグ時のみイベント作成画面で試す
     const eventId = '2';
-    setFormInit(eventId);
+    init(eventId);
 }
 
 function changePeriodStartDate(){
@@ -163,33 +163,30 @@ function changePeriodEndDate(){
     calendarController.updatePreviewCalendar();
 }
 
-function setFormInit(eventId){
-
-    let eventInfo = [];
-
-      fetch(`/data?eventId=${eventId}`)
+function init(eventId) {
+    fetch(`/data?eventId=${eventId}`)
       .then(response => response.json())
-      .then(data => eventInfo = data)
+      .then(data => {
+          if (data.length != 1) {
+              throw new Error('イベント情報の取得に失敗しました。');
+          }
+
+          // イベント情報の取得に成功した場合の処理
+          setEventInfo(data[0]);
+      })
       .catch(error => console.error('Error:', error));
+}
 
-    console.log("eventInfo:" + eventInfo);
+function setEventInfo(eventInfo) {
+    // イベントタイトルを設定
+    eventFormController.setEventTitle(eventInfo.event_title);
 
-    //イベント情報取得
-    //イベントTとイベント詳細Tを結合してデータ取得
-    // データが取得できない場合はエラー
-    if ( eventInfo.length != 1) {
-        return;
-    }
+    // 開始日、終了日を設定
+    eventFormController.setPeriodStartDate(eventInfo.start_day);
+    eventFormController.setPeriodEndDate(eventInfo.end_day);
 
-    //取得出来たらほかの3テーブルも取得 それぞれwhere=イベントidで取得
+    // 一枠の時間を設定
+    eventFormController.setReservationSlotTime(eventInfo.reservation_slot_time);
 
-    //イベントタイトルを設定
-    eventFormController.setEventTitle(eventInfo[0].event_title);
-    
-    //開始日、終了日を設定
-    eventFormController.setPeriodStartDate(eventInfo[0].start_day);
-    eventFormController.setPeriodEndDate(eventInfo[0].end_day);
-
-    //一枠の時間を設定
-    eventFormController.setReservationSlotTime(eventInfo[0].reservation_slot_time);
+    // その他のテーブルからのデータ取得や設定もここに追加
 }
