@@ -182,6 +182,7 @@ function setEventInfo(eventInfo) {
     eventFormController.setEventTitle(eventInfo.event_title);
 
     // 開始日、終了日を設定
+    console.log(eventInfo.start_day);
     eventFormController.setPeriodStartDate(eventInfo.start_day);
     eventFormController.setPeriodEndDate(eventInfo.end_day);
 
