@@ -172,7 +172,7 @@ function setFormInit(eventId){
       .then(data => eventInfo = data[0])
       .catch(error => console.error('Error:', error));
 
-    console.log("eventInfo: eventInfo");
+    console.log("eventInfo:" + eventInfo);
 
     //イベント情報取得
     //イベントTとイベント詳細Tを結合してデータ取得
