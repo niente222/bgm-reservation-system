@@ -165,10 +165,15 @@ function changePeriodEndDate(){
 
 function setFormInit(eventId){
 
-      fetch(`/data?eventId=${eventId}`)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
+    fetch(`https://niente0520.xsrv.jp/data?eventId=${eventId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
 
       
     const eventInfo = [
