@@ -141,7 +141,7 @@ window.onload = function() {
 
     //以下はイベント編集画面の処理
     //デバッグ時のみイベント作成画面で試す
-    const eventId = '1';
+    const eventId = '2';
     setFormInit(eventId);
 }
 
@@ -169,7 +169,7 @@ function setFormInit(eventId){
 
       fetch(`/data?eventId=${eventId}`)
       .then(response => response.json())
-      .then(data => eventInfo = data[0])
+      .then(data => eventInfo = data)
       .catch(error => console.error('Error:', error));
 
     console.log("eventInfo:" + eventInfo);
