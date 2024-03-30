@@ -23,7 +23,7 @@ h1 {
     align-items: center;
 }
 
-.event-make-button {
+#event-make-button {
     background-color: violet;
     text-align: center;
     width: 320px;

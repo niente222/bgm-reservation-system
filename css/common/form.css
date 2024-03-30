@@ -176,7 +176,7 @@ input[type="time"]{
     align-items: center;
 }
 
-.event-make-button {
+#event-make-button {
     background: #E4EFFF;
     text-align: center;
     line-height: 80px;
@@ -189,7 +189,7 @@ input[type="time"]{
                 -5px -5px 17px #ffffff;
 }
 
-.event-make-button p {
+#event-make-button p {
     color: black;
     text-decoration: none;
     font-size: 28px;

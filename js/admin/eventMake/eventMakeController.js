@@ -138,6 +138,10 @@ window.onload = function() {
         eventFormController.addFormRowIndividualExclusionDate();
     });
 
+    document.getElementById('event-make-button').addEventListener('click', function() {
+        clickMakeEventButton();
+    });
+
     calendarController.createCalendar();
 
     //以下はイベント編集画面の処理
@@ -172,20 +176,8 @@ function init(eventId) {
         if (data.eventData.length == 0) {
             throw new Error('イベント情報の取得に失敗しました。');
         }
-          
-        const eventData = data.eventData;
-        const dowData = data.dowData;
-        const dateData = data.dateData;
-
-        // イベント情報の取得に成功した場合の処理
-        // setEventInfo(eventData[0], dowData.filter(item => item.day_of_week_id === 7));
-        // setWodReceptionTimeRow(dowData.filter(item => item.day_of_week_id != 7));
-
 
         setEventInfo(data);
-
-        //setDateDataInfo(dateData);
-
       })
       .catch(error => console.error('Error:', error));
 }
@@ -223,4 +215,44 @@ function setEventInfo(data) {
 
     //除外日を設定
     eventFormController.setExclusionDateRow(exclusionData);
+}
+
+function clickMakeEventButton() {
+
+    //イベントテーブル登録
+    insertEvent();
+
+    //個別曜日の受付時間登録
+
+    //特定日の受付時間登録
+
+    //除外日登録
+}
+
+function insertEvent() {
+    fetch('/admin/insertEvent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            event_title: eventFormController.getEventTitle(),
+            start_date: eventFormController.getPeriodStartDate(),
+            end_date: eventFormController.getPeriodEndDate(),
+            reservation_slot_time: eventFormController.getReservationSlotTime(),
+            off_day_toggles: eventFormController.getDayToggle(),
+            ins_user: 1
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.success) {
+            // データ登録後に完了画面に遷移する
+            window.location.href = '/admin/eventMake/completed';
+        } else {
+            // エラー処理をここに記述
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }

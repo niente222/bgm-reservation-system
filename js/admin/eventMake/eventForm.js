@@ -351,3 +351,37 @@ export function setExclusionDateRow(exclusionData) {
         formRow.querySelector('.input-individual-exclusion-date').value = common.convertDBDateToYYYYMMDD(exclusionDate.date);
     }
 }
+
+//値取得系 
+export function getEventTitle() {
+    const form = document.querySelector('.form.event-title input');
+    return form.value;
+}
+
+export function getPeriodStartDate() {
+    const form = document.getElementById('input-period-start-date');
+    return common.convertDBDateToYYYYMMDD(form.value);
+}
+
+export function getPeriodEndDate() {
+    const form = document.getElementById('input-period-end-date')
+    return common.convertDBDateToYYYYMMDD(form.value);
+}
+
+export function getReservationSlotTime() {
+    const form = document.querySelector('.form.reservation-slot-time .input-fields input');
+    return form.value;
+}
+
+export function getDayToggle() {
+
+    let dayTogglesStr = '';
+
+    for (let i = 0; i < 7; i++ ) {
+        const dayToggle = document.getElementById('day-toggle-' + i);
+        dayTogglesStr += dayToggle.classList.contains('day-toggle-off') ? '0' : '1';
+    }
+
+    console.log(dayTogglesStr)
+    return dayTogglesStr;
+}
