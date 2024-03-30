@@ -223,6 +223,7 @@ function clickMakeEventButton() {
     insertEvent();
 
     //個別曜日の受付時間登録
+    insertDowReceptionTime();
 
     //特定日の受付時間登録
 
@@ -243,6 +244,31 @@ function insertEvent() {
             off_day_toggles: eventFormController.getDayToggle(),
             ins_user: 1
         })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+
+        } else {
+            // エラー処理をここに記述
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function insertDowReceptionTime() {
+
+    let dowReceptionTimes = [
+        { event_id: 2, day_of_week_id: 0, is_default_row: 1, start_time: '09:00', end_time: '10:00' },
+        { event_id: 2, day_of_week_id: 2, is_default_row: 0, start_time: '10:00', end_time: '11:00' }
+    ];
+
+    fetch('/admin/insertDowReceptionTime', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dowReceptionTimes)
     })
     .then(response => response.json())
     .then(data => {
