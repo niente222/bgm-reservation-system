@@ -220,14 +220,16 @@ function setEventInfo(data) {
 function clickMakeEventButton() {
 
     //イベントテーブル登録
-    insertEvent();
+    //insertEvent();
 
     //個別曜日の受付時間登録
-    insertDowReceptionTime();
+    //insertDowReceptionTime();
 
     //特定日の受付時間登録
+    //insertDateReceptionTime();
 
     //除外日登録
+    //insertExclusionDate();
 }
 
 function insertEvent() {
@@ -274,7 +276,55 @@ function insertDowReceptionTime() {
     .then(data => {
         console.log(data);
         if (data.success) {
-            // データ登録後に完了画面に遷移する
+            window.location.href = '/admin/eventMake/completed';
+        } else {
+            // エラー処理をここに記述
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function insertDateReceptionTime() {
+    let dateReceptionTimes = [
+        { event_id: 2, date: '2024-04-15', start_time: '18:00:00', end_time: '20:30:00' }
+    ];
+
+    fetch('/admin/insertDateReceptionTime', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dateReceptionTimes)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.success) {
+            window.location.href = '/admin/eventMake/completed';
+        } else {
+            // エラー処理をここに記述
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function insertExclusionDate() {
+    let exclusionDates = [
+        { event_id: 2, date: '2024-03-13' },
+        { event_id: 2, date: '2024-03-14' }
+    ];
+
+    fetch('/admin/insertExclusionDate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(exclusionDates)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.success) {
             window.location.href = '/admin/eventMake/completed';
         } else {
             // エラー処理をここに記述
