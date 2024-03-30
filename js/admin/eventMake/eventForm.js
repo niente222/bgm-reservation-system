@@ -35,6 +35,8 @@ export function addFormRowReceptionTime() {
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-default-reception-time-button');
     formContainer.insertBefore(newRow, addButton.parentNode);
+
+    return newRow;
 }
 
 export function addFormRowIndividualDayOfWeek() {
@@ -267,4 +269,23 @@ export function setDayToggle(offDayTogglesStr) {
         // イベントを dayToggle 要素にディスパッチ
         dayToggle.dispatchEvent(event);
     }
+}
+
+export function setDefaultReceptionTime(receptionTimes) {
+
+    //一行目を設定
+    const startTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-start-reception-time');
+    const endTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-end-reception-time');
+    
+    startTimeFirstRow.value = receptionTimes.filter(item => item.is_default_row === 1)[0].start_time;
+    endTimeFirstRow.value = receptionTimes.filter(item => item.is_default_row === 1)[0].end_time;
+
+    //二行目以降を設定
+    for (const receptionTime of receptionTimes.filter(item => item.is_default_row === 0)) {
+        const formRow  = addFormRowReceptionTime();
+
+        formRow.querySelector('.default-start-reception-time').value = receptionTime.start_time;
+        formRow.querySelector('.default-end-reception-time').value = receptionTime.end_time;
+    }
+    
 }

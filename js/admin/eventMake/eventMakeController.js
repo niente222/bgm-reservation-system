@@ -165,20 +165,29 @@ function changePeriodEndDate(){
 }
 
 function init(eventId) {
-    fetch(`/admin/getEventT?eventId=${eventId}`)
+    fetch(`/admin/getEvent?eventId=${eventId}`)
       .then(response => response.json())
       .then(data => {
-          if (data.length != 1) {
-              throw new Error('イベント情報の取得に失敗しました。');
-          }
 
-          // イベント情報の取得に成功した場合の処理
-          setEventInfo(data[0]);
+        const eventData = data.eventData;
+
+        // if (eventData.length == 0) {
+        //     throw new Error('イベント情報の取得に失敗しました。');
+        // }
+          
+        const dowData = data.dowData;
+        const dateData = data.dateData;
+
+        // イベント情報の取得に成功した場合の処理
+        setEventInfo(eventData[0], dowData.filter(item => item.day_of_week_id === 7));
+        //setDowDataInfo(dowData.filter(item => item.day_of_week_id != 7));
+        //setDateDataInfo(dateData);
+
       })
       .catch(error => console.error('Error:', error));
 }
 
-function setEventInfo(eventInfo) {
+function setEventInfo(eventInfo, receptionTimes) {
     // イベントタイトルを設定
     eventFormController.setEventTitle(eventInfo.event_title);
 
@@ -192,11 +201,16 @@ function setEventInfo(eventInfo) {
     // 実施曜日を設定
     eventFormController.setDayToggle(eventInfo.off_day_toggles);
 
-
     // 受付時間を設定
+    eventFormController.setDefaultReceptionTime(receptionTimes);
 
 
-    //個別曜日の受付時間を設定
+    
     //特定日の受付時間を設定
     //除外日を設定
+}
+
+function setReceptionTimeRow() {
+    //個別曜日の受付時間を設定
+    dowData.filter(item => item.is_default_row === 0)
 }
