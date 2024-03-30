@@ -1,5 +1,5 @@
 
-import * as reservationDataController from './make/reservationData.js';
+import * as reservationDataController from './admin/eventMake/reservationData.js';
 
 //プレビューカレンダーの表示に使用する変数
 var targetDate = new Date();

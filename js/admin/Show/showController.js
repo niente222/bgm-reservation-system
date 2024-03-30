@@ -1,4 +1,4 @@
-import * as calendarController from '../calendar.js';
+import * as calendarController from '../../calendar.js';
 
 window.onload = function() {
 

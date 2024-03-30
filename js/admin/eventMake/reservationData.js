@@ -1,4 +1,4 @@
-import * as common from '../common.js';
+import * as common from '../../common.js';
 
 var periodStartDate = 20240101;
 var periodEndDate = 20241231;

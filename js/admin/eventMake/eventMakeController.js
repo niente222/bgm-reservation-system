@@ -1,5 +1,5 @@
-import * as calendarController from '../calendar.js';
-import * as common from '../common.js';
+import * as calendarController from '../../calendar.js';
+import * as common from '../../common.js';
 import * as eventFormController from './eventForm.js';
 import * as reservationDataController from './reservationData.js';
 

@@ -1,4 +1,4 @@
-import * as calendarController from '../calendar.js';
+import * as calendarController from '../../calendar.js';
 import * as reservationDataController from './reservationData.js';
 
 // 行追加系
