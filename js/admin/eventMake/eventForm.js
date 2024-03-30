@@ -1,4 +1,5 @@
 import * as calendarController from '../../calendar.js';
+import * as common from '../../common.js';
 import * as reservationDataController from './reservationData.js';
 
 // 行追加系
@@ -173,6 +174,8 @@ export function addFormRowIndividualDate() {
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-date-button');
     formContainer.insertBefore(newRow, addButton.parentNode);
+
+    return newRow;
 }
 
 export function addFormRowIndividualExclusionDate() {
@@ -215,6 +218,8 @@ export function addFormRowIndividualExclusionDate() {
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-exclusion-date-button');
     formContainer.insertBefore(newRow, addButton.parentNode);
+
+    return newRow;
 }
 
 //値設定系
@@ -293,11 +298,11 @@ export function setDefaultReceptionTime(receptionTimeData) {
 export function setWodReceptionTimeRow(dowReceptionTimeData) {
 
     //一行目を設定
-    const startTimeFirstPulldown = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
+    const dpwPulldownFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
     const startTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-start-reception-time');
     const endTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-end-reception-time');
     
-    startTimeFirstPulldown.value = dowReceptionTimeData[0].day_of_week_id;
+    dpwPulldownFirstRow.value = dowReceptionTimeData[0].day_of_week_id;
     startTimeFirstRow.value = dowReceptionTimeData[0].start_time;
     endTimeFirstRow.value = dowReceptionTimeData[0].end_time;
 
@@ -308,5 +313,41 @@ export function setWodReceptionTimeRow(dowReceptionTimeData) {
         formRow.querySelector('.individual-day-of-week-pulldown').value = dowReceptionTime.day_of_week_id;
         formRow.querySelector('.individual-day-of-week-start-reception-time').value = dowReceptionTime.start_time;
         formRow.querySelector('.individual-day-of-week-end-reception-time').value = dowReceptionTime.end_time;
+    }
+}
+
+export function setDateReceptionTimeRow(dateReceptionTimeData) {
+
+    //一行目を設定
+    const dateFirstRow = document.querySelector('.form.individual-date .input-fields .input-individual-date');
+    const startTimeFirstRow = document.querySelector('.form.individual-date .input-fields .individual-date-start-reception-time');
+    const endTimeFirstRow = document.querySelector('.form.individual-date .input-fields .individual-date-end-reception-time');
+    
+    dateFirstRow.value = common.convertDBDateToYYYYMMDD(dateReceptionTimeData[0].date);
+    startTimeFirstRow.value = dateReceptionTimeData[0].start_time;
+    endTimeFirstRow.value = dateReceptionTimeData[0].end_time;
+    
+    //二行目以降を設定
+    for (const dateReceptionTime of dateReceptionTimeData.slice(1)) {
+        const formRow  = addFormRowIndividualDate();
+        
+        formRow.querySelector('.input-individual-date').value = common.convertDBDateToYYYYMMDD(dateReceptionTime.date);
+        formRow.querySelector('.individual-date-start-reception-time').value = dateReceptionTime.start_time;
+        formRow.querySelector('.individual-date-end-reception-time').value = dateReceptionTime.end_time;
+    }
+}
+
+export function setExclusionDateRow(exclusionData) {
+
+    //一行目を設定
+    const dateFirstRow = document.querySelector('.form.individual-exclusion-date .input-fields .input-individual-exclusion-date');
+    
+    dateFirstRow.value = common.convertDBDateToYYYYMMDD(exclusionData[0].date);
+    
+    //二行目以降を設定
+    for (const exclusionDate of exclusionData.slice(1)) {
+        const formRow  = addFormRowIndividualExclusionDate();
+        
+        formRow.querySelector('.input-individual-exclusion-date').value = common.convertDBDateToYYYYMMDD(exclusionDate.date);
     }
 }

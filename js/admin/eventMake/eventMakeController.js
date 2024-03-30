@@ -195,14 +195,13 @@ function setEventInfo(data) {
     const eventData = data.eventData[0];
     const receptionTimeData = data.dowData.filter(item => item.day_of_week_id === 7);
     const dowReceptionTimeData = data.dowData.filter(item => item.day_of_week_id != 7);
-
-
-    const dowData = data.dowData;
     const dateData = data.dateData;
+    const exclusionData = data.exclusionData;
 
     // イベントタイトルを設定
     eventFormController.setEventTitle(eventData.event_title);
 
+    console.log("eventData.start_date" + eventData.start_date)
     // 開始日、終了日を設定
     eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
     eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
@@ -218,12 +217,10 @@ function setEventInfo(data) {
 
     // 個別曜日の受付時間を設定
     eventFormController.setWodReceptionTimeRow(dowReceptionTimeData);
-}
 
-function setWodReceptionTimeRow() {
-    //個別曜日の受付時間を設定
-    dowData.filter(item => item.is_default_row === 0)
-}
+    //特定日の受付時間を設定
+    eventFormController.setDateReceptionTimeRow(dateData);
 
-//特定日の受付時間を設定
     //除外日を設定
+    eventFormController.setExclusionDateRow(exclusionData);
+}
