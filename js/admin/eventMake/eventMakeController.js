@@ -169,48 +169,61 @@ function init(eventId) {
       .then(response => response.json())
       .then(data => {
 
-        const eventData = data.eventData;
-
-        // if (eventData.length == 0) {
-        //     throw new Error('イベント情報の取得に失敗しました。');
-        // }
+        if (data.eventData.length == 0) {
+            throw new Error('イベント情報の取得に失敗しました。');
+        }
           
+        const eventData = data.eventData;
         const dowData = data.dowData;
         const dateData = data.dateData;
 
         // イベント情報の取得に成功した場合の処理
-        setEventInfo(eventData[0], dowData.filter(item => item.day_of_week_id === 7));
-        //setDowDataInfo(dowData.filter(item => item.day_of_week_id != 7));
+        // setEventInfo(eventData[0], dowData.filter(item => item.day_of_week_id === 7));
+        // setWodReceptionTimeRow(dowData.filter(item => item.day_of_week_id != 7));
+
+
+        setEventInfo(data);
+
         //setDateDataInfo(dateData);
 
       })
       .catch(error => console.error('Error:', error));
 }
 
-function setEventInfo(eventInfo, receptionTimes) {
+function setEventInfo(data) {
+
+    const eventData = data.eventData[0];
+    const receptionTimeData = data.dowData.filter(item => item.day_of_week_id === 7);
+    const dowReceptionTimeData = data.dowData.filter(item => item.day_of_week_id != 7);
+
+
+    const dowData = data.dowData;
+    const dateData = data.dateData;
+
     // イベントタイトルを設定
-    eventFormController.setEventTitle(eventInfo.event_title);
+    eventFormController.setEventTitle(eventData.event_title);
 
     // 開始日、終了日を設定
-    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventInfo.start_date));
-    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventInfo.end_date));
+    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
+    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
 
     // 一枠の時間を設定
-    eventFormController.setReservationSlotTime(eventInfo.reservation_slot_time);
+    eventFormController.setReservationSlotTime(eventData.reservation_slot_time);
 
     // 実施曜日を設定
-    eventFormController.setDayToggle(eventInfo.off_day_toggles);
+    eventFormController.setDayToggle(eventData.off_day_toggles);
 
     // 受付時間を設定
-    eventFormController.setDefaultReceptionTime(receptionTimes);
+    eventFormController.setDefaultReceptionTime(receptionTimeData);
 
-
-    
-    //特定日の受付時間を設定
-    //除外日を設定
+    // 個別曜日の受付時間を設定
+    eventFormController.setWodReceptionTimeRow(dowReceptionTimeData);
 }
 
-function setReceptionTimeRow() {
+function setWodReceptionTimeRow() {
     //個別曜日の受付時間を設定
     dowData.filter(item => item.is_default_row === 0)
 }
+
+//特定日の受付時間を設定
+    //除外日を設定

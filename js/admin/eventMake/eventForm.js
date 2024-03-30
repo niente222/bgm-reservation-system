@@ -108,6 +108,8 @@ export function addFormRowIndividualDayOfWeek() {
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-day-of-week-button');
     formContainer.insertBefore(newRow, addButton.parentNode);
+
+    return newRow;
 }
 
 export function addFormRowIndividualDate() {
@@ -259,7 +261,6 @@ export function setDayToggle(offDayTogglesStr) {
 
     for (const offday of offDayToggles) {
         const dayToggle = document.getElementById('day-toggle-' + offday);
-        console.log("offday:" + offday);
     
         var event = new Event('click', {
             'bubbles': true,
@@ -271,21 +272,41 @@ export function setDayToggle(offDayTogglesStr) {
     }
 }
 
-export function setDefaultReceptionTime(receptionTimes) {
+export function setDefaultReceptionTime(receptionTimeData) {
 
     //一行目を設定
     const startTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-start-reception-time');
     const endTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-end-reception-time');
     
-    startTimeFirstRow.value = receptionTimes.filter(item => item.is_default_row === 1)[0].start_time;
-    endTimeFirstRow.value = receptionTimes.filter(item => item.is_default_row === 1)[0].end_time;
+    startTimeFirstRow.value = receptionTimeData.filter(item => item.is_default_row === 1)[0].start_time;
+    endTimeFirstRow.value = receptionTimeData.filter(item => item.is_default_row === 1)[0].end_time;
 
     //二行目以降を設定
-    for (const receptionTime of receptionTimes.filter(item => item.is_default_row === 0)) {
+    for (const receptionTime of receptionTimeData.filter(item => item.is_default_row === 0)) {
         const formRow  = addFormRowReceptionTime();
 
         formRow.querySelector('.default-start-reception-time').value = receptionTime.start_time;
         formRow.querySelector('.default-end-reception-time').value = receptionTime.end_time;
     }
+}
+
+export function setWodReceptionTimeRow(dowReceptionTimeData) {
+
+    //一行目を設定
+    const startTimeFirstPulldown = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
+    const startTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-start-reception-time');
+    const endTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-end-reception-time');
     
+    startTimeFirstPulldown.value = dowReceptionTimeData[0].day_of_week_id;
+    startTimeFirstRow.value = dowReceptionTimeData[0].start_time;
+    endTimeFirstRow.value = dowReceptionTimeData[0].end_time;
+
+    //二行目以降を設定
+    for (const dowReceptionTime of dowReceptionTimeData.slice(1)) {
+        const formRow  = addFormRowIndividualDayOfWeek();
+        
+        formRow.querySelector('.individual-day-of-week-pulldown').value = dowReceptionTime.day_of_week_id;
+        formRow.querySelector('.individual-day-of-week-start-reception-time').value = dowReceptionTime.start_time;
+        formRow.querySelector('.individual-day-of-week-end-reception-time').value = dowReceptionTime.end_time;
+    }
 }
