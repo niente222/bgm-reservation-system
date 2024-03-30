@@ -165,7 +165,7 @@ function changePeriodEndDate(){
 }
 
 function init(eventId) {
-    fetch(`/data?eventId=${eventId}`)
+    fetch(`/admin/getEventT?eventId=${eventId}`)
       .then(response => response.json())
       .then(data => {
           if (data.length != 1) {
@@ -189,5 +189,14 @@ function setEventInfo(eventInfo) {
     // 一枠の時間を設定
     eventFormController.setReservationSlotTime(eventInfo.reservation_slot_time);
 
-    // その他のテーブルからのデータ取得や設定もここに追加
+    // 実施曜日を設定
+    eventFormController.setDayToggle(eventInfo.off_day_toggles);
+
+
+    // 受付時間を設定
+
+
+    //個別曜日の受付時間を設定
+    //特定日の受付時間を設定
+    //除外日を設定
 }

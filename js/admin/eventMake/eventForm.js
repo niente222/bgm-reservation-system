@@ -251,3 +251,20 @@ export function setReservationSlotTime(reservationSlotTime) {
     const form = document.querySelector('.form.reservation-slot-time .input-fields input');
     form.value = reservationSlotTime;
 }
+
+export function setDayToggle(offDayTogglesStr) {
+    const offDayToggles = offDayTogglesStr.split('');
+
+    for (const offday of offDayToggles) {
+        const dayToggle = document.getElementById('day-toggle-' + offday);
+        console.log("offday:" + offday);
+    
+        var event = new Event('click', {
+            'bubbles': true,
+            'cancelable': true
+        });
+    
+        // イベントを dayToggle 要素にディスパッチ
+        dayToggle.dispatchEvent(event);
+    }
+}
