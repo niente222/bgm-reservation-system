@@ -223,10 +223,10 @@ function clickMakeEventButton() {
     //insertEvent();
 
     //個別曜日の受付時間登録
-    //insertDowReceptionTime();
+    insertDowReceptionTime();
 
     //特定日の受付時間登録
-    //insertDateReceptionTime();
+    insertDateReceptionTime();
 
     //除外日登録
     insertExclusionDate();
@@ -310,10 +310,6 @@ function insertDateReceptionTime() {
 }
 
 function insertExclusionDate() {
-    // let exclusionDates = [
-    //     { event_id: 2, date: '2024-03-13' },
-    //     { event_id: 2, date: '2024-03-14' }
-    // ];
 
     //除外日の入力を配列に追加
     let exclusionDates = eventFormController.getExclusionDate();
