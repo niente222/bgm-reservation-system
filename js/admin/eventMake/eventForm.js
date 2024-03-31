@@ -386,7 +386,7 @@ export function getDayToggle() {
     return dayTogglesStr;
 }
 
-export function getDefaultReceptionTime() {
+export function getDefaultReceptionTime(eventId) {
 
     let defaultReceptionTimes = [];
 
@@ -404,7 +404,7 @@ export function getDefaultReceptionTime() {
         // もし開始時間と終了時間が存在すれば配列に追加
         if (startTime && endTime) {
             defaultReceptionTimes.push({
-                event_id: 2,
+                event_id: eventId,
                 day_of_week_id: 7, // defaultReceptionTimeの曜日は全(7)で固定
                 is_default_row: isDefaultRow, 
                 start_time: startTime,
@@ -416,7 +416,7 @@ export function getDefaultReceptionTime() {
     return defaultReceptionTimes;
 }
 
-export function getDowReceptionTime() {
+export function getDowReceptionTime(eventId) {
 
     let dowReceptionTimes = [];
 
@@ -435,7 +435,7 @@ export function getDowReceptionTime() {
         // もし開始時間と終了時間が存在すれば配列に追加
         if (startTime && endTime) {
             dowReceptionTimes.push({
-                event_id: 2,
+                event_id: eventId,
                 day_of_week_id: dowId,
                 is_default_row: isDefaultRow, 
                 start_time: startTime,
@@ -447,7 +447,7 @@ export function getDowReceptionTime() {
     return dowReceptionTimes;
 }
 
-export function getDateReceptionTime() {
+export function getDateReceptionTime(eventId) {
 
     let dateReceptionTimes = [];
 
@@ -465,7 +465,7 @@ export function getDateReceptionTime() {
         // もし開始時間と終了時間が存在すれば配列に追加
         if (startTime && endTime) {
             dateReceptionTimes.push({
-                event_id: 2,
+                event_id: eventId,
                 date: date,
                 start_time: startTime,
                 end_time: endTime
@@ -476,7 +476,7 @@ export function getDateReceptionTime() {
     return dateReceptionTimes;
 }
 
-export function getExclusionDate() {
+export function getExclusionDate(eventId) {
 
     let exclusionDate = [];
 
@@ -492,7 +492,7 @@ export function getExclusionDate() {
         // もし日付が存在すれば配列に追加
         if (date) {
             exclusionDate.push({
-                event_id: 2,
+                event_id: eventId,
                 date: date
             });
         }

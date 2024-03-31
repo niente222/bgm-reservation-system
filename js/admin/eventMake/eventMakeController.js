@@ -3,7 +3,20 @@ import * as common from '../../common.js';
 import * as eventFormController from './eventForm.js';
 import * as reservationDataController from './reservationData.js';
 
+// 画面モード
+// mode = 'new' 登録画面
+// mode = 'edit' 更新画面
+var mode = '';
+const currentUrl = window.location.pathname;
+// URLに含まれるパスによって条件分岐
+if (currentUrl.includes('/admin/eventMake/new')) {
+    mode = 'new';
+} else if (currentUrl.includes('/admin/eventMake/edit')) {
+    mode = 'edit';
+}
 
+// 更新画面用 パラメータ イベントID
+var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 
 //実施曜日
 //bool配列 dayOfWeek
@@ -145,9 +158,9 @@ window.onload = function() {
     calendarController.createCalendar();
 
     //以下はイベント編集画面の処理
-    //デバッグ時のみイベント作成画面で試す
-    const eventId = new URL(window.location.href).pathname.split('/').pop();
-    init(eventId);
+    if (mode === 'edit'){
+        init(eventId_urlpram);
+    }
 }
 
 function changePeriodStartDate(){
@@ -174,7 +187,7 @@ function init(eventId) {
       .then(data => {
 
         if (data.eventData.length == 0) {
-            throw new Error('イベント情報の取得に失敗しました。');
+            //throw new Error('イベント情報の取得に失敗しました。');
         }
 
         setEventInfo(data);
@@ -219,17 +232,20 @@ function setEventInfo(data) {
 
 function clickMakeEventButton() {
 
-    //イベントテーブル登録
-    //insertEvent();
-
-    //個別曜日の受付時間登録
-    insertDowReceptionTime();
-
-    //特定日の受付時間登録
-    insertDateReceptionTime();
-
-    //除外日登録
-    insertExclusionDate();
+    if(mode === 'new'){
+        //イベントテーブル登録
+        //個別曜日の受付時間登録
+        //特定日の受付時間登録
+        //除外日登録
+        insertEvent();
+    }else if(mode === 'edit'){
+        //イベントテーブル更新
+        //個別曜日の受付時間登録
+        //特定日の受付時間登録
+        //除外日登録
+        updateEvent();
+    }
+    
 }
 
 function insertEvent() {
@@ -250,21 +266,75 @@ function insertEvent() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            const eventId = data.insertedId;
 
+            // 全てのinsert処理を同時に開始
+            return Promise.all([
+                insertDowReceptionTime(eventId),
+                insertDateReceptionTime(eventId),
+                insertExclusionDate(eventId)
+            ]).then(() => eventId);  // 全ての処理が成功したらeventIdを次に渡す
         } else {
-            // エラー処理をここに記述
+            throw new Error('Event creation failed');
         }
     })
-    .catch(error => console.error('Error:', error));
+    .then(eventId => {
+        // 全てのinsert処理が成功した後に実行される
+        console.log(`All insert operations completed for event ID ${eventId}`);
+        window.location.href = '/admin/eventMake/completed/new';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // エラー処理をここに記述
+    });
 }
 
-function insertDowReceptionTime() {
+function updateEvent() {
+    fetch('/admin/updateEvent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            event_id: eventId_urlpram,
+            event_title: eventFormController.getEventTitle(),
+            start_date: eventFormController.getPeriodStartDate(),
+            end_date: eventFormController.getPeriodEndDate(),
+            reservation_slot_time: eventFormController.getReservationSlotTime(),
+            off_day_toggles: eventFormController.getDayToggle()
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 全てのinsert処理を同時に開始
+            return Promise.all([
+                insertDowReceptionTime(eventId_urlpram),
+                insertDateReceptionTime(eventId_urlpram),
+                insertExclusionDate(eventId_urlpram)
+            ]).then(() => eventId_urlpram);  // 全ての処理が成功したらeventIdを次に渡す
+        } else {
+            throw new Error('Event creation failed');
+        }
+    })
+    .then(eventId => {
+        // 全てのinsert処理が成功した後に実行される
+        console.log(`All insert operations completed for event ID ${eventId_urlpram}`);
+        window.location.href = '/admin/eventMake/completed/edit/' + eventId_urlpram;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // エラー処理をここに記述
+    });
+}
+
+function insertDowReceptionTime(eventId) {
 
     //受付時間の入力を配列に追加
-    let dowReceptionTimes = eventFormController.getDefaultReceptionTime();
+    let dowReceptionTimes = eventFormController.getDefaultReceptionTime(eventId);
 
     //曜日別受付時間の入力を配列に追加
-    dowReceptionTimes.push(...eventFormController.getDowReceptionTime());
+    dowReceptionTimes.push(...eventFormController.getDowReceptionTime(eventId));
 
     fetch('/admin/insertDowReceptionTime', {
         method: 'POST',
@@ -277,7 +347,6 @@ function insertDowReceptionTime() {
     .then(data => {
         console.log(data);
         if (data.success) {
-            window.location.href = '/admin/eventMake/completed';
         } else {
             // エラー処理をここに記述
         }
@@ -285,10 +354,10 @@ function insertDowReceptionTime() {
     .catch(error => console.error('Error:', error));
 }
 
-function insertDateReceptionTime() {
+function insertDateReceptionTime(eventId) {
 
     //日付別受付時間の入力を配列に追加
-    let dateReceptionTimes = eventFormController.getDateReceptionTime();
+    let dateReceptionTimes = eventFormController.getDateReceptionTime(eventId);
 
     fetch('/admin/insertDateReceptionTime', {
         method: 'POST',
@@ -301,7 +370,6 @@ function insertDateReceptionTime() {
     .then(data => {
         console.log(data);
         if (data.success) {
-            window.location.href = '/admin/eventMake/completed';
         } else {
             // エラー処理をここに記述
         }
@@ -309,10 +377,10 @@ function insertDateReceptionTime() {
     .catch(error => console.error('Error:', error));
 }
 
-function insertExclusionDate() {
+function insertExclusionDate(eventId) {
 
     //除外日の入力を配列に追加
-    let exclusionDates = eventFormController.getExclusionDate();
+    let exclusionDates = eventFormController.getExclusionDate(eventId);
 
     fetch('/admin/insertExclusionDate', {
         method: 'POST',
@@ -325,7 +393,6 @@ function insertExclusionDate() {
     .then(data => {
         console.log(data);
         if (data.success) {
-            window.location.href = '/admin/eventMake/completed';
         } else {
             // エラー処理をここに記述
         }

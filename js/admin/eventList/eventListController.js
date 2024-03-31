@@ -11,14 +11,13 @@ window.onload = function() {
 }
 
 function getEventList() {
-    const eventId = 2;
 
-    fetch(`/admin/getEventList?eventId=${eventId}`)
+    fetch(`/admin/getEventList`)
       .then(response => response.json())
       .then(data => {
 
         if (data.eventData.length == 0) {
-            throw new Error('イベント情報の取得に失敗しました。');
+            //throw new Error('イベント情報の取得に失敗しました。');
         }
 
         addEventListRow(data);
@@ -27,7 +26,6 @@ function getEventList() {
 }
 
 function addEventListRow(eventListData) {
-    console.log("eventListData:" + JSON.stringify(eventListData));
 
     // event-list-board 要素を取得
     const eventListBoard = document.querySelector('.event-list-board');
@@ -41,7 +39,7 @@ function addEventListRow(eventListData) {
         const eventTitle = document.createElement('div');
         eventTitle.className = 'event-title';
         const titleLink = document.createElement('a');
-        titleLink.href = '/admin/eventMake/' + data.event_id;
+        titleLink.href = '/admin/eventMake/new';
         titleLink.textContent = data.event_title;
         eventTitle.appendChild(titleLink);
 
@@ -57,7 +55,7 @@ function addEventListRow(eventListData) {
         const eventEdit = document.createElement('div');
         eventEdit.className = 'event-edit';
         const editLink = document.createElement('a');
-        editLink.href = '/admin/eventMake/' + data.event_id;
+        editLink.href = '/admin/eventMake/edit/' + data.event_id;
         editLink.textContent = '編集';
         eventEdit.appendChild(editLink);
 
