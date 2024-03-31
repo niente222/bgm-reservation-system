@@ -475,3 +475,28 @@ export function getDateReceptionTime() {
 
     return dateReceptionTimes;
 }
+
+export function getExclusionDate() {
+
+    let exclusionDate = [];
+
+    // .individual-exclusion-date 内のすべての行をループする
+    document.querySelectorAll('.form.individual-exclusion-date .form-row-individual-exclusion-date').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const date = row.querySelector('.input-individual-exclusion-date').value;
+
+        // もし日付が存在すれば配列に追加
+        if (date) {
+            exclusionDate.push({
+                event_id: 2,
+                date: date
+            });
+        }
+    });
+
+    return exclusionDate;
+}

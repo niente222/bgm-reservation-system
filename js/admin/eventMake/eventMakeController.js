@@ -226,10 +226,10 @@ function clickMakeEventButton() {
     //insertDowReceptionTime();
 
     //特定日の受付時間登録
-    insertDateReceptionTime();
+    //insertDateReceptionTime();
 
     //除外日登録
-    //insertExclusionDate();
+    insertExclusionDate();
 }
 
 function insertEvent() {
@@ -286,11 +286,8 @@ function insertDowReceptionTime() {
 }
 
 function insertDateReceptionTime() {
-    // let dateReceptionTimes = [
-    //     { event_id: 2, date: '2024-04-15', start_time: '18:00:00', end_time: '20:30:00' }
-    // ];
 
-    //受付時間の入力を配列に追加
+    //日付別受付時間の入力を配列に追加
     let dateReceptionTimes = eventFormController.getDateReceptionTime();
 
     fetch('/admin/insertDateReceptionTime', {
@@ -313,10 +310,13 @@ function insertDateReceptionTime() {
 }
 
 function insertExclusionDate() {
-    let exclusionDates = [
-        { event_id: 2, date: '2024-03-13' },
-        { event_id: 2, date: '2024-03-14' }
-    ];
+    // let exclusionDates = [
+    //     { event_id: 2, date: '2024-03-13' },
+    //     { event_id: 2, date: '2024-03-14' }
+    // ];
+
+    //除外日の入力を配列に追加
+    let exclusionDates = eventFormController.getExclusionDate();
 
     fetch('/admin/insertExclusionDate', {
         method: 'POST',
