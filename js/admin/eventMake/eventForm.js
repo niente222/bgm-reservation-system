@@ -395,7 +395,7 @@ export function getDefaultReceptionTime() {
 
         // 行削除ボタンの行をスキップ
         if (row.classList.contains('only-add-button-row')) return;
-        
+
         // 各行から開始時間と終了時間を取得
         const startTime = row.querySelector('.default-start-reception-time').value;
         const endTime = row.querySelector('.default-end-reception-time').value;
@@ -445,4 +445,33 @@ export function getDowReceptionTime() {
     });
 
     return dowReceptionTimes;
+}
+
+export function getDateReceptionTime() {
+
+    let dateReceptionTimes = [];
+
+    // .form.individual-date 内のすべての行をループする
+    document.querySelectorAll('.form.individual-date .form-row-individual-date').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const date = row.querySelector('.input-individual-date').value;
+        const startTime = row.querySelector('.individual-date-start-reception-time').value;
+        const endTime = row.querySelector('.individual-date-end-reception-time').value;
+
+        // もし開始時間と終了時間が存在すれば配列に追加
+        if (startTime && endTime) {
+            dateReceptionTimes.push({
+                event_id: 2,
+                date: date,
+                start_time: startTime,
+                end_time: endTime
+            });
+        }
+    });
+
+    return dateReceptionTimes;
 }

@@ -223,10 +223,10 @@ function clickMakeEventButton() {
     //insertEvent();
 
     //個別曜日の受付時間登録
-    insertDowReceptionTime();
+    //insertDowReceptionTime();
 
     //特定日の受付時間登録
-    //insertDateReceptionTime();
+    insertDateReceptionTime();
 
     //除外日登録
     //insertExclusionDate();
@@ -286,9 +286,12 @@ function insertDowReceptionTime() {
 }
 
 function insertDateReceptionTime() {
-    let dateReceptionTimes = [
-        { event_id: 2, date: '2024-04-15', start_time: '18:00:00', end_time: '20:30:00' }
-    ];
+    // let dateReceptionTimes = [
+    //     { event_id: 2, date: '2024-04-15', start_time: '18:00:00', end_time: '20:30:00' }
+    // ];
+
+    //受付時間の入力を配列に追加
+    let dateReceptionTimes = eventFormController.getDateReceptionTime();
 
     fetch('/admin/insertDateReceptionTime', {
         method: 'POST',
