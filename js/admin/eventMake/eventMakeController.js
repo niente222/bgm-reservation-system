@@ -146,7 +146,7 @@ window.onload = function() {
 
     //以下はイベント編集画面の処理
     //デバッグ時のみイベント作成画面で試す
-    const eventId = '2';
+    const eventId = new URL(window.location.href).pathname.split('/').pop();
     init(eventId);
 }
 
