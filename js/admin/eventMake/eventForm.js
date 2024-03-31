@@ -295,7 +295,7 @@ export function setDefaultReceptionTime(receptionTimeData) {
     }
 }
 
-export function setWodReceptionTimeRow(dowReceptionTimeData) {
+export function setDowReceptionTimeRow(dowReceptionTimeData) {
 
     //一行目を設定
     const dpwPulldownFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
@@ -384,4 +384,65 @@ export function getDayToggle() {
 
     console.log(dayTogglesStr)
     return dayTogglesStr;
+}
+
+export function getDefaultReceptionTime() {
+
+    let defaultReceptionTimes = [];
+
+    // .form.default-reception-time 内のすべての行をループする
+    document.querySelectorAll('.form.default-reception-time .form-row-default-reception-time').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+        
+        // 各行から開始時間と終了時間を取得
+        const startTime = row.querySelector('.default-start-reception-time').value;
+        const endTime = row.querySelector('.default-end-reception-time').value;
+        const isDefaultRow = row.classList.contains('form-initial-row') ? 1 : 0;// 一行目はデフォルト行として登録
+
+        // もし開始時間と終了時間が存在すれば配列に追加
+        if (startTime && endTime) {
+            defaultReceptionTimes.push({
+                event_id: 2,
+                day_of_week_id: 7, // defaultReceptionTimeの曜日は全(7)で固定
+                is_default_row: isDefaultRow, 
+                start_time: startTime,
+                end_time: endTime
+            });
+        }
+    });
+
+    return defaultReceptionTimes;
+}
+
+export function getDowReceptionTime() {
+
+    let dowReceptionTimes = [];
+
+    // .form.default-reception-time 内のすべての行をループする
+    document.querySelectorAll('.form.individual-day-of-week .form-row-individual-day-of-week').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const dowId = row.querySelector('.individual-day-of-week-pulldown').value
+        const startTime = row.querySelector('.individual-day-of-week-start-reception-time').value;
+        const endTime = row.querySelector('.individual-day-of-week-end-reception-time').value;
+        const isDefaultRow = row.classList.contains('form-initial-row') ? 1 : 0;// 一行目はデフォルト行として登録
+
+        // もし開始時間と終了時間が存在すれば配列に追加
+        if (startTime && endTime) {
+            dowReceptionTimes.push({
+                event_id: 2,
+                day_of_week_id: dowId,
+                is_default_row: isDefaultRow, 
+                start_time: startTime,
+                end_time: endTime
+            });
+        }
+    });
+
+    return dowReceptionTimes;
 }

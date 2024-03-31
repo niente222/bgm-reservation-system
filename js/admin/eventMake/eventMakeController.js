@@ -208,7 +208,7 @@ function setEventInfo(data) {
     eventFormController.setDefaultReceptionTime(receptionTimeData);
 
     // 個別曜日の受付時間を設定
-    eventFormController.setWodReceptionTimeRow(dowReceptionTimeData);
+    eventFormController.setDowReceptionTimeRow(dowReceptionTimeData);
 
     //特定日の受付時間を設定
     eventFormController.setDateReceptionTimeRow(dateData);
@@ -223,7 +223,7 @@ function clickMakeEventButton() {
     //insertEvent();
 
     //個別曜日の受付時間登録
-    //insertDowReceptionTime();
+    insertDowReceptionTime();
 
     //特定日の受付時間登録
     //insertDateReceptionTime();
@@ -260,10 +260,11 @@ function insertEvent() {
 
 function insertDowReceptionTime() {
 
-    let dowReceptionTimes = [
-        { event_id: 2, day_of_week_id: 0, is_default_row: 1, start_time: '09:00', end_time: '10:00' },
-        { event_id: 2, day_of_week_id: 2, is_default_row: 0, start_time: '10:00', end_time: '11:00' }
-    ];
+    //受付時間の入力を配列に追加
+    let dowReceptionTimes = eventFormController.getDefaultReceptionTime();
+
+    //曜日別受付時間の入力を配列に追加
+    dowReceptionTimes.push(...eventFormController.getDowReceptionTime());
 
     fetch('/admin/insertDowReceptionTime', {
         method: 'POST',
