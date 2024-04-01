@@ -27,14 +27,6 @@ var isValidDayOfWeekList = new Array(true, true, true, true, true, true, true);
 window.onload = function() {
 
     //イベントリスナー追加
-    document.querySelector('.previous-month-button').addEventListener('click', function() {
-        calendarController.showPrevMonth();
-    });
-
-    document.querySelector('.next-month-button').addEventListener('click', function() {
-        calendarController.showNextMonth();
-    });
-
     document.getElementById('input-period-start-date').addEventListener('change', function() {
         changePeriodStartDate();
     });
@@ -157,6 +149,9 @@ window.onload = function() {
 
     calendarController.createCalendar();
 
+    calendarController.clickPrevMonthButton();
+    calendarController.clickNextMonthButton();
+
     //以下はイベント編集画面の処理
     if (mode === 'edit'){
         init(eventId_urlpram);
@@ -208,8 +203,8 @@ function setEventInfo(data) {
 
     console.log("eventData.start_date" + eventData.start_date)
     // 開始日、終了日を設定
-    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
-    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
+    eventFormController.setPeriodStartDate(common.convertDBDateToYYYY-MM-DD(eventData.start_date));
+    eventFormController.setPeriodEndDate(common.convertDBDateToYYYY-MM-DD(eventData.end_date));
 
     // 一枠の時間を設定
     eventFormController.setReservationSlotTime(eventData.reservation_slot_time);

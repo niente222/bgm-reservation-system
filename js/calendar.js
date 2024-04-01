@@ -130,3 +130,16 @@ export function updatePreviewCalendar(){
         });
     });
 }
+
+//イベントリスナー設定
+export function clickPrevMonthButton(){
+    document.querySelector('.previous-month-button').addEventListener('click', function() {
+        showPrevMonth();
+    });
+}
+
+export function clickNextMonthButton(){
+    document.querySelector('.next-month-button').addEventListener('click', function() {
+        showNextMonth();
+    });
+}

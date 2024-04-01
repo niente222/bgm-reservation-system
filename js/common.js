@@ -59,6 +59,15 @@ export function convertDateToYYYYMMDD(date) {
   return date.replace(/-/g, "");
 }
 
+//
+export function convertTimeToHHMM(time) {
+  return time.replace(/:/g, "");
+}
+
+export function convertDBTimeToHHMM(time) {
+  return time.substring(0, 5).replace(/:/g, "");
+}
+
 //DBに保存されるDATE型をyyyy-MM-ddに変換
 export function convertDBDateToYYYYMMDD(db_date) {
   // Dateオブジェクトを生成
@@ -68,4 +77,15 @@ export function convertDBDateToYYYYMMDD(db_date) {
   const formattedDate = dateObj.toISOString().split('T')[0];
 
   return formattedDate;
+}
+
+//DBに保存されるDATE型をyyyyMMddに変換
+export function convertDBDateToYYYYMMDDCompact(db_date) {
+  // Dateオブジェクトを生成
+  const dateObj = new Date(db_date);
+
+  // Dateオブジェクトを yyyy-MM-dd 形式に変換
+  const formattedDate = dateObj.toISOString().split('T')[0];
+
+  return convertDateToYYYYMMDD(formattedDate);
 }

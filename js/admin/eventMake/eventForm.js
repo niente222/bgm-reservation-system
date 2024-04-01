@@ -323,7 +323,7 @@ export function setDateReceptionTimeRow(dateReceptionTimeData) {
     const startTimeFirstRow = document.querySelector('.form.individual-date .input-fields .individual-date-start-reception-time');
     const endTimeFirstRow = document.querySelector('.form.individual-date .input-fields .individual-date-end-reception-time');
     
-    dateFirstRow.value = common.convertDBDateToYYYYMMDD(dateReceptionTimeData[0].date);
+    dateFirstRow.value = common.convertDBDateToYYYY-MM-DD(dateReceptionTimeData[0].date);
     startTimeFirstRow.value = dateReceptionTimeData[0].start_time;
     endTimeFirstRow.value = dateReceptionTimeData[0].end_time;
     
@@ -331,7 +331,7 @@ export function setDateReceptionTimeRow(dateReceptionTimeData) {
     for (const dateReceptionTime of dateReceptionTimeData.slice(1)) {
         const formRow  = addFormRowIndividualDate();
         
-        formRow.querySelector('.input-individual-date').value = common.convertDBDateToYYYYMMDD(dateReceptionTime.date);
+        formRow.querySelector('.input-individual-date').value = common.convertDBDateToYYYY-MM-DD(dateReceptionTime.date);
         formRow.querySelector('.individual-date-start-reception-time').value = dateReceptionTime.start_time;
         formRow.querySelector('.individual-date-end-reception-time').value = dateReceptionTime.end_time;
     }
@@ -342,13 +342,13 @@ export function setExclusionDateRow(exclusionData) {
     //一行目を設定
     const dateFirstRow = document.querySelector('.form.individual-exclusion-date .input-fields .input-individual-exclusion-date');
     
-    dateFirstRow.value = common.convertDBDateToYYYYMMDD(exclusionData[0].date);
+    dateFirstRow.value = common.convertDBDateToYYYY-MM-DD(exclusionData[0].date);
     
     //二行目以降を設定
     for (const exclusionDate of exclusionData.slice(1)) {
         const formRow  = addFormRowIndividualExclusionDate();
         
-        formRow.querySelector('.input-individual-exclusion-date').value = common.convertDBDateToYYYYMMDD(exclusionDate.date);
+        formRow.querySelector('.input-individual-exclusion-date').value = common.convertDBDateToYYYY-MM-DD(exclusionDate.date);
     }
 }
 
@@ -360,12 +360,12 @@ export function getEventTitle() {
 
 export function getPeriodStartDate() {
     const form = document.getElementById('input-period-start-date');
-    return common.convertDBDateToYYYYMMDD(form.value);
+    return common.convertDBDateToYYYY-MM-DD(form.value);
 }
 
 export function getPeriodEndDate() {
     const form = document.getElementById('input-period-end-date')
-    return common.convertDBDateToYYYYMMDD(form.value);
+    return common.convertDBDateToYYYY-MM-DD(form.value);
 }
 
 export function getReservationSlotTime() {
