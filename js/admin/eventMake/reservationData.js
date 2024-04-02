@@ -385,8 +385,6 @@ export function setReservationDataForReservation(data){
         const individualExclusionDate = individualExclusionDateListList[i];
         delete reservationData[individualExclusionDate];
     }
-    
-    console.log("reservationData:" + JSON.stringify(reservationData));
 }
 
 // 受付時間を設定 (予約画面用)
