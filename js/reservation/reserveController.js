@@ -1,11 +1,13 @@
 import * as calendarController from '../calendar.js';
 import * as common from '../common.js';
 import * as reservationDataController from '../admin/eventMake/reservationData.js';
+import * as reservationFormController from './reservationForm.js';
 
 // パラメータ イベントID
 var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 
 window.onload = function() {
+    calendarController.setHandleCellClick(setReservationSlotBoard);
     calendarController.createCalendar();
 
     calendarController.clickPrevMonthButton();
@@ -44,14 +46,11 @@ async function getEvent() {
 }
 
 function setEventInfo(data){
-
-
-    //頑張ってプレビューカレンダーを反映
-    //前回のは参考になりそうでならなさそう
-    //反映項目ひとつずつ頑張る
-    //カレンダーセルごとにその日の受付時間を持たせたいから、それを見越してどんなデータを持ちたいか考える
-
-
     reservationDataController.setReservationDataForReservation(data);
     calendarController.updatePreviewCalendar();
+}
+
+function setReservationSlotBoard(cellId){
+    const reservationData = reservationDataController.getReservationById(cellId);
+    reservationFormController.setReservationSlotBoard(reservationData,10);
 }

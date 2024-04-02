@@ -4,6 +4,9 @@ import * as reservationDataController from './admin/eventMake/reservationData.js
 //プレビューカレンダーの表示に使用する変数
 var targetDate = new Date();
 
+//カレンダーセルをクリックしたときのコールバック関数
+var handleCellClick;
+
 export function createCalendar(){
     const weeks = ['日', '月', '火', '水', '木', '金', '土']
     const date = targetDate
@@ -70,6 +73,8 @@ export function createCalendar(){
     calendarHtml += '</table>'
 
     document.querySelector('#calendar').innerHTML = calendarHtml
+
+    clickCalendarCell(handleCellClick);
 }
 
 //プレビューカレンダーのヘッダーの曜日の有効、無効を設定する
@@ -97,7 +102,7 @@ export function showPrevMonth(){
 
 export function showNextMonth(){
     targetDate = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1); // 次月の初日を設定
-    createCalendar(targetDate);
+    createCalendar();
 
     //プレビューカレンダーを表示 予約データは変わらないため更新は不要
     updatePreviewCalendar();
@@ -143,3 +148,16 @@ export function clickNextMonthButton(){
         showNextMonth();
     });
 }
+
+export function setHandleCellClick(callback){
+    handleCellClick = callback;
+}
+
+export function clickCalendarCell(callback){
+    document.querySelectorAll('.calendar-cell').forEach(function(cell) {
+        cell.addEventListener('click', function() {
+            callback(cell.id);  // コールバック関数を呼び出し、cellのidを渡す
+        });
+    });
+}
+

@@ -37,6 +37,11 @@ export function getIsValidDayOfWeekList(){
     return isValidDayOfWeekList;
 }
 
+//idを指定して予約受付データを1県取得
+export function getReservationById(date){
+    return reservationData[date];
+}
+
 //予約受付データを取得
 //ほとんどの場合は「予約受付データを更新」とセットで使用するが、
 //カレンダーを前月翌月に切り替えるときは「予約受付データを更新」は不要
@@ -121,7 +126,7 @@ export function updateReservationData(){
         delete reservationData[individualExclusionDate];
     }
 
-    console.log("reservationData:" + reservationData);
+    console.log("reservationData:" + JSON.stringify(reservationData));
 }
 
 // 受付時間リストを初期化して再読み込み
@@ -376,14 +381,11 @@ export function setReservationDataForReservation(data){
     // individualExclusionDateList = ["20240323","20240328"]
     const individualExclusionDateListList = [...new Set(exclusionData.map(item => common.convertDBDateToYYYYMMDDCompact(item.date)))];
 
-    
-    console.log("individualExclusionDateListList:" + JSON.stringify(individualExclusionDateListList));
-
     for (let i = 0; i < individualExclusionDateListList.length; i++){
         const individualExclusionDate = individualExclusionDateListList[i];
         delete reservationData[individualExclusionDate];
     }
-
+    
     console.log("reservationData:" + JSON.stringify(reservationData));
 }
 

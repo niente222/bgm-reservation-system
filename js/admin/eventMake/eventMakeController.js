@@ -147,6 +147,7 @@ window.onload = function() {
         clickMakeEventButton();
     });
 
+    calendarController.setHandleCellClick(setReservationSlotBoard);
     calendarController.createCalendar();
 
     calendarController.clickPrevMonthButton();
@@ -156,6 +157,10 @@ window.onload = function() {
     if (mode === 'edit'){
         init(eventId_urlpram);
     }
+}
+
+function setReservationSlotBoard(cellId){
+    alert(cellId);
 }
 
 function changePeriodStartDate(){
@@ -201,10 +206,9 @@ function setEventInfo(data) {
     // イベントタイトルを設定
     eventFormController.setEventTitle(eventData.event_title);
 
-    console.log("eventData.start_date" + eventData.start_date)
     // 開始日、終了日を設定
-    eventFormController.setPeriodStartDate(common.convertDBDateToYYYY-MM-DD(eventData.start_date));
-    eventFormController.setPeriodEndDate(common.convertDBDateToYYYY-MM-DD(eventData.end_date));
+    eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
+    eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
 
     // 一枠の時間を設定
     eventFormController.setReservationSlotTime(eventData.reservation_slot_time);

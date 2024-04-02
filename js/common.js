@@ -89,3 +89,26 @@ export function convertDBDateToYYYYMMDDCompact(db_date) {
 
   return convertDateToYYYYMMDD(formattedDate);
 }
+
+//HHmmをHH:mmに変換
+export function convertHHmmToHHmm(time) {
+  if (time.length !== 4 || isNaN(time)) {
+      console.error("Invalid time format");
+      return null;
+  }
+
+  // HHmm形式の時間をHH:mm形式に変換
+  return time.substring(0, 2) + ':' + time.substring(2);
+}
+
+// HHmmを分に変換
+export function convertHHmmToMinutes(time) {
+  return parseInt(time.substring(0, 2)) * 60 + parseInt(time.substring(2, 4));
+}
+
+// 分をHH:mmに変換
+export function convertMinutesToHHmm(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+}
