@@ -55,6 +55,46 @@ export function setReservationSlotBoard(reserveData, reservationSlotTime) {
     });
 }
 
+export function setReservedTimes(reservedTimes){
+    // すべてのラジオボタン要素を取得
+    const allRadioButtons = document.querySelectorAll('.reservation-slot-list input[type="radio"]');
+
+    // 各ラジオボタンに対して、予約済みの時間帯であれば無効化する
+    allRadioButtons.forEach(radio => {
+        const startTime = radio.nextElementSibling.textContent;
+        const endTime = radio.nextElementSibling.nextElementSibling.nextElementSibling.textContent;
+
+        // 予約済み時間帯に含まれているか確認
+        const isReserved = reservedTimes.some(reserved => {
+            return isTimeRangeOverlap(startTime, endTime, reserved.start_time, reserved.end_time);
+        });
+
+        // 予約済みであれば無効化
+        if (isReserved) {
+            radio.disabled = true;
+            // 予約済みであることを示すためのクラスも追加することができる
+            radio.parentElement.classList.add('reserved');
+        }
+    });
+}
+
+function isTimeRangeOverlap(startTime, endTime, reservedStart, reservedEnd) {
+    // HH:mm 形式の時間を分に変換するヘルパー関数
+    function convertTimeToMinutes(time) {
+      const [hours, minutes] = time.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+  
+    // 時間範囲を分に変換
+    const start = convertTimeToMinutes(startTime);
+    const end = convertTimeToMinutes(endTime);
+    const reservedStartMin = convertTimeToMinutes(reservedStart);
+    const reservedEndMin = convertTimeToMinutes(reservedEnd);
+  
+    // 予約時間範囲と重複しているかチェック
+    return (start < reservedEndMin && end > reservedStartMin);
+  }
+
 //値取得系 
 export function getReserveName() {
     const form = document.querySelector('.form.reserve-name input');
@@ -71,7 +111,7 @@ export function getRemark() {
     return form.value;
 }
 
-export function getSelectedStartTime() {
+export function getSelectedStartTime(reservedTimes) {
     // '.reservation-slot-list' 内のチェックされたラジオボタンを取得
     const selectedRadio = document.querySelector('.reservation-slot-list input[type="radio"]:checked');
     

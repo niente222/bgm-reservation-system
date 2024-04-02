@@ -6,6 +6,7 @@ import * as reservationFormController from './reservationForm.js';
 // パラメータ イベントID
 var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 
+var reservationList;
 var targetReservationDate;
 
 window.onload = function() {
@@ -32,6 +33,9 @@ async function init() {
         } else {
             console.error('イベント情報の取得に失敗しました。');
         }
+
+        reservationList = await getReserve(eventId_urlpram);
+
     } catch (error) {
         console.error('Error:', error);
     }
@@ -52,6 +56,21 @@ async function getEvent() {
     }
 }
 
+async function getReserve() {
+    try {
+        const response = await fetch(`/reservation/getReserve?eventId=${eventId_urlpram}`);
+        if (!response.ok) {
+            throw new Error('ネットワークレスポンスが正常ではありません');
+        }
+        const data = await response.json();
+        console.log("data:" + JSON.stringify(data));  // レスポンスデータをログに出力
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // エラーを呼び出し元に伝播させる
+    }
+}
+
 function setEventInfo(data){
     reservationDataController.setReservationDataForReservation(data);
     calendarController.updatePreviewCalendar();
@@ -61,6 +80,12 @@ function setReservationSlotBoard(cellId){
     const reservationData = reservationDataController.getReservationById(cellId);
     targetReservationDate = cellId;
     reservationFormController.setReservationSlotBoard(reservationData,10);
+
+    const reservedTimes = common.filterReservationsByDate(reservationList,cellId).map(event => {
+        return { start_time: event.start_time, end_time: event.end_time };
+      });
+
+    reservationFormController.setReservedTimes(reservedTimes);
 }
 
 function clickMakeReserveButton(){

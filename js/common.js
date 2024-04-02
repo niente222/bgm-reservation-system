@@ -125,3 +125,18 @@ export function convertMinutesToHHmm(minutes) {
   const mins = minutes % 60;
   return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
 }
+
+
+// 日付yyyymmddから予約データを取得する
+export function filterReservationsByDate(reservationList, dateToMatch) {
+  // 日付文字列を yyyy-MM-dd 形式に変換
+  const isoDateToMatch = dateToMatch.slice(0, 4) + '-' + dateToMatch.slice(4, 6) + '-' + dateToMatch.slice(6);
+
+  // reservation_dateが一致するデータをフィルタリング
+  const filteredReservations = reservationList.reserveData.filter(reservation => {
+    const reservationDateISO = reservation.reservation_date.split('T')[0];
+    return reservationDateISO === isoDateToMatch;
+  });
+
+  return filteredReservations;
+}
