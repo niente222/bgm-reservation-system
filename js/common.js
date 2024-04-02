@@ -90,6 +90,19 @@ export function convertDBDateToYYYYMMDDCompact(db_date) {
   return convertDateToYYYYMMDD(formattedDate);
 }
 
+//yyyymmddをyyyy-MM-ddに変換
+export function convertYYYYMMDDtoISO(db_date) {
+  // yyyymmdd形式の文字列を年(year)、月(month)、日(day)に分割
+  const year = db_date.substring(0, 4);
+  const month = db_date.substring(4, 6);
+  const day = db_date.substring(6, 8);
+
+  // 分割した年月日をISO形式（yyyy-MM-dd）の文字列に組み立てる
+  const isoFormattedDate = `${year}-${month}-${day}`;
+
+  return isoFormattedDate;
+}
+
 //HHmmをHH:mmに変換
 export function convertHHmmToHHmm(time) {
   if (time.length !== 4 || isNaN(time)) {
