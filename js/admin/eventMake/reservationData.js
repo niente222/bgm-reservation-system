@@ -126,7 +126,7 @@ export function updateReservationData(){
         delete reservationData[individualExclusionDate];
     }
 
-    console.log("reservationData:" + JSON.stringify(reservationData));
+    //console.log("reservationData:" + JSON.stringify(reservationData));
 }
 
 // 受付時間リストを初期化して再読み込み

@@ -264,16 +264,18 @@ export function setReservationSlotTime(reservationSlotTime) {
 export function setDayToggle(offDayTogglesStr) {
     const offDayToggles = offDayTogglesStr.split('');
 
-    for (const offday of offDayToggles) {
-        const dayToggle = document.getElementById('day-toggle-' + offday);
-    
-        var event = new Event('click', {
-            'bubbles': true,
-            'cancelable': true
-        });
-    
-        // イベントを dayToggle 要素にディスパッチ
-        dayToggle.dispatchEvent(event);
+    for (let i = 0; i < 7; i++){
+        const dayToggle = document.getElementById('day-toggle-' + i);
+
+        if(offDayToggles[i] == 0){
+            var event = new Event('click', {
+                'bubbles': true,
+                'cancelable': true
+            });
+        
+            // イベントを dayToggle 要素にディスパッチ
+            dayToggle.dispatchEvent(event);
+        }
     }
 }
 

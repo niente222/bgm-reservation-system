@@ -227,6 +227,7 @@ function setEventInfo(data) {
     eventFormController.setReservationSlotTime(eventData.reservation_slot_time);
 
     // 実施曜日を設定
+    console.log("eventData.off_day_toggles:" + eventData.off_day_toggles)
     eventFormController.setDayToggle(eventData.off_day_toggles);
 
     // 受付時間を設定
