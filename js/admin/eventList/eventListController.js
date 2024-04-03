@@ -39,7 +39,7 @@ function addEventListRow(eventListData) {
         const eventTitle = document.createElement('div');
         eventTitle.className = 'event-title';
         const titleLink = document.createElement('a');
-        titleLink.href = '/admin/eventMake/new';
+        titleLink.href = '/admin/eventDashboard/' + data.event_id;
         titleLink.textContent = data.event_title;
         eventTitle.appendChild(titleLink);
 

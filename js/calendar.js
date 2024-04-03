@@ -1,8 +1,13 @@
 
 import * as reservationDataController from './admin/eventMake/reservationData.js';
+import * as common from './common.js';
 
 //プレビューカレンダーの表示に使用する変数
 var targetDate = new Date();
+
+//予約リストを保持する変数
+//プレビューカレンダーの通知に設定する用
+var reservedData;
 
 //カレンダーセルをクリックしたときのコールバック関数
 var handleCellClick;
@@ -49,18 +54,18 @@ export function createCalendar(){
                 let num = lastMonthendDayCount - startDay + d + 1
                 const id = lastMonth_YYYYMM + num .toString().padStart( 2, '0'); 
                 
-                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge">1</div>' + num + '</td>'
+                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge no-notification"></div>' + num + '</td>'
                 lastMonthEndDate.setDate(lastMonthEndDate.getDate() - 1)
             } else if (dayCount > endDayCount) {
                 // 末尾の日数を超えた
                 let num = dayCount - endDayCount
                 const id = nextMonth_YYYYMM + num .toString().padStart( 2, '0'); 
 
-                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge">1</div>' + num + '</td>'
+                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge no-notification"></div>' + num + '</td>'
                 dayCount++
             } else {
                 const id = thisMonth_YYYYMM + dayCount .toString().padStart( 2, '0'); 
-                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge">1</div>' + dayCount + '</td>'
+                calendarHtml += '<td id="' + id + '" class="calendar-cell"><div class="notification-badge no-notification"></div>' + dayCount + '</td>'
                 dayCount++
             }
         }
@@ -75,6 +80,7 @@ export function createCalendar(){
     document.querySelector('#calendar').innerHTML = calendarHtml
 
     clickCalendarCell(handleCellClick);
+    setNotificationBadge();
 }
 
 //プレビューカレンダーのヘッダーの曜日の有効、無効を設定する
@@ -131,6 +137,39 @@ export function updatePreviewCalendar(){
                 td.classList.remove('isInvalid');
             }else{
                 td.classList.add('isInvalid');
+            }
+        });
+    });
+}
+
+export function setReservedData(settingReservedData){
+    reservedData = settingReservedData;
+}
+
+export function setNotificationBadge(){
+
+    if(!reservedData) return;
+
+    // "calendar-cells"クラスを持つ全ての要素を取得
+    const calendarCells = document.querySelectorAll('.calendar-cells');
+
+    // 各"calendar-cells"要素に対する処理
+    calendarCells.forEach((calendarCell) => {
+        // 各子要素の<td>に対する処理
+        const tdElements = calendarCell.querySelectorAll('td');
+        tdElements.forEach((td) => {
+            const badgeElement = td.querySelector('.notification-badge');
+            const reservedAtId = common.filterReservationsByDate(reservedData, td.id);
+
+            badgeElement.textContent = reservedAtId.length;
+
+            if(reservedAtId.length === 0){
+                if(!badgeElement.classList.contains('no-notification')){
+                    badgeElement.classList.add('no-notification');
+                };
+            }else {
+                badgeElement.textContent = reservedAtId.length;
+                badgeElement.classList.remove('no-notification');
             }
         });
     });

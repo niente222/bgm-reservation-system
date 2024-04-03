@@ -24,6 +24,10 @@ var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 //valid=true invalid=false
 var isValidDayOfWeekList = new Array(true, true, true, true, true, true, true);
 
+// 予約リスト
+// プレビューカレンダーの通知設定に使う
+var reservedList;
+
 window.onload = function() {
 
     //イベントリスナー追加
@@ -181,18 +185,27 @@ function changePeriodEndDate(){
     calendarController.updatePreviewCalendar();
 }
 
-function init(eventId) {
-    fetch(`/admin/getEvent?eventId=${eventId}`)
-      .then(response => response.json())
-      .then(data => {
+async function init(eventId) {
+    try {
+        // イベントの情報を取得
+        const eventResponse = await fetch(`/admin/getEvent?eventId=${eventId}`);
+        const eventData = await eventResponse.json();
 
-        if (data.eventData.length == 0) {
-            //throw new Error('イベント情報の取得に失敗しました。');
+        if (eventData.eventData.length === 0) {
+            throw new Error('イベント情報の取得に失敗しました。');
         }
 
-        setEventInfo(data);
-      })
-      .catch(error => console.error('Error:', error));
+        setEventInfo(eventData);
+
+        // 編集画面の場合は予約データも取得
+        if (mode === 'edit') {
+            const reservedData = await getReserve(eventId);
+            calendarController.setReservedData(reservedData);
+            calendarController.setNotificationBadge();
+        }
+    } catch (error) {
+        console.error('Error during initialization:', error);
+    }
 }
 
 function setEventInfo(data) {
@@ -397,4 +410,19 @@ function insertExclusionDate(eventId) {
         }
     })
     .catch(error => console.error('Error:', error));
+}
+
+async function getReserve() {
+    try {
+        const response = await fetch(`/reservation/getReserve?eventId=${eventId_urlpram}`);
+        if (!response.ok) {
+            throw new Error('ネットワークレスポンスが正常ではありません');
+        }
+        const data = await response.json();
+        console.log("data:" + JSON.stringify(data));  // レスポンスデータをログに出力
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // エラーを呼び出し元に伝播させる
+    }
 }
