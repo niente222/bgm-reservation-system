@@ -2,33 +2,61 @@
 <html>
     <head>
         <title>イベント一覧ページ</title>
+        <link href="/css/common/reset.css" rel="stylesheet">
+        <link href="/css/common/common.css" rel="stylesheet">
+        <link href="/css/common/header.css" rel="stylesheet">
+        <link href="/css/common/footer.css" rel="stylesheet">
+        <link href="/css/common/form.css" rel="stylesheet">
         <link href="/css/admin/eventList.css" rel="stylesheet">
     </head>
     <body>
         <h1>イベント一覧ページ</h1>
         <a class="" href="/admin/eventMake/new">イベントを作成する</a>
+        <div class="filter-buttons">
+            <div class="filter-button" id="before-event-button">
+                <p>開催前</p>
+            </div>
+            <div class="filter-button" id="in-event-button">
+                <p>開催中</p>
+            </div>
+            <div class="filter-button" id="after-event-button">
+                <p>開催後</p>
+            </div>
+            <div class="filter-button" id="all-event-button">
+                <p>すべて</p>
+            </div>
+        </div>
         <div class="contents">
             <div class="event-list-board">
                 <div class="event-row event-list-header">
                     <div class="event-title-header">
                         <p class="">イベントタイトル</p>
                     </div>
-                    <div class="event-period-header">
-                        <p class="">期間</p>
-                    </div>
                     <div class="event-edit-header">
                         <p class="">編集</p>
                     </div>
                 </div>
                 <div class="event-row">
-                    <div class="event-title">
-                        <a class="" href="./Show.html">DOM残しておきたい用 ダミー</a>
-                    </div>
-                    <div class="event-period">
-                        <p class="">2024/3/25 ～ 2024/4/5</p>
+                    <div class="event-info">
+                        <div class="event-info-column-left">
+                            <div class="event-title">
+                                <p class="">DOM残しておきたい用 ダミー</p>
+                            </div>
+                            <div class="event-period">
+                                <p class="">2024/3/25 ～ 2024/4/5</p>
+                            </div>
+                        </div>
+                        <div class="event-info-column-right">
+                            <div class="">
+                                <p class="">予約数</p>
+                            </div>
+                            <div class="">
+                                <p class="">50件</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="event-edit">
-                        <a class="" href="./Edit.html">編集</a>
+                        <img src="/images/admin/icon_eventEdit.png" class="icon-event-edit">
                     </div>
                 </div>
             </div>

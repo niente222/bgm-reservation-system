@@ -1,13 +1,33 @@
 
 import * as common from '../../common.js';
 
+var eventList;
+
 window.onload = function() {
     
     //イベントリスト取得
     getEventList();
 
-    //イベントリスト表示
-    //addEventListRow();
+    //イベントリスナー登録
+    document.getElementById('before-event-button').addEventListener('click', () => {
+        // ページ遷移
+        clickBeforeEventButton();
+    });
+
+    document.getElementById('in-event-button').addEventListener('click', () => {
+        // ページ遷移
+        clickInEventButton();
+    });
+
+    document.getElementById('after-event-button').addEventListener('click', () => {
+        // ページ遷移
+        clickAfterEventButton();
+    });
+
+    document.getElementById('all-event-button').addEventListener('click', () => {
+        // ページ遷移
+        clickAllEventButton();
+    });
 }
 
 function getEventList() {
@@ -20,51 +40,141 @@ function getEventList() {
             //throw new Error('イベント情報の取得に失敗しました。');
         }
 
-        addEventListRow(data);
+        eventList = data.eventData;
+        console.log(JSON.stringify(eventList));
+        clickBeforeEventButton();
+        //addEventListRow(data);
       })
       .catch(error => console.error('Error:', error));
 }
 
 function addEventListRow(eventListData) {
 
-    // event-list-board 要素を取得
-    const eventListBoard = document.querySelector('.event-list-board');
+    removeAllEventRow();
 
-    for (const data of eventListData.eventData) {
-        // 新しい event-row 要素を作成
+    const eventListBoard = document.querySelector('.event-list-board');
+    
+    for (const data of eventListData) {
         const eventRow = document.createElement('div');
         eventRow.className = 'event-row';
+    
+        const eventInfo = document.createElement('div');
+        eventInfo.className = 'event-info';
 
-        // イベントタイトルの要素を作成
+        eventInfo.addEventListener('click', () => {
+            // ページ遷移
+            window.location.href = `/admin/eventDashboard/${data.event_id}`;
+        });
+    
+        const eventInfoColumnLeft = document.createElement('div');
+        eventInfoColumnLeft.className = 'event-info-column-left';
+    
         const eventTitle = document.createElement('div');
         eventTitle.className = 'event-title';
-        const titleLink = document.createElement('a');
-        titleLink.href = '/admin/eventDashboard/' + data.event_id;
-        titleLink.textContent = data.event_title;
-        eventTitle.appendChild(titleLink);
-
-        // イベント期間の要素を作成
+        const titleP = document.createElement('p');
+        titleP.textContent = data.event_title;
+        eventTitle.appendChild(titleP);
+    
         const eventPeriod = document.createElement('div');
         eventPeriod.className = 'event-period';
         const periodP = document.createElement('p');
-        periodP.textContent = common.convertDBDateToYYYYMMDD(data.start_date) + ' ～ ' 
-            + common.convertDBDateToYYYYMMDD(data.end_date);
+        periodP.textContent = common.convertDBDateToYYYYMMDD(data.start_date) + ' ～ ' + common.convertDBDateToYYYYMMDD(data.end_date);
         eventPeriod.appendChild(periodP);
-
-        // イベント編集の要素を作成
+    
+        eventInfoColumnLeft.appendChild(eventTitle);
+        eventInfoColumnLeft.appendChild(eventPeriod);
+    
+        const eventInfoColumnRight = document.createElement('div');
+        eventInfoColumnRight.className = 'event-info-column-right';
+    
+        const reservationCountTitle = document.createElement('div');
+        const reservationCountTitleP = document.createElement('p');
+        reservationCountTitleP.textContent = '予約数';
+        reservationCountTitle.appendChild(reservationCountTitleP);
+    
+        const reservationCount = document.createElement('div');
+        const reservationCountP = document.createElement('p');
+        // 予約数のデータは仮に50件とします
+        reservationCountP.textContent = '50件';
+        reservationCount.appendChild(reservationCountP);
+    
+        eventInfoColumnRight.appendChild(reservationCountTitle);
+        eventInfoColumnRight.appendChild(reservationCount);
+    
+        eventInfo.appendChild(eventInfoColumnLeft);
+        eventInfo.appendChild(eventInfoColumnRight);
+    
+        eventRow.appendChild(eventInfo);
+    
         const eventEdit = document.createElement('div');
         eventEdit.className = 'event-edit';
-        const editLink = document.createElement('a');
-        editLink.href = '/admin/eventMake/edit/' + data.event_id;
-        editLink.textContent = '編集';
-        eventEdit.appendChild(editLink);
 
-        // event-row 要素に各部分を追加
-        eventRow.appendChild(eventTitle);
-        eventRow.appendChild(eventPeriod);
+        eventEdit.addEventListener('click', () => {
+            // ページ遷移
+            window.location.href = `/admin/eventMake/edit/${data.event_id}`;
+        });
+
+        // <img>タグを作成し、src属性に画像のパスを設定
+        const editImage = document.createElement('img');
+        editImage.src = "/images/admin/icon_eventEdit.png";
+        editImage.className = "icon-event-edit";
+
+        // <img>タグを<a>タグの中に挿入
+        eventEdit.appendChild(editImage);
+    
         eventRow.appendChild(eventEdit);
-
-        // event-list-board に event-row を追加
+    
         eventListBoard.appendChild(eventRow);
     }
+}
+
+function removeAllEventRow(){
+    // クラス名 'event-row' を持つすべての要素を選択
+    const eventRows = document.querySelectorAll('.event-row');
+
+    // 選択された要素をループし、それぞれをDOMから削除
+    eventRows.forEach(row => {
+        row.remove();
+    });
+}
+
+function clickBeforeEventButton(){
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const filteredEvents = eventList.filter(event => {
+        const startDate = new Date(event.start_date);
+        return startDate > today;
+    });
+
+    addEventListRow(filteredEvents);
+}
+
+function clickInEventButton(){
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const filteredEvents = eventList.filter(event => {
+        const startDate = new Date(event.start_date);
+        const endDate = new Date(event.end_date);
+        return startDate <= today && endDate >= today;
+    });
+
+    addEventListRow(filteredEvents);
+}
+
+function clickAfterEventButton(){
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const filteredEvents = eventList.filter(event => {
+        const endDate = new Date(event.end_date);
+        return endDate < today;
+    });
+
+    addEventListRow(filteredEvents);
+}
+
+function clickAllEventButton(){
+    addEventListRow(eventList);
 }

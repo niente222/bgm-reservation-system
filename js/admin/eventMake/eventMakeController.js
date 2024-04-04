@@ -220,6 +220,7 @@ function setEventInfo(data) {
     eventFormController.setEventTitle(eventData.event_title);
 
     // 開始日、終了日を設定
+    console.log("eventData.start_date:" + eventData.start_date);
     eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
     eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
 
@@ -227,7 +228,6 @@ function setEventInfo(data) {
     eventFormController.setReservationSlotTime(eventData.reservation_slot_time);
 
     // 実施曜日を設定
-    console.log("eventData.off_day_toggles:" + eventData.off_day_toggles)
     eventFormController.setDayToggle(eventData.off_day_toggles);
 
     // 受付時間を設定
