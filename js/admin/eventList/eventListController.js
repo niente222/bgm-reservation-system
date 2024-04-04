@@ -43,7 +43,6 @@ function getEventList() {
         eventList = data.eventData;
         console.log(JSON.stringify(eventList));
         clickBeforeEventButton();
-        //addEventListRow(data);
       })
       .catch(error => console.error('Error:', error));
 }

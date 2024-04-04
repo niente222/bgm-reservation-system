@@ -1,12 +1,58 @@
+// 画面モード
+// mode = 'new' 登録画面
+// mode = 'edit' 更新画面
+var mode = '';
+const currentUrl = window.location.pathname;
+// URLに含まれるパスによって条件分岐
+if (currentUrl.includes('/admin/eventMake/completed/new')) {
+    mode = 'new';
+} else if (currentUrl.includes('/admin/eventMake/completed/edit')) {
+    mode = 'edit';
+}
+
+// 更新画面用 パラメータ イベントID
+var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 
 window.onload = function() {
-    if (window.registeredEvent) {
-        // 登録データを表示
-        //document.getElementById('event-info').textContent = window.registeredEvent.event_title;
-        // その他のデータも同様に表示...
-        console.log("セッションを受け取って完了画面を表示")
-    }else {
-        console.log("セッションを受け取って完了画面を表示出来ていない")
+    getCompletedEvent(eventId_urlpram)
+}
+
+async function getCompletedEvent(eventId) {
+    try {
+        // イベントの情報を取得
+        const eventResponse = await fetch(`/admin/getEvent?eventId=${eventId}`);
+        const eventData = await eventResponse.json();
+
+        if (eventData.eventData.length === 0) {
+            throw new Error('イベント情報の取得に失敗しました。');
+        }
+
+        setCompletedEventInfo(eventData.eventData[0]);
+
+        // 編集画面の場合は予約データも取得
+        if (mode === 'edit') {
+            setEditMode();
+        }
+    } catch (error) {
+        console.error('Error during initialization:', error);
     }
 }
 
+function setCompletedEventInfo(completedData){
+
+    const eventTitle = document.querySelector('.completed-event-title');
+    eventTitle.textContent  = completedData.event_title;
+
+    const eventPeriod = document.querySelector('.completed-event-period');
+    eventPeriod.textContent  = completedData.start_date + " ～ " + completedData.end_date;
+}
+
+function setEditMode(){
+    document.title='イベント更新完了ページ';
+
+    const header = document.querySelector('.header');
+    header.textContent  = 'イベント更新完了ページ';
+
+    const link = document.querySelector('.completed-message');
+    link.textContent  = '更新完了しました。';
+}

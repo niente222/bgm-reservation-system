@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+.completed-contents{
+    width: 100%;
+}
+
+.completed-info {
+    text-align: center;
+    width: 100%;
+    height: 250px;
+    padding-top: 30px;
+    background-color: #E4EFFF;
+    border-radius: 25px;
+    box-shadow: 39px 39px 79px #c2cbd9,
+            -25px -25px 79px #ffffff;
+}
+
+.completed-event-title {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.completed-event-period {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.message{
+    text-align: center;
+}
+
+.completed-message {
+    font-size: 48px;
+}
