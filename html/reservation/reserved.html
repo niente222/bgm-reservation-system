@@ -2,23 +2,31 @@
 <html>
     <head>
         <title>予約完了ページ</title>
-        <link href="../css/reserved.css" rel="stylesheet">
+        <link href="/css/common/reset.css" rel="stylesheet">
+        <link href="/css/common/common.css" rel="stylesheet">
+        <link href="/css/common/header.css" rel="stylesheet">
+        <link href="/css/common/footer.css" rel="stylesheet">
+        <link href="/css/common/form.css" rel="stylesheet">
+        <link href="/css/reservation/reserved.css" rel="stylesheet">
     </head>
     <body>
         <h1>予約完了ページ</h1>
         <div class="contents">
-            <div class="messages">
-                <p class="">2024/3/26</p>
-                <p class="">17:30 ～ 18:00</p>
-                <p class="">羽村 仁成 様</p>
-                <p class="">080-9999-9999</p>
-                <p class="">予約完了しました。</p>
-            </div>
-            <div class="">
-                <p>画面を閉じる</p>
+            <div class="completed-contents">
+                <div class="completed-info">
+                    <p class="completed-event-title"></p>
+                    <p class="completed-reserve-date"></p>
+                    <p class="completed-reserve-time"></p>
+                    <p class="completed-reserver-name"></p>
+                    <p class="completed-reserve-contact-address"></p>
+                </div>
+                <div class="message">
+                    <p class="completed-message">予約が完了しました。</p>
+                    <div id="browser-close-button">この画面を閉じてください</div>
+                </div>
             </div>
         </div>
     </body>
     
-    <!-- <script type="module" src="../js/show/showController.js"></script> -->
+    <script type="module" src="/js/reservation/reservedController.js"></script>
 </html>

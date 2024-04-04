@@ -1,3 +1,5 @@
+import * as common from '../../common.js';
+
 // 画面モード
 // mode = 'new' 登録画面
 // mode = 'edit' 更新画面
@@ -44,7 +46,8 @@ function setCompletedEventInfo(completedData){
     eventTitle.textContent  = completedData.event_title;
 
     const eventPeriod = document.querySelector('.completed-event-period');
-    eventPeriod.textContent  = completedData.start_date + " ～ " + completedData.end_date;
+    eventPeriod.textContent  = common.formatDateSlashNoPadding(completedData.start_date)
+         + " ～ " + common.formatDateSlashNoPadding(completedData.end_date);
 }
 
 function setEditMode(){

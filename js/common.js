@@ -68,6 +68,12 @@ export function convertDBTimeToHHMM(time) {
   return time.substring(0, 5).replace(/:/g, "");
 }
 
+// HH:mm:ss形式の時間文字列を受け取り、H:m形式（先頭のゼロを取り除いた形式）に変換
+export function formatTimeNoPadding(timeStr) {
+  const [hour, minute] = timeStr.split(':').map(num => parseInt(num, 10));
+  return `${hour}:${minute}`; // H:m 形式で返す
+}
+
 //DBに保存されるDATE型をyyyy-MM-ddに変換
 export function convertDBDateToYYYYMMDD(db_date) {
   // Dateオブジェクトを生成
@@ -139,4 +145,9 @@ export function filterReservationsByDate(reservationList, dateToMatch) {
   });
 
   return filteredReservations;
+}
+
+export function formatDateSlashNoPadding(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(num => parseInt(num, 10));
+  return `${year}/${month}/${day}`; // yyyy/M/d 形式で返す
 }
