@@ -57,3 +57,19 @@ export function setDashboard(reservations) {
       reservationBoard.appendChild(reservationData);
     });
   }
+
+export function setPreviewCalendarHeader(eventData){
+  const eventPeriodStartDate = document.getElementById('preview-header-event-period-start-date');
+  eventPeriodStartDate.textContent = common.formatDateSlashNoPadding(eventData.start_date);
+
+  const eventPeriodEndDate = document.getElementById('preview-header-event-period-end-date');
+  eventPeriodEndDate.textContent = common.formatDateSlashNoPadding(eventData.end_date);
+
+  const eventTitle = document.getElementById('preview-header-event-title');
+  eventTitle.textContent = eventData.event_title;
+}
+
+export function setDashboardHeader(targetDate){
+  const dashboardHeaderTargetDate = document.getElementById('dashboard-header-target-date');
+  dashboardHeaderTargetDate.textContent = common.convertToSlashSeparatedDate(targetDate);
+}

@@ -147,7 +147,19 @@ export function filterReservationsByDate(reservationList, dateToMatch) {
   return filteredReservations;
 }
 
+// yyyy-mm-ddを yyyy/M/d 形式で返す
 export function formatDateSlashNoPadding(dateStr) {
   const [year, month, day] = dateStr.split('-').map(num => parseInt(num, 10));
   return `${year}/${month}/${day}`; // yyyy/M/d 形式で返す
+}
+
+// yyyymmddを yyyy/M/d 形式で返す
+export function convertToSlashSeparatedDate(dateStr) {
+  if (dateStr.length === 8) {
+      let year = dateStr.substring(0, 4);
+      let month = parseInt(dateStr.substring(4, 6), 10); // 先頭の0を取り除く
+      let day = parseInt(dateStr.substring(6, 8), 10); // 先頭の0を取り除く
+      return `${year}/${month}/${day}`;
+  }
+  throw new Error('日付はyyyymmdd形式である必要があります');
 }

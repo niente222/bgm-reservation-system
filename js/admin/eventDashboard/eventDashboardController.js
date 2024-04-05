@@ -29,6 +29,7 @@ async function init() {
         
         if (data && data.eventData.length > 0) {
             setEventInfo(data);
+            dashboardFormController.setPreviewCalendarHeader(data.eventData[0]);
         } else {
             console.error('イベント情報の取得に失敗しました。');
         }
@@ -101,6 +102,7 @@ function setReservationSlotBoard(cellId){
     const reservationListByDate = common.filterReservationsByDate(reservedList,cellId);
     targetReservationDate = cellId;
 
+    dashboardFormController.setDashboardHeader(cellId);
     //reservation-boardに予約リストをセットする
     dashboardFormController.setDashboard(reservationListByDate);
 }
