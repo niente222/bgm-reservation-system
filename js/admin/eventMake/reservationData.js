@@ -279,8 +279,10 @@ export function setReservationDataForReservation(data){
     setPropertyPeriodEndDate(common.convertDBDateToYYYYMMDDCompact(eventData.end_date));
 
     for (let i = 0; i < 7; i++){
-        setIsValidDayOfWeekList(i, !eventData.off_day_toggles.includes(i.toString()));
+        setIsValidDayOfWeekList(i, eventData.off_day_toggles.split('')[i] == 1);
     }
+
+    console.log("eventData:" + JSON.stringify(eventData));
 
     //defaultReceptionTimeListを設定
     setDefaultReceptionTimeForReservation(defaultReceptionTimeData);

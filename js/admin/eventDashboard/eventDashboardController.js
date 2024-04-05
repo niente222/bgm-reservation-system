@@ -64,7 +64,6 @@ async function getReserve() {
             throw new Error('ネットワークレスポンスが正常ではありません');
         }
         const data = await response.json();
-        console.log("data:" + JSON.stringify(data));  // レスポンスデータをログに出力
         return data;
     } catch (error) {
         console.error('Error:', error);
