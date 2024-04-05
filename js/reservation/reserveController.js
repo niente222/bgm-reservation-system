@@ -8,6 +8,7 @@ var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 
 var reservationList;
 var targetReservationDate;
+var reservationSlotTime;
 
 window.onload = function() {
 
@@ -30,6 +31,8 @@ async function init() {
         
         if (data && data.eventData.length > 0) {
             setEventInfo(data);
+            reservationSlotTime = data.eventData[0].reservation_slot_time;
+            reservationFormController.setPreviewCalendarHeader(data.eventData[0]);
         } else {
             console.error('イベント情報の取得に失敗しました。');
         }
@@ -79,7 +82,9 @@ function setEventInfo(data){
 function setReservationSlotBoard(cellId){
     const reservationData = reservationDataController.getReservationById(cellId);
     targetReservationDate = cellId;
-    reservationFormController.setReservationSlotBoard(reservationData,10);
+
+    reservationFormController.setDashboardHeader(cellId);
+    reservationFormController.setReservationSlotBoard(reservationData,reservationSlotTime);
 
     const reservedTimes = common.filterReservationsByDate(reservationList,cellId).map(event => {
         return { start_time: event.start_time, end_time: event.end_time };
