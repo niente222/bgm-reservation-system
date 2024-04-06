@@ -127,7 +127,7 @@ export function getRemark() {
     return form.value;
 }
 
-export function getSelectedStartTime(reservedTimes) {
+export function getSelectedStartTime() {
     // '.reservation-slot-list' 内のチェックされたラジオボタンを取得
     const selectedRadio = document.querySelector('.reservation-slot-list input[type="radio"]:checked');
     

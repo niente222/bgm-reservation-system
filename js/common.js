@@ -104,6 +104,9 @@ export function convertDBDateToYYYYMMDDCompact(db_date) {
 
 //yyyymmddをyyyy-MM-ddに変換
 export function convertYYYYMMDDtoISO(db_date) {
+
+  if(!db_date) return null;
+  
   // yyyymmdd形式の文字列を年(year)、月(month)、日(day)に分割
   const year = db_date.substring(0, 4);
   const month = db_date.substring(4, 6);

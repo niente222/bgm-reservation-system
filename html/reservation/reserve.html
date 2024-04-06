@@ -2,6 +2,11 @@
 <html>
     <head>
         <title>予約ページ</title>
+        <link href="/css/common/reset.css" rel="stylesheet">
+        <link href="/css/common/common.css" rel="stylesheet">
+        <link href="/css/common/header.css" rel="stylesheet">
+        <link href="/css/common/footer.css" rel="stylesheet">
+        <link href="/css/common/form.css" rel="stylesheet">
         <link href="/css/calendar.css" rel="stylesheet">
         <link href="/css/reserve.css" rel="stylesheet">
     </head>
@@ -41,15 +46,24 @@
         <div class="form-area">
             <div class="form reserve-name">
                 <p class="form-title">氏名</p>
-                <input type="text">
+                <div class="">
+                    <input type="text">
+                    <div class="error-message"></div>
+                </div>
             </div>
             <div class="form reserver_contact_address">
                 <p class="form-title">連絡先</p>
-                <input type="text">
+                <div class="">
+                    <input type="text">
+                    <div class="error-message"></div>
+                </div>
             </div>
             <div class="form remark">
                 <p class="form-title">備考</p>
-                <textarea></textarea>
+                <div class="">
+                    <textarea></textarea>
+                    <div class="error-message"></div>
+                </div>
             </div>
             <div id="reserve-make-button">
                 <p>予約する</p>

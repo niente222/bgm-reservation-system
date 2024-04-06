@@ -287,51 +287,42 @@ async function hasErrorFormData(){
     let hasError = false
     
     //イベントタイトル
-    
     if(await validateEventTitle()){
-        console.log(1)
         hasError = true;
     }
 
     //期間
     if(validatePeriod()){
-        console.log(2)
         hasError = true;
     }
 
     //一枠の時間
     if(validateReservationSlotTime()){
-        console.log(3)
         hasError = true;
     }
 
     //受付時間
     if(validateReceptionTime()){
-        console.log(4)
         hasError = true;
     }
 
     //受付時間
     if(validateReceptionTime()){
-        console.log(5)
         hasError = true;
     }
 
     //個別の曜日に受付時間を指定
     if(validateDowReceptionTime()){
-        console.log(6)
         hasError = true;
     }
 
     //特定の日に受付時間を指定
     if(validateDateReceptionTime()){
-        console.log(7)
         hasError = true;
     }
 
     //特定の日を除外する
     if(validateExclusionDate()){
-        console.log(8)
         hasError = true;
     }
 

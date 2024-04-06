@@ -1,5 +1,7 @@
 import * as calendarController from '../calendar.js';
 import * as common from '../common.js';
+import * as validation from '../validation.js';
+import * as constants from '../constants.js';
 import * as reservationDataController from '../admin/eventMake/reservationData.js';
 import * as reservationFormController from './reservationForm.js';
 
@@ -74,6 +76,21 @@ async function getReserve() {
     }
 }
 
+// 排他チェック用
+async function getReserveForExclusion(reserveDate,startTime,endTime) {
+    try {
+        const response = await fetch(`/reservation/getReserveForExclusion?eventId=${eventId_urlpram}&reserveDate=${reserveDate}&startTime=${startTime}&endTime=${endTime}`);
+        if (!response.ok) {
+            throw new Error('ネットワークレスポンスが正常ではありません');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // エラーを呼び出し元に伝播させる
+    }
+}
+
 function setEventInfo(data){
     reservationDataController.setReservationDataForReservation(data);
     calendarController.updatePreviewCalendar();
@@ -93,8 +110,41 @@ function setReservationSlotBoard(cellId){
     reservationFormController.setReservedTimes(reservedTimes);
 }
 
-function clickMakeReserveButton(){
+async function clickMakeReserveButton(){
+
+    //入力チェック
+    if(await hasErrorFormData()){
+        alert("入力エラーがあります。\nご確認ください。");
+        return;
+    } 
+
     insertReservation();
+}
+
+async function hasErrorFormData(){
+    let hasError = false
+    
+    //氏名
+    if(await validateReserveName()){
+        hasError = true;
+    }
+
+    //連絡先
+    if(validateReserverContactAddress()){
+        hasError = true;
+    }
+
+    //備考
+    if(validateRemark()){
+        hasError = true;
+    }
+
+    //予約時間
+    if(await validateReceptionTime()){
+        hasError = true;
+    }
+
+    return hasError;
 }
 
 function insertReservation() {
@@ -114,13 +164,142 @@ function insertReservation() {
         })
     })
     .then(response => response.json())
-    .then(eventId => {
-        // 全てのinsert処理が成功した後に実行される
-        console.log(`All insert operations completed for event ID ${eventId}`);
-        window.location.href = '/reservation/reserve/completed/2';
+    .then(data => {
+        if (data.success) {
+            const reserveId = data.insertedId;
+
+            // 全てのinsert処理が成功した後に実行される
+            console.log(`All insert operations completed for event ID ${reserveId}`);
+            window.location.href = '/reservation/reserve/completed/' + reserveId;
+        } else {
+            throw new Error('Event creation failed');
+        }
     })
     .catch(error => {
         console.error('Error:', error);
         // エラー処理をここに記述
     });
+}
+
+//入力チェック 氏名
+async function validateReserveName(){
+    const errorMessageForm = document.querySelector('.form.reserve-name .error-message');
+    const reserverName = reservationFormController.getReserveName();
+    let errorMessageList = [];
+
+    //未入力チェック 文字数チェック
+    if(validation.isInputEmpty(reserverName)){
+        errorMessageList.push(constants.createErrorMessageInputEmpty());
+    }else if(validation.isWithoutLengthRange(reserverName, 32)){
+        errorMessageList.push(constants.createErrorMessageWithoutLengthRange(32));
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 連絡先
+function validateReserverContactAddress(){
+    const errorMessageForm = document.querySelector('.form.reserver_contact_address .error-message');
+    const reserverContactAddress = reservationFormController.getReserveContactAddress();
+    let errorMessageList = [];
+
+    //未入力チェック 文字数チェック
+    if(validation.isInputEmpty(reserverContactAddress)){
+        errorMessageList.push(constants.createErrorMessageInputEmpty());
+    }else if(validation.isWithoutLengthRange(reserverContactAddress, 256)){
+        errorMessageList.push(constants.createErrorMessageWithoutLengthRange(256));
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+    console.log(errorMessageList);
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 備考
+function validateRemark(){
+    const errorMessageForm = document.querySelector('.form.remark .error-message');
+    const remark = reservationFormController.getRemark();
+    let errorMessageList = [];
+
+    //文字数チェック
+    if(validation.isWithoutLengthRange(remark, 256,0)){
+        errorMessageList.push(constants.createErrorMessageWithoutLengthRange(256,0));
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 予約時間
+async function validateReceptionTime(){
+
+    const reserveDate = common.convertYYYYMMDDtoISO(targetReservationDate) || '';
+    const startTime = reservationFormController.getSelectedStartTime();
+    const endTime = reservationFormController.getSelectedEndTime();
+    const errorMessageForm = document.querySelector('.form.remark .error-message');
+    let errorMessageList = [];
+
+    //選択されているかチェック
+    if(validation.isInputEmpty(reserveDate) || validation.isInputEmpty(startTime) || validation.isInputEmpty(endTime)){
+        errorMessageList.push(constants.createErrorMessageWithoutLengthRange(256,0));
+    }
+
+    //整合性チェック
+    // if(validateConsistencyReceptionTime()){
+        // errorMessageList.push(constants.createErrorMessageWithoutLengthRange(256,0));
+    // }
+
+    //排他チェック ほかの項目にエラーがある場合は行わない
+    if(errorMessageList.length == 0){
+        if(await CheckExclusionReceptionTime(reserveDate,startTime,endTime)){
+            errorMessageList.push(constants.createErrorMessageExclusion());
+        }
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//整合性チェック 予約時間
+function validateConsistencyReceptionTime(){
+    //登録している予約の予約日、開始時間、終了時間を取得
+}
+
+//排他チェック 予約時間
+async function CheckExclusionReceptionTime(reserveDate,startTime,endTime){
+    const dataCount = await getReserveForExclusion(reserveDate,startTime,endTime);
+    return dataCount.count > 0;
 }
