@@ -14,7 +14,7 @@ var reservedList;
 var targetReservationDate;
 
 window.onload = function() {
-    calendarController.setHandleCellClick(setReservationSlotBoard);
+    calendarController.setHandleCellClick(clickCalendarCell);
     calendarController.createCalendar();
 
     calendarController.clickPrevMonthButton();
@@ -96,6 +96,11 @@ export function deleteReservation(reservationId) {
 function setEventInfo(data){
     reservationDataController.setReservationDataForReservation(data);
     calendarController.updatePreviewCalendar();
+}
+
+function clickCalendarCell(cellId){
+    dashboardFormController.resetDashboard();
+    setReservationSlotBoard(cellId);
 }
 
 function setReservationSlotBoard(cellId){

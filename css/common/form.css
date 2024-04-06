@@ -40,6 +40,10 @@
     align-items: center;
 }
 
+.input-fields.not-flex {
+    display: block;
+}
+
 input {
     height: 30px;
     padding-left: 15px;
@@ -154,7 +158,7 @@ input[type="time"]{
     margin-left: 17px;
 }
 
-.form.default-reception-time .form-row-default-reception-time:first-child .remove-row-default-reception-time-button{
+.form.default-reception-time .form-initial-row .remove-row-default-reception-time-button{
     display: none;
 }
 
@@ -216,6 +220,14 @@ details {
 .individual-day-of-week-pulldown,
 .input-individual-date {
     margin-right: 20px;
+}
+
+.input-row{
+    display: flex;
+}
+
+.not-margin-right{
+    margin-right: 0 !important;
 }
 
 summary {

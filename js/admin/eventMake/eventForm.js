@@ -5,6 +5,11 @@ import * as reservationDataController from './reservationData.js';
 // 行追加系
 export function addFormRowReceptionTime() {
     const formContainer = document.querySelector('.form.default-reception-time');
+    
+    const div = document.createElement('div');
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
+
 
     // 新しい行を生成
     const newRow = document.createElement('div');
@@ -27,17 +32,22 @@ export function addFormRowReceptionTime() {
     // 削除ボタンにイベントリスナーを追加
     deleteButton.addEventListener('click', function() {
         // 削除処理など
-        formContainer.removeChild(newRow);
+        //formContainer.removeChild(newRow);
+        formContainer.removeChild(div);
     });
 
     // 行に削除ボタンを追加
     newRow.appendChild(deleteButton);
 
+    div.appendChild(newRow);
+    div.appendChild(errorMessage);
+
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-default-reception-time-button');
-    formContainer.insertBefore(newRow, addButton.parentNode);
+    //formContainer.insertBefore(newRow, addButton.parentNode);
+    formContainer.insertBefore(div, addButton.parentNode);
 
-    return newRow;
+    return div;
 }
 
 export function addFormRowIndividualDayOfWeek() {
@@ -46,9 +56,17 @@ export function addFormRowIndividualDayOfWeek() {
     // 新しい行を生成
     const newRow = document.createElement('div');
     newRow.className = 'form-row-individual-day-of-week form-additional-row';
+
+    const inputFields = document.createElement('div');
+    inputFields.className = 'input-fields not-flex not-margin-right';
+
+    const div = document.createElement('div');
+    div.className = 'input-row';
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
     
     // 内容を追加
-    newRow.innerHTML = `
+    div.innerHTML = `
         <select class="individual-day-of-week-pulldown">
             <option value="1" selected>月</option>
             <option value="2">火</option>
@@ -64,9 +82,9 @@ export function addFormRowIndividualDayOfWeek() {
     `;
 
     // ここでイベントリスナーを追加する
-    const pulldown = newRow.querySelector('.individual-day-of-week-pulldown');
-    const startTimeInput = newRow.querySelector('.individual-day-of-week-start-reception-time');
-    const endTimeInput = newRow.querySelector('.individual-day-of-week-end-reception-time');
+    const pulldown = div.querySelector('.individual-day-of-week-pulldown');
+    const startTimeInput = div.querySelector('.individual-day-of-week-start-reception-time');
+    const endTimeInput = div.querySelector('.individual-day-of-week-end-reception-time');
     
     pulldown.addEventListener('change', function() {
         // selectの値が変更されたときの処理
@@ -104,7 +122,12 @@ export function addFormRowIndividualDayOfWeek() {
     });
 
     // 行に削除ボタンを追加
-    newRow.appendChild(deleteButton);
+    div.appendChild(deleteButton);
+
+    
+    newRow.appendChild(inputFields);
+    inputFields.appendChild(div);
+    inputFields.appendChild(errorMessage);
 
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-day-of-week-button');
@@ -115,13 +138,22 @@ export function addFormRowIndividualDayOfWeek() {
 
 export function addFormRowIndividualDate() {
     const formContainer = document.querySelector('.individual-date');
+    
+    const inputFields = document.createElement('div');
+    inputFields.className = 'input-fields not-flex not-margin-right';
+
+    const div = document.createElement('div');
+    div.className = 'input-row';
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
+   
 
     // 新しい行を生成
     const newRow = document.createElement('div');
     newRow.className = 'form-row-individual-date form-additional-row';
     
     // 内容を追加
-    newRow.innerHTML = `
+    div.innerHTML = `
         <input type="date" class="input-individual-date">
         <input type="time" class="individual-date-start-reception-time">
         <p class="tilde">～</p>
@@ -129,9 +161,9 @@ export function addFormRowIndividualDate() {
     `;
 
     // ここでイベントリスナーを追加する
-    const dateInput = newRow.querySelector('.input-individual-date');
-    const startTimeInput = newRow.querySelector('.individual-date-start-reception-time');
-    const endTimeInput = newRow.querySelector('.individual-date-end-reception-time');
+    const dateInput = div.querySelector('.input-individual-date');
+    const startTimeInput = div.querySelector('.individual-date-start-reception-time');
+    const endTimeInput = div.querySelector('.individual-date-end-reception-time');
     
     dateInput.addEventListener('change', function() {
         // selectの値が変更されたときの処理
@@ -165,11 +197,15 @@ export function addFormRowIndividualDate() {
     // 削除ボタンにイベントリスナーを追加
     deleteButton.addEventListener('click', function() {
         // 削除処理など
-        formContainer.removeChild(newRow);
+        formContainer.removeChild(div);
     });
 
     // 行に要素を追加
-    newRow.appendChild(deleteButton);
+    div.appendChild(deleteButton);
+
+    newRow.appendChild(inputFields);
+    inputFields.appendChild(div);
+    inputFields.appendChild(errorMessage);
 
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-date-button');
@@ -180,18 +216,26 @@ export function addFormRowIndividualDate() {
 
 export function addFormRowIndividualExclusionDate() {
     const formContainer = document.querySelector('.individual-exclusion-date');
+    
+    const inputFields = document.createElement('div');
+    inputFields.className = 'input-fields not-flex not-margin-right';
+
+    const div = document.createElement('div');
+    div.className = 'input-row';
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
 
     // 新しい行を生成
     const newRow = document.createElement('div');
     newRow.className = 'form-row-individual-exclusion-date form-additional-row';
 
     // 内容を追加
-    newRow.innerHTML = `
+    div.innerHTML = `
         <input type="date" class="input-individual-exclusion-date">
     `;
 
     // ここでイベントリスナーを追加する
-    const dateInput = newRow.querySelector('.input-individual-exclusion-date');
+    const dateInput = div.querySelector('.input-individual-exclusion-date');
 
     dateInput.addEventListener('change', function() {
         // 終了時間のinputの値が変更されたときの処理
@@ -213,7 +257,11 @@ export function addFormRowIndividualExclusionDate() {
     });
 
     // 行に要素を追加
-    newRow.appendChild(deleteButton);
+    div.appendChild(deleteButton);
+
+    newRow.appendChild(inputFields);
+    inputFields.appendChild(div);
+    inputFields.appendChild(errorMessage);
 
     // 追加ボタンが最後に来るように、追加ボタンの前に新しい行を挿入
     const addButton = formContainer.querySelector('#add-row-individual-exclusion-date-button');
@@ -354,6 +402,26 @@ export function setExclusionDateRow(exclusionData) {
     }
 }
 
+//一コマの時間に応じてinput type=timeのプルダウンの選択肢を変える
+//　いったん保留
+// export function setReceptionTimeStep(){
+
+//     const reservationSlotTime = $('.form.reservation-slot-time input').val() || 1;
+//     const defaultStartReceptionTime = $('.lib-timepicker-default-start-reception-time').val();
+//     const minTime = defaultStartReceptionTime || "00:00";
+//     $('.lib-timepicker-default-end-reception-time').timepicker({
+// 		'minTime': ''+minTime,
+// 		'step': reservationSlotTime,
+// 	});
+// }
+
+// export function setReceptionMinTime(receptionTimeElement,minTime,reservationSlotTime){
+//     receptionTimeElement.timepicker({
+// 		'minTime': ''+minTime,
+// 		'step': reservationSlotTime,
+// 	});
+// }
+
 //値取得系 
 export function getEventTitle() {
     const form = document.querySelector('.form.event-title input');
@@ -362,11 +430,15 @@ export function getEventTitle() {
 
 export function getPeriodStartDate() {
     const form = document.getElementById('input-period-start-date');
+    
+    if(form.value === '') return '';
     return common.convertDBDateToYYYYMMDD(form.value);
 }
 
 export function getPeriodEndDate() {
-    const form = document.getElementById('input-period-end-date')
+    const form = document.getElementById('input-period-end-date');
+
+    if(form.value === '') return '';
     return common.convertDBDateToYYYYMMDD(form.value);
 }
 
@@ -501,4 +573,10 @@ export function getExclusionDate(eventId) {
     });
 
     return exclusionDate;
+}
+
+//入力エラーメッセージ付与
+
+export function errorEventTitle(errorMessageList){
+
 }

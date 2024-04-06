@@ -9,6 +9,10 @@
         <link href="/css/common/form.css" rel="stylesheet">
         <link href="/css/calendar.css" rel="stylesheet">
         <link href="/css/admin/eventMake.css" rel="stylesheet">
+        
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.css">
+        <script src="https://cdn.rawgit.com/jonthornton/jquery-timepicker/3e0b283a/jquery.timepicker.min.js"></script> -->
     </head>
     <body>
         <header>
@@ -20,26 +24,35 @@
             <div class="form-area">
                 <div class="form event-title">
                     <p class="form-title">イベントタイトル</p>
-                    <input type="text">
+                    <div>
+                        <input type="text">
+                        <div class="error-message"></div>
+                    </div>
                 </div>
                 <div class="form period">
                     <p class="form-title">期間</p>
-                    <div class="input-fields">
-                        <div class="start-date">
-                            <p>開始日</p>
-                            <input type="date" id="input-period-start-date">
+                    <div>
+                        <div class="input-fields">
+                            <div class="start-date">
+                                <p>開始日</p>
+                                <input type="date" id="input-period-start-date">
+                            </div>
+                            <p class="tilde">～</p>
+                            <div class="end-date">
+                                <p>最終日</p>
+                                <input type="date" id="input-period-end-date">
+                            </div>
                         </div>
-                        <p class="tilde">～</p>
-                        <div class="end-date">
-                            <p>最終日</p>
-                            <input type="date" id="input-period-end-date">
-                        </div>
+                        <div class="error-message"></div>
                     </div>
                 </div>
                 <div class="form reservation-slot-time">
                     <p class="form-title">一枠の時間</p>
-                    <div class="input-fields">
-                        <input type="text"><p>分</p>
+                    <div>
+                        <div class="input-fields">
+                            <input type="text"><p>分</p>
+                        </div>
+                        <div class="error-message"></div>
                     </div>
                 </div>
                 <div class="form ">
@@ -71,11 +84,14 @@
                 <div class="form default-reception-time">
                     <div class="form-row-default-reception-time form-initial-row form-additional-row">
                         <p class="form-title">受付時間</p>
-                        <div class="input-fields">
-                            <input type="time" class="default-start-reception-time">
-                            <p class="tilde">～</p>
-                            <input type="time" class="default-end-reception-time">
-                            <button class="remove-row-default-reception-time-button remove-row-button">×</button>
+                        <div>
+                            <div class="input-fields">
+                                <input type="time" class="default-start-reception-time" >
+                                <p class="tilde">～</p>
+                                <input type="time" class="default-end-reception-time">
+                                <button class="remove-row-default-reception-time-button remove-row-button">×</button>
+                            </div>
+                            <div class="error-message"></div>
                         </div>
                     </div>
                     <div class="form-row-default-reception-time only-add-button-row">
@@ -88,19 +104,22 @@
                     <details class="form individual-day-of-week">
                         <summary>個別の曜日に受付時間を指定</summary>
                         <div class="form-row-individual-day-of-week form-initial-row form-additional-row">
-                            <div class="input-fields">
-                                <select class="individual-day-of-week-pulldown">
-                                    <option value="1" selected>月</option>
-                                    <option value="2">火</option>
-                                    <option value="3">水</option>
-                                    <option value="4">木</option>
-                                    <option value="5">金</option>
-                                    <option value="6">土</option>
-                                    <option value="0">日</option>
-                                </select>
-                                <input type="time" class="individual-day-of-week-start-reception-time">
-                                <p class="tilde">～</p>
-                                <input type="time" class="individual-day-of-week-end-reception-time">
+                            <div class="input-fields not-flex">
+                                <div class="input-row">
+                                    <select class="individual-day-of-week-pulldown">
+                                        <option value="1" selected>月</option>
+                                        <option value="2">火</option>
+                                        <option value="3">水</option>
+                                        <option value="4">木</option>
+                                        <option value="5">金</option>
+                                        <option value="6">土</option>
+                                        <option value="0">日</option>
+                                    </select>
+                                    <input type="time" class="individual-day-of-week-start-reception-time">
+                                    <p class="tilde">～</p>
+                                    <input type="time" class="individual-day-of-week-end-reception-time">
+                                </div>
+                                <div class="error-message"></div>
                             </div>
                         </div>
                         <div class="form-row-individual-day-of-week only-add-button-row">
@@ -110,11 +129,14 @@
                     <details class="form individual-date">
                         <summary>特定の日に受付時間を指定</summary>
                         <div class="form-row-individual-date form-initial-row form-additional-row">
-                            <div class="input-fields">
-                                <input type="date" class="input-individual-date">
-                                <input type="time" class="individual-date-start-reception-time">
-                                <p class="tilde">～</p>
-                                <input type="time" class="individual-date-end-reception-time">
+                            <div class="input-fields not-flex">
+                                <div class="input-row">
+                                    <input type="date" class="input-individual-date">
+                                    <input type="time" class="individual-date-start-reception-time">
+                                    <p class="tilde">～</p>
+                                    <input type="time" class="individual-date-end-reception-time">
+                                </div>
+                                <div class="error-message"></div>
                             </div>
                         </div>
                         <div class="form-row-individual-date only-add-button-row form-additional-row">
@@ -124,8 +146,11 @@
                     <details class="form individual-exclusion-date">
                         <summary>特定の日を除外する</summary>
                         <div class="form-row-individual-exclusion-date form-additional-row">
-                            <div class="input-fields">
-                                <input type="date" class="input-individual-exclusion-date">
+                            <div class="input-fields not-flex">
+                                <div class="input-row">
+                                    <input type="date" class="input-individual-exclusion-date">
+                                </div>
+                                <div class="error-message"></div>
                             </div>
                         </div>
                         <div class="form-row-individual-date only-add-button-row form-additional-row">
@@ -151,7 +176,7 @@
         <div id="event-make-button">
             <p>予約を作成する</p>
         </div>
-        
+
         <footer></footer>
     </body>
     

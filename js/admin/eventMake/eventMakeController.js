@@ -1,5 +1,7 @@
 import * as calendarController from '../../calendar.js';
 import * as common from '../../common.js';
+import * as validation from '../../validation.js';
+import * as constants from '../../constants.js';
 import * as eventFormController from './eventForm.js';
 import * as reservationDataController from './reservationData.js';
 
@@ -38,6 +40,18 @@ window.onload = function() {
     document.getElementById('input-period-end-date').addEventListener('change', function() {
         changePeriodEndDate();
     });
+
+    document.querySelector('.form.reservation-slot-time input').addEventListener('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    //一コマの時間に応じてinput type=timeのプルダウンの選択肢を変える
+    //　いったん保留
+    // document.querySelector('.form.reservation-slot-time input').addEventListener('change', function() {
+    //     eventFormController.setReceptionTimeStep();
+    // });
+
+    //$('.lib-timepicker-default-start-reception-time').timepicker();
 
     document.querySelectorAll('.day-toggle').forEach(function(button) {
         button.addEventListener('click', function() {
@@ -245,6 +259,12 @@ function setEventInfo(data) {
 
 function clickMakeEventButton() {
 
+    //入力チェック
+    if(hasErrorFormData()){
+        alert("入力エラーがあります。\nご確認ください。");
+        return;
+    } 
+
     if(mode === 'new'){
         //イベントテーブル登録
         //個別曜日の受付時間登録
@@ -259,6 +279,52 @@ function clickMakeEventButton() {
         updateEvent();
     }
     
+}
+
+function hasErrorFormData(){
+    let hasError = false
+    
+    //イベントタイトル
+    if(validateEventTitle()){
+        hasError = true;
+    }
+
+    //期間
+    if(validatePeriod()){
+        hasError = true;
+    }
+
+    //一枠の時間
+    if(validateReservationSlotTime()){
+        hasError = true;
+    }
+
+    //受付時間
+    if(validateReceptionTime()){
+        hasError = true;
+    }
+
+    //受付時間
+    if(validateReceptionTime()){
+        hasError = true;
+    }
+
+    //個別の曜日に受付時間を指定
+    if(validateDowReceptionTime()){
+        hasError = true;
+    }
+
+    //特定の日に受付時間を指定
+    if(validateDateReceptionTime()){
+        hasError = true;
+    }
+
+    //特定の日を除外する
+    if(validateExclusionDate()){
+        hasError = true;
+    }
+
+    return hasError;
 }
 
 function insertEvent() {
@@ -294,7 +360,7 @@ function insertEvent() {
     .then(eventId => {
         // 全てのinsert処理が成功した後に実行される
         console.log(`All insert operations completed for event ID ${eventId}`);
-        window.location.href = '/admin/eventMake/completed/new';
+        window.location.href = '/admin/eventMake/completed/new/' + eventId;
     })
     .catch(error => {
         console.error('Error:', error);
@@ -426,4 +492,292 @@ async function getReserve() {
         console.error('Error:', error);
         throw error; // エラーを呼び出し元に伝播させる
     }
+}
+
+//入力チェック イベントタイトル
+function validateEventTitle(){
+    const errorMessageForm = document.querySelector('.form.event-title .error-message');
+    const eventTitle = eventFormController.getEventTitle();
+    let errorMessageList = [];
+
+    //未入力チェック 文字数チェック
+    if(validation.isInputEmpty(eventTitle)){
+        errorMessageList.push(constants.createErrorMessageInputEmpty());
+    }else if(validation.isWithoutLengthRange(eventTitle, 32)){
+        errorMessageList.push(constants.createErrorMessageWithoutLengthRange(32));
+    }
+
+    //重複チェック
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 期間
+function validatePeriod(){
+    const errorMessageForm = document.querySelector('.form.period .error-message');
+    const startPeriod = eventFormController.getPeriodStartDate();
+    const endPeriod = eventFormController.getPeriodEndDate();
+    let errorMessageList = [];
+
+    //未入力チェック 日付フォーマットチェック
+    if(validation.isInputEmpty(startPeriod) || validation.isInputEmpty(endPeriod)){
+        errorMessageList.push(constants.createErrorMessageInputEmpty());
+    }else if(validation.isInvalidDateFormat(startPeriod) || validation.isInvalidDateFormat(startPeriod)){
+        errorMessageList.push(constants.createErrorMessageInvalidDateFormat());
+    }
+
+    //論理チェック
+    if(validation.isEndDateBeforeStartDate(startPeriod, endPeriod)){
+        errorMessageList.push(constants.createErrorMessageEndDateBeforeStartDate());
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 一枠の時間
+function validateReservationSlotTime(){
+    const errorMessageForm = document.querySelector('.form.reservation-slot-time .error-message');
+    const reservationSlotTime = eventFormController.getReservationSlotTime();
+    let errorMessageList = [];
+
+    //未入力チェック 数値フォーマットチェック 数値範囲チェック
+    if(validation.isInputEmpty(reservationSlotTime)){
+        errorMessageList.push(constants.createErrorMessageInputEmpty());
+    }else if(validation.isInvalidNumberFormat(reservationSlotTime)){
+        errorMessageList.push(constants.createErrorMessageInvalidNumberFormat());
+    }else if(validation.isOutsideRange(reservationSlotTime, 3600, 1)){
+        errorMessageList.push(constants.createErrorMessageOutsideRange(3600, 1));
+    }
+
+    //入力エラーがあるので、エラーメッセージを付与
+    if(errorMessageList.length > 0){
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+        return true;
+    }
+
+    //入力エラーがないので、エラーメッセージをなくす
+    validation.removeErrorMessageToForm(errorMessageForm);
+
+    return false;
+}
+
+//入力チェック 受付時間
+function validateReceptionTime(){
+
+    let errorCount = 0;
+
+    //すべての受付時間を取得
+    document.querySelectorAll('.form.default-reception-time .form-row-default-reception-time').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const startTime = row.querySelector('.default-start-reception-time').value;
+        const endTime = row.querySelector('.default-end-reception-time').value;
+        const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
+        let errorMessageList = [];
+
+        //未入力チェック 時間フォーマットチェック
+        if(validation.isInputEmpty(startTime) || validation.isInputEmpty(endTime)){
+            errorMessageList.push(constants.createErrorMessageInputEmpty());
+            errorCount++;
+        }else if(validation.isInvalidTimeFormat(startTime) || validation.isInvalidTimeFormat(endTime)){
+            errorMessageList.push(constants.createErrorMessageInvalidTimeFormat());
+            errorCount++;
+        }
+
+        //論理チェック
+        if(validation.isEndTimeBeforeStartTime(startTime, endTime)){
+            errorMessageList.push(constants.createErrorMessageEndTimeBeforeStartTime());
+            errorCount++;
+        }
+
+        //エラーメッセージをいったんリセット
+        validation.removeErrorMessageToForm(errorMessageForm);
+
+        //入力エラーがあれば、エラーメッセージを付与
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+    });
+
+    //入力エラーがある
+    if(errorCount > 0){
+        return true;
+    }
+
+    return false;
+}
+
+//入力チェック 個別の曜日に受付時間を指定
+function validateDowReceptionTime(){
+
+    let errorCount = 0;
+
+    //すべての受付時間を取得
+    document.querySelectorAll('.form.individual-day-of-week .form-row-individual-day-of-week').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const dowId = row.querySelector('.individual-day-of-week-pulldown').value;
+        const startTime = row.querySelector('.individual-day-of-week-start-reception-time').value;
+        const endTime = row.querySelector('.individual-day-of-week-end-reception-time').value;
+        const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
+        let errorMessageList = [];
+
+        //曜日Idチェック
+        // 未入力チェック、曜日チェック
+        if(validation.isInvalidDowId(dowId)){
+            errorMessageList.push(constants.createErrorMessageInvalidDayOfWeekId());
+            errorCount++;
+        }
+
+        //未入力チェック 時間フォーマットチェック
+        // どちらか一方のみが入力されている場合エラーとする
+        if(validation.isInputEmpty(startTime) && !validation.isInputEmpty(endTime) ||
+                !validation.isInputEmpty(startTime) && validation.isInputEmpty(endTime)){
+            errorMessageList.push(constants.createErrorMessageInputEmpty());
+            errorCount++;
+        }else if(validation.isInvalidTimeFormat(startTime) || validation.isInvalidTimeFormat(endTime)){
+            errorMessageList.push(constants.createErrorMessageInvalidTimeFormat());
+            errorCount++;
+        }
+
+        //論理チェック
+        if(validation.isEndTimeBeforeStartTime(startTime, endTime)){
+            errorMessageList.push(constants.createErrorMessageEndTimeBeforeStartTime());
+            errorCount++;
+        }
+
+        //エラーメッセージをいったんリセット
+        validation.removeErrorMessageToForm(errorMessageForm);
+
+        //入力エラーがあれば、エラーメッセージを付与
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+    });
+
+    //入力エラーがある
+    if(errorCount > 0){
+        return true;
+    }
+
+    return false;
+}
+
+//入力チェック 特定の日に受付時間を指定
+function validateDateReceptionTime(){
+
+    let errorCount = 0;
+
+    //すべての受付時間を取得
+    document.querySelectorAll('.form.individual-date .form-row-individual-date').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const date = row.querySelector('.input-individual-date').value;
+        const startTime = row.querySelector('.individual-date-start-reception-time').value;
+        const endTime = row.querySelector('.individual-date-end-reception-time').value;
+        const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
+        let errorMessageList = [];
+
+        //未入力チェック 日付フォーマットチェック
+        if(validation.isInputEmpty(date)){
+            errorMessageList.push(constants.createErrorMessageInputEmpty());
+            errorCount++;
+        }else if(validation.isInvalidDateFormat(date)){
+            errorMessageList.push(constants.createErrorMessageInvalidDateFormat());
+            errorCount++;
+        }
+
+        //未入力チェック 時間フォーマットチェック
+        // どちらか一方のみが入力されている場合エラーとする
+        if(validation.isInputEmpty(startTime) && !validation.isInputEmpty(endTime) ||
+                !validation.isInputEmpty(startTime) && validation.isInputEmpty(endTime)){
+            errorMessageList.push(constants.createErrorMessageInputEmpty());
+            errorCount++;
+        }else if(validation.isInvalidTimeFormat(startTime) || validation.isInvalidTimeFormat(endTime)){
+            errorMessageList.push(constants.createErrorMessageInvalidTimeFormat());
+            errorCount++;
+        }
+
+        //論理チェック
+        if(validation.isEndTimeBeforeStartTime(startTime, endTime)){
+            errorMessageList.push(constants.createErrorMessageEndTimeBeforeStartTime());
+            errorCount++;
+        }
+
+        //エラーメッセージをいったんリセット
+        validation.removeErrorMessageToForm(errorMessageForm);
+
+        //入力エラーがあれば、エラーメッセージを付与
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+    });
+
+    //入力エラーがある
+    if(errorCount > 0){
+        return true;
+    }
+
+    return false;
+}
+
+//入力チェック 特定の日を除外する
+function validateExclusionDate(){
+
+    let errorCount = 0;
+
+    //すべての受付時間を取得
+    document.querySelectorAll('.form.individual-exclusion-date .form-row-individual-exclusion-date').forEach((row) => {
+
+        // 行削除ボタンの行をスキップ
+        if (row.classList.contains('only-add-button-row')) return;
+
+        // 各行から開始時間と終了時間を取得
+        const date = row.querySelector('.input-individual-exclusion-date').value;
+        const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
+        let errorMessageList = [];
+
+        //未入力チェック 日付フォーマットチェック
+        if(validation.isInputEmpty(date)){
+            errorMessageList.push(constants.createErrorMessageInputEmpty());
+            errorCount++;
+        }else if(validation.isInvalidDateFormat(date)){
+            errorMessageList.push(constants.createErrorMessageInvalidDateFormat());
+            errorCount++;
+        }
+
+        //エラーメッセージをいったんリセット
+        validation.removeErrorMessageToForm(errorMessageForm);
+
+        //入力エラーがあれば、エラーメッセージを付与
+        validation.addErrorMessageToForm(errorMessageForm, errorMessageList);
+    });
+
+    //入力エラーがある
+    if(errorCount > 0){
+        return true;
+    }
+
+    return false;
 }

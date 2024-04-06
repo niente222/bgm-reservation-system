@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.reservation-data {
+    border: 1px solid;
+}
+
+.reservation-header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
