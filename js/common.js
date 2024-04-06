@@ -60,18 +60,24 @@ export function convertDateToYYYYMMDD(date) {
 }
 
 //
-export function convertTimeToHHMM(time) {
-  return time.replace(/:/g, "");
-}
+// export function convertTimeToHHMM(time) {
+//   return time.replace(/:/g, "");
+// }
 
 export function convertDBTimeToHHMM(time) {
   return time.substring(0, 5).replace(/:/g, "");
 }
 
 // HH:mm:ss形式の時間文字列を受け取り、H:m形式（先頭のゼロを取り除いた形式）に変換
-export function formatTimeNoPadding(timeStr) {
+export function convertTimeToHM(timeStr) {
   const [hour, minute] = timeStr.split(':').map(num => parseInt(num, 10));
   return `${hour}:${minute}`; // H:m 形式で返す
+}
+
+// HH:mm:ss形式の時間文字列を受け取り、HH:mm形式に変換
+export function convertTimeToHHMM(timeString) {
+  const [hours, minutes] = timeString.split(':');
+  return `${hours}:${minutes}`;
 }
 
 //DBに保存されるDATE型をyyyy-MM-ddに変換

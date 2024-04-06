@@ -333,15 +333,15 @@ export function setDefaultReceptionTime(receptionTimeData) {
     const startTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-start-reception-time');
     const endTimeFirstRow = document.querySelector('.form.default-reception-time .input-fields .default-end-reception-time');
     
-    startTimeFirstRow.value = receptionTimeData.filter(item => item.is_default_row === 1)[0].start_time;
-    endTimeFirstRow.value = receptionTimeData.filter(item => item.is_default_row === 1)[0].end_time;
+    startTimeFirstRow.value = common.convertTimeToHHMM(receptionTimeData.filter(item => item.is_default_row === 1)[0].start_time);
+    endTimeFirstRow.value = common.convertTimeToHHMM(receptionTimeData.filter(item => item.is_default_row === 1)[0].end_time);
 
     //二行目以降を設定
     for (const receptionTime of receptionTimeData.filter(item => item.is_default_row === 0)) {
         const formRow  = addFormRowReceptionTime();
 
-        formRow.querySelector('.default-start-reception-time').value = receptionTime.start_time;
-        formRow.querySelector('.default-end-reception-time').value = receptionTime.end_time;
+        formRow.querySelector('.default-start-reception-time').value = common.convertTimeToHHMM(receptionTime.start_time);
+        formRow.querySelector('.default-end-reception-time').value = common.convertTimeToHHMM(receptionTime.end_time);
     }
 }
 
@@ -353,16 +353,16 @@ export function setDowReceptionTimeRow(dowReceptionTimeData) {
     const endTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-end-reception-time');
     
     dpwPulldownFirstRow.value = dowReceptionTimeData[0].day_of_week_id;
-    startTimeFirstRow.value = dowReceptionTimeData[0].start_time;
-    endTimeFirstRow.value = dowReceptionTimeData[0].end_time;
+    startTimeFirstRow.value = common.convertTimeToHHMM(dowReceptionTimeData[0].start_time);
+    endTimeFirstRow.value = common.convertTimeToHHMM(dowReceptionTimeData[0].end_time);
 
     //二行目以降を設定
     for (const dowReceptionTime of dowReceptionTimeData.slice(1)) {
         const formRow  = addFormRowIndividualDayOfWeek();
         
         formRow.querySelector('.individual-day-of-week-pulldown').value = dowReceptionTime.day_of_week_id;
-        formRow.querySelector('.individual-day-of-week-start-reception-time').value = dowReceptionTime.start_time;
-        formRow.querySelector('.individual-day-of-week-end-reception-time').value = dowReceptionTime.end_time;
+        formRow.querySelector('.individual-day-of-week-start-reception-time').value = common.convertTimeToHHMM(dowReceptionTime.start_time);
+        formRow.querySelector('.individual-day-of-week-end-reception-time').value = common.convertTimeToHHMM(dowReceptionTime.end_time);
     }
 }
 
@@ -374,16 +374,16 @@ export function setDateReceptionTimeRow(dateReceptionTimeData) {
     const endTimeFirstRow = document.querySelector('.form.individual-date .input-fields .individual-date-end-reception-time');
     
     dateFirstRow.value = common.convertDBDateToYYYYMMDD(dateReceptionTimeData[0].date);
-    startTimeFirstRow.value = dateReceptionTimeData[0].start_time;
-    endTimeFirstRow.value = dateReceptionTimeData[0].end_time;
+    startTimeFirstRow.value = common.convertTimeToHHMM(dateReceptionTimeData[0].start_time);
+    endTimeFirstRow.value = common.convertTimeToHHMM(dateReceptionTimeData[0].end_time);
     
     //二行目以降を設定
     for (const dateReceptionTime of dateReceptionTimeData.slice(1)) {
         const formRow  = addFormRowIndividualDate();
         
         formRow.querySelector('.input-individual-date').value = common.convertDBDateToYYYYMMDD(dateReceptionTime.date);
-        formRow.querySelector('.individual-date-start-reception-time').value = dateReceptionTime.start_time;
-        formRow.querySelector('.individual-date-end-reception-time').value = dateReceptionTime.end_time;
+        formRow.querySelector('.individual-date-start-reception-time').value = common.convertTimeToHHMM(dateReceptionTime.start_time);
+        formRow.querySelector('.individual-date-end-reception-time').value = common.convertTimeToHHMM(dateReceptionTime.end_time);
     }
 }
 

@@ -10,6 +10,7 @@ import * as reservationDataController from './reservationData.js';
 // mode = 'edit' 更新画面
 var mode = '';
 const currentUrl = window.location.pathname;
+var beforeUpdateEventTitle;
 // URLに含まれるパスによって条件分岐
 if (currentUrl.includes('/admin/eventMake/new')) {
     mode = 'new';
@@ -213,6 +214,8 @@ async function init(eventId) {
 
         // 編集画面の場合は予約データも取得
         if (mode === 'edit') {
+            beforeUpdateEventTitle = eventData.eventData[0].event_title;
+
             const reservedData = await getReserve(eventId);
             calendarController.setReservedData(reservedData);
             calendarController.setNotificationBadge();
@@ -234,7 +237,6 @@ function setEventInfo(data) {
     eventFormController.setEventTitle(eventData.event_title);
 
     // 開始日、終了日を設定
-    console.log("eventData.start_date:" + eventData.start_date);
     eventFormController.setPeriodStartDate(common.convertDBDateToYYYYMMDD(eventData.start_date));
     eventFormController.setPeriodEndDate(common.convertDBDateToYYYYMMDD(eventData.end_date));
 
@@ -257,10 +259,10 @@ function setEventInfo(data) {
     eventFormController.setExclusionDateRow(exclusionData);
 }
 
-function clickMakeEventButton() {
+async function clickMakeEventButton() {
 
     //入力チェック
-    if(hasErrorFormData()){
+    if(await hasErrorFormData()){
         alert("入力エラーがあります。\nご確認ください。");
         return;
     } 
@@ -281,46 +283,55 @@ function clickMakeEventButton() {
     
 }
 
-function hasErrorFormData(){
+async function hasErrorFormData(){
     let hasError = false
     
     //イベントタイトル
-    if(validateEventTitle()){
+    
+    if(await validateEventTitle()){
+        console.log(1)
         hasError = true;
     }
 
     //期間
     if(validatePeriod()){
+        console.log(2)
         hasError = true;
     }
 
     //一枠の時間
     if(validateReservationSlotTime()){
+        console.log(3)
         hasError = true;
     }
 
     //受付時間
     if(validateReceptionTime()){
+        console.log(4)
         hasError = true;
     }
 
     //受付時間
     if(validateReceptionTime()){
+        console.log(5)
         hasError = true;
     }
 
     //個別の曜日に受付時間を指定
     if(validateDowReceptionTime()){
+        console.log(6)
         hasError = true;
     }
 
     //特定の日に受付時間を指定
     if(validateDateReceptionTime()){
+        console.log(7)
         hasError = true;
     }
 
     //特定の日を除外する
     if(validateExclusionDate()){
+        console.log(8)
         hasError = true;
     }
 
@@ -521,10 +532,12 @@ async function validateEventTitle(){
         errorMessageList.push(constants.createErrorMessageWithoutLengthRange(32));
     }
 
-    //重複チェック
-    if(await getEventByTitle(eventFormController.getEventTitle()) > 0){
-        errorMessageList.push(constants.createErrorMessageDuplication(eventFormController.getEventTitle()));
-    };
+    //重複チェック 編集モードでイベントタイトルを変更していない場合はスキップ
+    if(!(mode === 'edit' && beforeUpdateEventTitle === eventFormController.getEventTitle())){
+        if(await getEventByTitle(eventFormController.getEventTitle()) > 0){
+            errorMessageList.push(constants.createErrorMessageDuplication(eventFormController.getEventTitle()));
+        };
+    }
 
     //入力エラーがあるので、エラーメッセージを付与
     if(errorMessageList.length > 0){

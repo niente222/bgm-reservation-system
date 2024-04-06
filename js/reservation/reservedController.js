@@ -34,8 +34,8 @@ function setCompletedReservationInfo(completedData){
     reservationDate.textContent  = common.formatDateSlashNoPadding(completedData.reservation_date);
 
     const reservationTime = document.querySelector('.completed-reserve-time');
-    reservationTime.textContent  = common.formatTimeNoPadding(completedData.start_time)
-         + " ～ " + common.formatTimeNoPadding(completedData.end_time);
+    reservationTime.textContent  = common.convertTimeToHM(completedData.start_time)
+         + " ～ " + common.convertTimeToHM(completedData.end_time);
 
     const reserverName = document.querySelector('.completed-reserver-name');
     reserverName.textContent  = completedData.reserver_name;
