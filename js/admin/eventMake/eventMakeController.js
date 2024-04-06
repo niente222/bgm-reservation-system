@@ -479,6 +479,20 @@ function insertExclusionDate(eventId) {
     .catch(error => console.error('Error:', error));
 }
 
+async function getEventByTitle(eventTitle) {
+    try {
+        const response = await fetch(`/admin/getCountEventByEventTitle?eventTitle=${eventTitle}`);
+        if (!response.ok) {
+            throw new Error('ネットワークレスポンスが正常ではありません');
+        }
+        const data = await response.json();
+        return data.count;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // エラーを呼び出し元に伝播させる
+    }
+}
+
 async function getReserve() {
     try {
         const response = await fetch(`/reservation/getReserve?eventId=${eventId_urlpram}`);
@@ -495,7 +509,7 @@ async function getReserve() {
 }
 
 //入力チェック イベントタイトル
-function validateEventTitle(){
+async function validateEventTitle(){
     const errorMessageForm = document.querySelector('.form.event-title .error-message');
     const eventTitle = eventFormController.getEventTitle();
     let errorMessageList = [];
@@ -508,6 +522,9 @@ function validateEventTitle(){
     }
 
     //重複チェック
+    if(await getEventByTitle(eventFormController.getEventTitle()) > 0){
+        errorMessageList.push(constants.createErrorMessageDuplication(eventFormController.getEventTitle()));
+    };
 
     //入力エラーがあるので、エラーメッセージを付与
     if(errorMessageList.length > 0){

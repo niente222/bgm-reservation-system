@@ -3,6 +3,7 @@
 //エラーメッセージ
 export const createErrorMessageInputEmpty = () => `必須項目です`;
 export const createErrorMessageWithoutLengthRange = (maxLength, minLength=1) => `${maxLength}文字以上、${minLength}文字以内で入力してください`;
+export const createErrorMessageDuplication = (input) => `「${input}」は既に登録されています`;
 export const createErrorMessageInvalidDateFormat = () => `入力された日付は無効です`;
 export const createErrorMessageEndDateBeforeStartDate = () => `終了日は開始日よりも後の日付を入力してください`;
 export const createErrorMessageInvalidNumberFormat = () => `数値を入力してください`;
