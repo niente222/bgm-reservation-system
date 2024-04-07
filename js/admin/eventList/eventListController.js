@@ -93,8 +93,8 @@ function addEventListRow(eventListData) {
     
         const reservationCount = document.createElement('div');
         const reservationCountP = document.createElement('p');
-        // 予約数のデータは仮に50件とします
-        reservationCountP.textContent = '50件';
+        
+        reservationCountP.textContent = data.reservation_count + '件';
         reservationCount.appendChild(reservationCountP);
     
         eventInfoColumnRight.appendChild(reservationCountTitle);

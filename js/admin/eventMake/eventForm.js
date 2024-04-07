@@ -1,5 +1,6 @@
 import * as calendarController from '../../calendar.js';
 import * as common from '../../common.js';
+import * as constants from '../../constants.js';
 import * as reservationDataController from './reservationData.js';
 
 // 行追加系
@@ -347,6 +348,8 @@ export function setDefaultReceptionTime(receptionTimeData) {
 
 export function setDowReceptionTimeRow(dowReceptionTimeData) {
 
+    if(!dowReceptionTimeData) return;
+
     //一行目を設定
     const dpwPulldownFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
     const startTimeFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-start-reception-time');
@@ -367,6 +370,8 @@ export function setDowReceptionTimeRow(dowReceptionTimeData) {
 }
 
 export function setDateReceptionTimeRow(dateReceptionTimeData) {
+    
+    if(!dateReceptionTimeData) return;
 
     //一行目を設定
     const dateFirstRow = document.querySelector('.form.individual-date .input-fields .input-individual-date');
@@ -388,6 +393,8 @@ export function setDateReceptionTimeRow(dateReceptionTimeData) {
 }
 
 export function setExclusionDateRow(exclusionData) {
+
+    if(!exclusionData) return;
 
     //一行目を設定
     const dateFirstRow = document.querySelector('.form.individual-exclusion-date .input-fields .input-individual-exclusion-date');
@@ -456,7 +463,6 @@ export function getDayToggle() {
         dayTogglesStr += dayToggle.classList.contains('day-toggle-off') ? '0' : '1';
     }
 
-    console.log(dayTogglesStr)
     return dayTogglesStr;
 }
 

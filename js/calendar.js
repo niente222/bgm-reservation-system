@@ -1,6 +1,7 @@
 
 import * as reservationDataController from './admin/eventMake/reservationData.js';
 import * as common from './common.js';
+import * as constants from './constants.js';
 
 //プレビューカレンダーの表示に使用する変数
 var targetDate = new Date();
@@ -13,7 +14,7 @@ var reservedData;
 var handleCellClick;
 
 export function createCalendar(){
-    const weeks = ['日', '月', '火', '水', '木', '金', '土']
+    const weeks = constants.weeks
     const date = targetDate
     const year = date.getFullYear()
     const month = date.getMonth() + 1

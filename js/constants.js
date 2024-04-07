@@ -1,4 +1,6 @@
 
+// 曜日
+export const weeks = ['日', '月', '火', '水', '木', '金', '土']
 
 //エラーメッセージ
 export const createErrorMessageInputEmpty = () => `必須項目です`;
