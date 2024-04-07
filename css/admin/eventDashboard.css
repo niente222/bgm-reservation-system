@@ -5,9 +5,24 @@
     height: 800px;
     padding: 20px;
     border: none;
-    box-shadow: inset 1px 1px 3px #5b6066,
-            inset -1px -1px 3px #ffffff;
     overflow-y:scroll;
+    border-radius: 25px;
+    box-shadow: inset 3px 3px 10px #5b6066,
+            inset -3px -3px 10px #ffffff;
+}
+
+.reservation-board::-webkit-scrollbar {
+    width: 20px;
+}
+
+.reservation-board::-webkit-scrollbar-track {
+    display: none;
+}
+
+.reservation-board::-webkit-scrollbar-thumb {
+    background-color: #9aa2ac;
+    border: none;
+    -webkit-border-radius:8px;
 }
 
 .reservation-data{
