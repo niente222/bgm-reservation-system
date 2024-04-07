@@ -54,6 +54,16 @@ input {
             inset -1px -1px 3px #ffffff;
 }
 
+textarea {
+    width: 182px;
+    height: 174px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 3px #5b6066,
+            inset -1px -1px 3px #ffffff;
+}
+
 input[type="date"]{
     width: 100px !important;
 }
@@ -180,7 +190,8 @@ input[type="time"]{
     align-items: center;
 }
 
-#event-make-button {
+#event-make-button,
+#reserve-make-button {
     background: #E4EFFF;
     text-align: center;
     line-height: 80px;
@@ -193,7 +204,8 @@ input[type="time"]{
                 -5px -5px 17px #ffffff;
 }
 
-#event-make-button p {
+#event-make-button p,
+#reserve-make-button p {
     color: black;
     text-decoration: none;
     font-size: 28px;

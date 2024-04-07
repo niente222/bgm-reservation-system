@@ -8,7 +8,7 @@
         <link href="/css/common/footer.css" rel="stylesheet">
         <link href="/css/common/form.css" rel="stylesheet">
         <link href="/css/calendar.css" rel="stylesheet">
-        <link href="/css/reserve.css" rel="stylesheet">
+        <link href="/css/reservation/reserve.css" rel="stylesheet">
     </head>
     <body>
         <h1>予約ページ</h1>
@@ -17,7 +17,10 @@
                 <h2 id="dashboard-header-target-date"></h2>
                 <div id="reservation-slot-board">
                     <div class="reservation-slot-list">
-                        <label><input type="radio">9:00 ～ 9:30</label>
+                        <label class="reservation-slot-cell">
+                            <input type="radio" name="reservation">
+                            <div class="reservation-slot-cell-label">9:00 ～ 9:30</div>
+                        </label>
                     </div>
                 </div>
             </div>

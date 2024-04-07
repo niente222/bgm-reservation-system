@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+h1 {
+    text-align: center;
+}
+
+.contents {
+    width: fit-content;
+    display: flex;
+    margin: 50px auto;
+}
+
+.reservation-slot-area {
+    margin-right: 50px;
+}
+
+#reservation-slot-board {
+    border: 1px solid black;
+    width: 500px;
+    height: 600px;
+    overflow-y: scroll;
+    border: none;
+    border-radius: 25px;
+    box-shadow: inset 3px 3px 10px #5b6066,
+            inset -3px -3px 10px #ffffff;
+}
+
+.reservation-slot-list {
+    height: 100%;
+    padding-left: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.reservation-slot-cell {
+    width: 42%;
+    padding: 5px 10px;
+    margin-top: 15px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 25px;
+    border: none;border-radius: 25px;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
+    user-select: none;
+}
+
+.reservation-slot-cell.is-reserved {
+    background-color: #E4EFFF;
+    color: #AFAFAF;
+    box-shadow: inset 2px 2px 5px #5b6066,
+            inset -2px -2px 5px #ffffff;
+    pointer-events: none;
+}
+
+.reservation-slot-cell input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.reservation-slot-cell label::after {
+    content: '';
+    opacity: 0;
+}
+
+.reserve_start_time {
+    padding-left: 5px;
+}
+
+.reserve_start_time::before {
+    content: '★';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+    margin-right: 10px;
+    background-color: #fff;
+    border-radius: 100%;
+    text-align: center;
+}
+
+.reservation-slot-cell input[type="radio"] + .reserve_start_time::before {
+    color: #E4EFFF;
+    background-color: #E4EFFF;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
+    transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.reservation-slot-cell input[type="radio"]:checked + .reserve_start_time::before {
+    color: #555;
+    background-color: #ced2da;
+    box-shadow: inset 2px 2px 5px #5b6066,
+            inset -2px -2px 5px #ffffff;
+    transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.reservation-slot-cell.is-reserved .reserve_start_time {
+    padding-left: 44px;
+}
+
+.reservation-slot-cell.is-reserved .reserve_start_time::before {
+    display: none;
+}
+
+#event-make-button {
+    background-color: violet;
+    text-align: center;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-area {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form.reserve-name input,
+.form.reserver_contact_address input {
+    width: 310px;
+}
+
+.form.remark textarea {
+    width: 320px;
+    height: 170px;
+}

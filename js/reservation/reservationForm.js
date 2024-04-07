@@ -27,6 +27,7 @@ export function setReservationSlotBoard(reserveData, reservationSlotTime) {
 
             // ラジオボタンと時間ラベルを作成
             const label = document.createElement('label');
+            label.className = 'reservation-slot-cell';
             const input = document.createElement('input');
             input.type = 'radio';
             input.name = 'reservation-time';
@@ -73,7 +74,7 @@ export function setReservedTimes(reservedTimes){
         if (isReserved) {
             radio.disabled = true;
             // 予約済みであることを示すためのクラスも追加することができる
-            radio.parentElement.classList.add('reserved');
+            radio.parentElement.classList.add('is-reserved');
         }
     });
 }
