@@ -14,7 +14,9 @@ var reservedList;
 var targetReservationDate;
 
 window.onload = function() {
-    calendarController.setHandleCellClick(clickCalendarCell);
+
+    calendarController.setHandleCellClick(setClickCalendarCell);
+    calendarController.setHandleCellHover(setMouseoverCalendarCell,setMouseoutCalendarCell);
     calendarController.createCalendar();
 
     calendarController.clickPrevMonthButton();
@@ -98,9 +100,18 @@ function setEventInfo(data){
     calendarController.updatePreviewCalendar();
 }
 
-function clickCalendarCell(cellId){
+function setClickCalendarCell(cellId){
+    calendarController.clickCell(cellId);
     dashboardFormController.resetDashboard();
     setReservationSlotBoard(cellId);
+}
+
+function setMouseoverCalendarCell(cellId){
+    calendarController.mouseoverCell(cellId);
+}
+
+function setMouseoutCalendarCell(cellId){
+    calendarController.mouseoutCell(cellId);
 }
 
 function setReservationSlotBoard(cellId){
