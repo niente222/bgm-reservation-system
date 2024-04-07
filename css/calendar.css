@@ -113,8 +113,8 @@
     font-weight: bold;
 }
 
-.calendar-header th.isInvalid,
-.calendar-cells td.isInvalid{
+.calendar-header th.is-invalid,
+.calendar-cells td.is-invalid{
     background-color: #a2a2aa;
     color: rgb(209, 209, 209) !important;
     font-weight: normal;
@@ -146,4 +146,13 @@
 
 .notification-badge.no-notification {
     display: none;
+}
+
+.calendar-cell.is-hovered {
+    outline: 5px solid yellow;
+    outline-offset: -5px;
+}
+
+.calendar-cell.is-clicking {
+    background-color: #FDFFA3;
 }

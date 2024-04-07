@@ -10,8 +10,15 @@ var targetDate = new Date();
 //プレビューカレンダーの通知に設定する用
 var reservedData;
 
+//最後にクリックしたセルの日付を保持
+var clickingCellId;
+
 //カレンダーセルをクリックしたときのコールバック関数
 var handleCellClick;
+
+//カレンダーセルをホバーしたときのコールバック関数
+var handleCellMouseover;
+var handleCellMouseout;
 
 export function createCalendar(){
     const weeks = constants.weeks
@@ -80,8 +87,8 @@ export function createCalendar(){
 
     document.querySelector('#calendar').innerHTML = calendarHtml
 
-    clickCalendarCell(handleCellClick);
     setNotificationBadge();
+    if(clickingCellId) clickCell(clickingCellId);
 }
 
 //プレビューカレンダーのヘッダーの曜日の有効、無効を設定する
@@ -92,9 +99,9 @@ export function setPreviewCalendarHeaderDayOfWeek(dayOfWeek){
 
     for(var i = 0; i < dayOfWeek.length; i++) {
         if (dayOfWeek[i]) {
-            calendarHeaders[i].classList.remove('isInvalid');
+            calendarHeaders[i].classList.remove('is-invalid');
         }else{
-            calendarHeaders[i].classList.add('isInvalid');
+            calendarHeaders[i].classList.add('is-invalid');
         }
     }
 }
@@ -133,14 +140,17 @@ export function updatePreviewCalendar(){
         // 各子要素の<td>に対する処理
         const tdElements = calendarCell.querySelectorAll('td');
         tdElements.forEach((td) => {
-            // 日付がに存在したらisInvalidを付与
+            // 日付がに存在したらis-invalidを付与
             if (parseInt(td.id) in reservationData) {
-                td.classList.remove('isInvalid');
+                td.classList.remove('is-invalid');
             }else{
-                td.classList.add('isInvalid');
+                td.classList.add('is-invalid');
             }
         });
     });
+    
+    if(handleCellClick) clickCalendarCell(handleCellClick);
+    if(handleCellMouseover && handleCellMouseout) hoverCalendarCell(handleCellMouseover,handleCellMouseout);
 }
 
 export function setReservedData(settingReservedData){
@@ -176,6 +186,34 @@ export function setNotificationBadge(){
     });
 }
 
+// セルの状態を変化させる
+export function clickCell(cellId){
+    clickingCellId = cellId;
+
+    document.querySelectorAll('.calendar-cell').forEach(function(cell) {
+        cell.classList.remove('is-clicking');
+    });
+
+    const cell = document.getElementById(cellId);
+    if (cell) {
+        cell.classList.add('is-clicking');
+    }
+}
+
+export function mouseoverCell(cellId) {
+    const cell = document.getElementById(cellId);
+    if (cell) {
+        cell.classList.add('is-hovered');
+    }
+}
+
+export function mouseoutCell(cellId) {
+    const cell = document.getElementById(cellId);
+    if (cell) {
+        cell.classList.remove('is-hovered');
+    }
+}
+
 //イベントリスナー設定
 export function clickPrevMonthButton(){
     document.querySelector('.previous-month-button').addEventListener('click', function() {
@@ -189,15 +227,41 @@ export function clickNextMonthButton(){
     });
 }
 
+//イベントハンドラー設定
 export function setHandleCellClick(callback){
     handleCellClick = callback;
 }
 
 export function clickCalendarCell(callback){
     document.querySelectorAll('.calendar-cell').forEach(function(cell) {
-        cell.addEventListener('click', function() {
-            callback(cell.id);  // コールバック関数を呼び出し、cellのidを渡す
-        });
+        // cellにis-invalidクラスがない場合のみイベントリスナーを追加する
+        if (!cell.classList.contains('is-invalid')) {
+            cell.addEventListener('click', function() {
+                callback(cell.id);  // コールバック関数を呼び出し、cellのidを渡す
+            });
+        }
     });
 }
 
+export function setHandleCellHover(mouseoverCallback,mouseoutCallback){
+    handleCellMouseover = mouseoverCallback;
+    handleCellMouseout = mouseoutCallback;
+}
+
+export function hoverCalendarCell(mouseoverCallback,mouseoutCallback){
+    document.querySelectorAll('.calendar-cell').forEach(function(cell) {
+        if (!cell.classList.contains('is-invalid')) {
+            cell.addEventListener('mouseover', function() {
+                mouseoverCallback(cell.id);  // コールバック関数を呼び出し、cellのidを渡す
+            });
+        }
+    });
+
+    document.querySelectorAll('.calendar-cell').forEach(function(cell) {
+        if (!cell.classList.contains('is-invalid')) {
+            cell.addEventListener('mouseout', function() {
+                mouseoutCallback(cell.id);  // コールバック関数を呼び出し、cellのidを渡す
+            });
+        }
+    });
+}

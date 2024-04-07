@@ -18,7 +18,8 @@ window.onload = function() {
         clickMakeReserveButton();
     });
 
-    calendarController.setHandleCellClick(setReservationSlotBoard);
+    calendarController.setHandleCellClick(setClickCalendarCell);
+    calendarController.setHandleCellHover(setMouseoverCalendarCell,setMouseoutCalendarCell);
     calendarController.createCalendar();
 
     calendarController.clickPrevMonthButton();
@@ -94,20 +95,6 @@ async function getReserveForExclusion(reserveDate,startTime,endTime) {
 function setEventInfo(data){
     reservationDataController.setReservationDataForReservation(data);
     calendarController.updatePreviewCalendar();
-}
-
-function setReservationSlotBoard(cellId){
-    const reservationData = reservationDataController.getReservationById(cellId);
-    targetReservationDate = cellId;
-
-    reservationFormController.setDashboardHeader(cellId);
-    reservationFormController.setReservationSlotBoard(reservationData,reservationSlotTime);
-
-    const reservedTimes = common.filterReservationsByDate(reservationList,cellId).map(event => {
-        return { start_time: event.start_time, end_time: event.end_time };
-      });
-
-    reservationFormController.setReservedTimes(reservedTimes);
 }
 
 async function clickMakeReserveButton(){
@@ -302,4 +289,33 @@ function validateConsistencyReceptionTime(){
 async function CheckExclusionReceptionTime(reserveDate,startTime,endTime){
     const dataCount = await getReserveForExclusion(reserveDate,startTime,endTime);
     return dataCount.count > 0;
+}
+
+//カレンダーセルクリック、ホバー時のイベントハンドラーをcalendarControllerにセット
+function setClickCalendarCell(cellId){
+    calendarController.clickCell(cellId);
+    setReservationSlotBoard(cellId);
+}
+
+function setMouseoverCalendarCell(cellId){
+    calendarController.mouseoverCell(cellId);
+}
+
+function setMouseoutCalendarCell(cellId){
+    calendarController.mouseoutCell(cellId);
+}
+
+// カレンダーセルクリック時、左の予約枠リストをクリックした日付に更新する
+function setReservationSlotBoard(cellId){
+    const reservationData = reservationDataController.getReservationById(cellId);
+    targetReservationDate = cellId;
+
+    reservationFormController.setDashboardHeader(cellId);
+    reservationFormController.setReservationSlotBoard(reservationData,reservationSlotTime);
+
+    const reservedTimes = common.filterReservationsByDate(reservationList,cellId).map(event => {
+        return { start_time: event.start_time, end_time: event.end_time };
+      });
+
+    reservationFormController.setReservedTimes(reservedTimes);
 }
