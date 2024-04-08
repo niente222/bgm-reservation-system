@@ -348,7 +348,7 @@ export function setDefaultReceptionTime(receptionTimeData) {
 
 export function setDowReceptionTimeRow(dowReceptionTimeData) {
 
-    if(!dowReceptionTimeData) return;
+    if(dowReceptionTimeData.length == 0) return;
 
     //一行目を設定
     const dpwPulldownFirstRow = document.querySelector('.form.individual-day-of-week .input-fields .individual-day-of-week-pulldown');
@@ -371,7 +371,7 @@ export function setDowReceptionTimeRow(dowReceptionTimeData) {
 
 export function setDateReceptionTimeRow(dateReceptionTimeData) {
     
-    if(!dateReceptionTimeData) return;
+    if(dateReceptionTimeData.length == 0) return;
 
     //一行目を設定
     const dateFirstRow = document.querySelector('.form.individual-date .input-fields .input-individual-date');
@@ -394,7 +394,7 @@ export function setDateReceptionTimeRow(dateReceptionTimeData) {
 
 export function setExclusionDateRow(exclusionData) {
 
-    if(!exclusionData) return;
+    if(exclusionData.length == 0) return;
 
     //一行目を設定
     const dateFirstRow = document.querySelector('.form.individual-exclusion-date .input-fields .input-individual-exclusion-date');

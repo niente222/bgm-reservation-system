@@ -524,6 +524,7 @@ async function validateEventTitle(){
     }
 
     //重複チェック 編集モードでイベントタイトルを変更していない場合はスキップ
+    console.log("beforeUpdateEventTitle:" + beforeUpdateEventTitle)
     if(!(mode === 'edit' && beforeUpdateEventTitle === eventFormController.getEventTitle())){
         if(await getEventByTitle(eventFormController.getEventTitle()) > 0){
             errorMessageList.push(constants.createErrorMessageDuplication(eventFormController.getEventTitle()));
