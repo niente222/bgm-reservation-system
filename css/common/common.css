@@ -9,9 +9,10 @@ h1 {
 }
 
 .contents {
-    width: 80%;
+    width: 90%;
     max-width: 1200px;
     display: flex;
     justify-content: space-around;
     margin: 100px auto;
+    padding: 0 50px;
 }

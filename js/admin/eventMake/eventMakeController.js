@@ -179,7 +179,7 @@ window.onload = function() {
 }
 
 function setReservationSlotBoard(cellId){
-    alert(cellId);
+    
 }
 
 function changePeriodStartDate(){

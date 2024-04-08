@@ -21,8 +21,8 @@ h1 {
     overflow-y: scroll;
     border: none;
     border-radius: 25px;
-    box-shadow: inset 3px 3px 10px #5b6066,
-            inset -3px -3px 10px #ffffff;
+    box-shadow: inset 2px 2px 9px #5b6066,
+            inset -2px -2px 9px #ffffff;
 }
 
 #reservation-slot-board::-webkit-scrollbar {
@@ -60,16 +60,16 @@ h1 {
     align-items: center;
     border-radius: 25px;
     border: none;border-radius: 25px;
-    box-shadow:  2px 2px 5px #5b6066,
-             -2px -2px 5px #ffffff;
+    box-shadow:  2px 2px 3px #5b6066,
+             -2px -2px 3px #ffffff;
     user-select: none;
 }
 
 .reservation-slot-cell.is-reserved {
     background-color: #E4EFFF;
     color: #AFAFAF;
-    box-shadow: inset 2px 2px 5px #5b6066,
-            inset -2px -2px 5px #ffffff;
+    box-shadow: inset 2px 2px 3px #5b6066,
+            inset -2px -2px 3px #ffffff;
     pointer-events: none;
 }
 
@@ -102,16 +102,16 @@ h1 {
 .reservation-slot-cell input[type="radio"] + .reserve_start_time::before {
     color: #E4EFFF;
     background-color: #E4EFFF;
-    box-shadow:  2px 2px 5px #5b6066,
-             -2px -2px 5px #ffffff;
+    box-shadow:  2px 2px 3px #5b6066,
+             -2px -2px 3px #ffffff;
     transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 
 .reservation-slot-cell input[type="radio"]:checked + .reserve_start_time::before {
     color: #555;
     background-color: #ced2da;
-    box-shadow: inset 2px 2px 5px #5b6066,
-            inset -2px -2px 5px #ffffff;
+    box-shadow: inset 2px 2px 3px #5b6066,
+            inset -2px -2px 3px #ffffff;
     transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 

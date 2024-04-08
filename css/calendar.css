@@ -11,8 +11,8 @@
     top: 90px;
     background-color: #E4EFFF;
     border-radius: 25px;
-    box-shadow: 39px 39px 79px #c2cbd9,
-            -25px -25px 79px #ffffff;
+    box-shadow: 14px 14px 28px #5b6066,
+             -14px -14px 28px #ffffff;
     padding: 20px;
 }
 
@@ -149,7 +149,7 @@
 }
 
 .calendar-cell.is-hovered {
-    outline: 5px solid yellow;
+    outline: 2px solid yellow;
     outline-offset: -5px;
 }
 

@@ -1,5 +1,27 @@
 @charset "utf-8";
 
+body{
+    padding: 0 15%;
+}
+
+#event-make-button-at-list {
+    background-color: #FFB2B2;
+    text-align: center;
+    line-height: 60px;
+    width: 250px;
+    height: 60px;
+    margin-left: 30px;
+    border-radius: 18px;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
+}
+
+#event-make-button-at-list p {
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+}
+
 .filter-buttons{
     display: flex;
     justify-content: flex-end;
@@ -14,10 +36,21 @@
     background-color: #E4EFFF;
     border-radius: 10px;
     border: none;
-    box-shadow: 9px 9px 19px #c2cbd9,
-            -9px -9px 19px #ffffff;
-
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
     cursor: pointer;
+}
+
+.filter-button:hover{
+    outline: 2px solid #bebbe7;
+    outline-offset: -2px;
+}
+
+.filter-button.is-clicking{
+    box-shadow: inset 2px 2px 3px #5b6066,
+            inset -2px -2px 3px #ffffff;
+    outline: none;
+    outline-offset: none;
 }
 
 .filter-button p {
@@ -47,8 +80,8 @@
     background-color: #E4EFFF;
     border-radius: 10px;
     border: none;
-    box-shadow: 9px 9px 19px #c2cbd9,
-            -9px -9px 19px #ffffff;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
     cursor: pointer;
 }
 
@@ -60,8 +93,8 @@
     background-color: #E4EFFF;
     border-radius: 10px;
     border: none;
-    box-shadow: 9px 9px 19px #c2cbd9,
-            -9px -9px 19px #ffffff;
+    box-shadow:  2px 2px 5px #5b6066,
+             -2px -2px 5px #ffffff;
 
     cursor: pointer;
 }

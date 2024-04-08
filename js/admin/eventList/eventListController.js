@@ -4,30 +4,38 @@ import * as common from '../../common.js';
 var eventList;
 
 window.onload = function() {
-    
-    //イベントリスト取得
-    getEventList();
 
     //イベントリスナー登録
-    document.getElementById('before-event-button').addEventListener('click', () => {
-        // ページ遷移
+    document.getElementById('event-make-button-at-list').addEventListener('click', () => {
+        window.location.href = '/admin/eventMake/new';
+    });
+
+    document.getElementById('before-event-button').addEventListener('click', function() {
+        resetClickingClass();
+        this.classList.add('is-clicking');
         clickBeforeEventButton();
     });
 
-    document.getElementById('in-event-button').addEventListener('click', () => {
-        // ページ遷移
+    document.getElementById('in-event-button').addEventListener('click', function() {
+        resetClickingClass();
+        this.classList.add('is-clicking');
         clickInEventButton();
     });
 
-    document.getElementById('after-event-button').addEventListener('click', () => {
-        // ページ遷移
+    document.getElementById('after-event-button').addEventListener('click', function() {
+        resetClickingClass();
+        this.classList.add('is-clicking');
         clickAfterEventButton();
     });
 
-    document.getElementById('all-event-button').addEventListener('click', () => {
-        // ページ遷移
+    document.getElementById('all-event-button').addEventListener('click', function() {
+        resetClickingClass();
+        this.classList.add('is-clicking');
         clickAllEventButton();
     });
+
+    //イベントリスト取得
+    getEventList();
 }
 
 function getEventList() {
@@ -42,8 +50,15 @@ function getEventList() {
 
         eventList = data.eventData;
         console.log(JSON.stringify(eventList));
-        clickBeforeEventButton();
-      })
+
+        // 開催前ボタンをクリック
+        var event = new Event('click', {
+            'bubbles': true,
+            'cancelable': true
+        });
+        document.getElementById('before-event-button').dispatchEvent(event);
+
+        })
       .catch(error => console.error('Error:', error));
 }
 
@@ -176,4 +191,14 @@ function clickAfterEventButton(){
 
 function clickAllEventButton(){
     addEventListRow(eventList);
+}
+
+function resetClickingClass(){
+    const filterButtons = document.querySelectorAll('.filter-button');
+
+    filterButtons.forEach(button => {
+        if (button.classList.contains('is-clicking')) {
+            button.classList.remove('is-clicking');
+        }
+    });
 }
