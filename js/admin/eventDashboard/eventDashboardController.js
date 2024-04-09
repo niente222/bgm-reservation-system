@@ -23,6 +23,8 @@ window.onload = function() {
     calendarController.clickNextMonthButton();
 
     init();
+
+    common.setEventURLText(eventId_urlpram);
 }
 
 async function init() {

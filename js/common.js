@@ -1,3 +1,4 @@
+import * as constants from './constants.js';
 
 //引数の文字列が日付として有効か確認
 // 引数 str yyyyMMdd
@@ -173,14 +174,34 @@ export function convertToSlashSeparatedDate(dateStr) {
   throw new Error('日付はyyyymmdd形式である必要があります');
 }
 
+
+
+
+//
+export function setEventURLText(eventId) {
+  const eventURLText = document.querySelector('.event-url-text');
+  eventURLText.id = 'event-url-id-' + eventId;
+  eventURLText.value = constants.originURL + '/reservation/reserve/' + eventId;
+
+  // 既存のイベントリスナーを削除
+  const copyButton = document.querySelector('.copy-url-button');
+  copyButton.removeEventListener('click', copyButton.clickHandler);
+
+  // 新しいイベントリスナーを設定
+  copyButton.clickHandler = function() {
+      copyText('event-url-id-' + eventId);
+  };
+  copyButton.addEventListener('click', copyButton.clickHandler);
+}
+
 export function copyText(elementId) {
   // テキストフィールドを取得
   var textToCopy = document.getElementById(elementId);
 
-  // テキストを選択
-  textToCopy.select();
-  textToCopy.setSelectionRange(0, 99999); // モバイルデバイス用に選択範囲を広げる
-
-  // 選択したテキストをクリップボードにコピー
-  document.execCommand("copy");
+  var clipboardText = textToCopy.value;
+  if(navigator.clipboard == undefined) {
+      window.clipboardData.setData('Text', clipboardText);
+  } else {
+      navigator.clipboard.writeText(clipboardText);
+  }
 }

@@ -16,3 +16,29 @@ h1 {
     margin: 100px auto;
     padding: 0 50px;
 }
+
+.url-area{
+    display: flex;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.event-url-text {
+    width: 350px;
+    margin-right: 15px;
+}
+
+.copy-url-button {
+    width: 50px;
+    cursor: pointer;
+    background-color: #E4EFFF;
+    border-radius: 10px;
+    border: none;
+    box-shadow:  2px 2px 3px #5b6066,
+             -2px -2px 3px #ffffff;
+}
+
+.copy-url-button:hover{
+    outline: 2px solid #bebbe7;
+    outline-offset: -2px;
+}

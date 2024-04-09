@@ -18,6 +18,8 @@ var eventId_urlpram = new URL(window.location.href).pathname.split('/').pop();
 window.onload = function() {
     getCompletedEvent(eventId_urlpram);
 
+    common.setEventURLText(eventId_urlpram);
+
     document.getElementById('to-list-link').addEventListener('click', () => {
         window.location.href = '/admin/eventList';
     });
