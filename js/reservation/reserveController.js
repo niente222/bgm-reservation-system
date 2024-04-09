@@ -42,6 +42,9 @@ async function init() {
 
         reservationList = await getReserve(eventId_urlpram);
 
+        //一番目の日付をクリック
+        setClickCalendarCell(common.convertDBDateToYYYYMMDDCompact(data.eventData[0].start_date));
+
     } catch (error) {
         console.error('Error:', error);
     }

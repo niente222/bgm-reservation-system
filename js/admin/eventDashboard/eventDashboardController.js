@@ -42,6 +42,9 @@ async function init() {
         
         calendarController.setReservedData(reservedList);
         calendarController.setNotificationBadge();
+
+        //一番目の日付をクリック
+        setClickCalendarCell(common.convertDBDateToYYYYMMDDCompact(data.eventData[0].start_date))
     } catch (error) {
         console.error('Error:', error);
     }
