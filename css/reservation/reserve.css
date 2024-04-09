@@ -17,7 +17,6 @@ h1 {
 #reservation-slot-board {
     width: 535px;
     height: 600px;
-    /* height: 100px; */
     overflow-y: scroll;
     border: none;
     border-radius: 25px;
@@ -63,6 +62,11 @@ h1 {
     box-shadow:  2px 2px 3px #5b6066,
              -2px -2px 3px #ffffff;
     user-select: none;
+}
+
+.reservation-slot-cell:hover{
+    outline: 2px solid #bebbe7;
+    outline-offset: -2px;
 }
 
 .reservation-slot-cell.is-reserved {

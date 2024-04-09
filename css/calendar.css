@@ -54,12 +54,13 @@
     font-size: 32px;
 }
 
-.previous-month-button {
-    margin-right: 40px;
+.previous-month-button,
+.next-month-button {
     font-size: 40px;
     text-align: center;
     color: #555;
     background-color: #E4EFFF;
+    cursor: pointer;
     width: 60px;
     height: 60px;
     border-radius: 5px;
@@ -68,18 +69,18 @@
              -2px -2px 5px #ffffff;
 }
 
+.previous-month-button {
+    margin-right: 40px;
+}
+
 .next-month-button {
     margin-left: 40px;
-    font-size: 40px;
-    text-align: center;
-    color: #555;
-    background-color: #E4EFFF;
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    border: none;
-    box-shadow:  2px 2px 5px #5b6066,
-             -2px -2px 5px #ffffff;
+}
+
+.previous-month-button:hover,
+.next-month-button:hover{
+    outline: 2px solid #bebbe7;
+    outline-offset: -2px;
 }
 
 #calendar {

@@ -65,6 +65,11 @@
              -2px -2px 5px #ffffff;
 }
 
+.delete-button:hover{
+    outline: 2px solid #c96d6d;
+    outline-offset: -2px;
+}
+
 .reservation-time {
     font-size: 32px;
     font-weight: bold;
