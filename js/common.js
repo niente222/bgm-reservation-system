@@ -195,13 +195,26 @@ export function setEventURLText(eventId) {
 }
 
 export function copyText(elementId) {
-  // テキストフィールドを取得
-  var textToCopy = document.getElementById(elementId);
+  const textToCopy = document.getElementById(elementId);
 
-  var clipboardText = textToCopy.value;
-  if(navigator.clipboard == undefined) {
-      window.clipboardData.setData('Text', clipboardText);
+  if (textToCopy) {
+    // テキストを選択
+    textToCopy.select();
+    textToCopy.setSelectionRange(0, 99999); // モバイルデバイス用に選択範囲を広げる
+
+    // 選択したテキストをクリップボードにコピー
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy.value)
+            .then(() => {
+                console.log('テキストがクリップボードにコピーされました。');
+            })
+            .catch(err => {
+                console.error('クリップボードにコピーできませんでした:', err);
+            });
+    } else {
+        console.error('クリップボードAPIにアクセスできません。');
+    }
   } else {
-      navigator.clipboard.writeText(clipboardText);
+    console.error('指定されたIDの要素が見つかりません。');
   }
 }
