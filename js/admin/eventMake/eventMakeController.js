@@ -172,6 +172,13 @@ window.onload = function() {
     calendarController.clickPrevMonthButton();
     calendarController.clickNextMonthButton();
 
+    // キャンセルボタン
+    document.getElementById('cancel-button').addEventListener('click', () => {
+        if(window.confirm('入力内容は破棄を破棄してイベント一覧画面に戻ります。\nよろしいですか？')){
+            window.location.href = '/admin/eventList';
+        }
+    });
+
     //以下はイベント編集画面の処理
     if (mode === 'edit'){
         //タイトルとH1とボタンの文言を編集画面用に書き換え

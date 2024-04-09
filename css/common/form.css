@@ -200,7 +200,8 @@ input[type="time"]{
 }
 
 #event-make-button,
-#reserve-make-button {
+#reserve-make-button,
+#cancel-button {
     background: #E4EFFF;
     cursor: pointer;
     text-align: center;
@@ -218,8 +219,13 @@ input[type="time"]{
 }
 
 #event-make-button:hover ,
-#reserve-make-button:hover{
+#reserve-make-button:hover {
     outline: 2px solid #c96d6d;
+    outline-offset: -2px;
+}
+
+#cancel-button:hover {
+    outline: 2px solid #6dc979;
     outline-offset: -2px;
 }
 
@@ -264,4 +270,10 @@ select {
     padding: 3px;
     box-shadow: inset 1px 1px 3px #5b6066,
             inset -1px -1px 3px #ffffff;
+}
+
+.submit-buttons {
+    display: flex;
+    width: 60%;
+    margin: 0 auto;
 }
