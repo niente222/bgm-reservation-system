@@ -2,6 +2,9 @@
 // 曜日
 export const weeks = ['日', '月', '火', '水', '木', '金', '土']
 
+//URL
+export const originURL = 'http://162.43.27.122:3000';
+
 //エラーメッセージ
 export const createErrorMessageInputEmpty = () => `必須項目です`;
 export const createErrorMessageWithoutLengthRange = (maxLength, minLength=1) => `${maxLength}文字以上、${minLength}文字以内で入力してください`;

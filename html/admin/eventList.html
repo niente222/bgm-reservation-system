@@ -32,13 +32,34 @@
             </div>
             <div class="contents">
                 <div class="event-list-board">
-                    <div class="event-row event-list-header">
-                        <!-- <div class="event-title-header">
-                            <p class="">イベントタイトル</p>
+                    <div class="event-row">
+                        <div class="url-area">
+                            <input type="text" id="event-url-id-99">
+                            <div class="copy-url-button"></div>
                         </div>
-                        <div class="event-edit-header">
-                            <p class="">編集</p>
-                        </div> -->
+                        <div class="main-area">
+                            <div class="event-info" onclick="location.href='/admin/eventDashboard/event_id';">
+                                <div class="event-info-column-left">
+                                    <div class="event-title">
+                                        <p>イベントのタイトル</p>
+                                    </div>
+                                    <div class="event-period">
+                                        <p>開始日 ～ 終了日</p>
+                                    </div>
+                                </div>
+                                <div class="event-info-column-right">
+                                    <div>
+                                        <p>予約数</p>
+                                    </div>
+                                    <div>
+                                        <p>予約数の値 件</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-edit" onclick="location.href='/admin/eventMake/edit/event_id';">
+                                <img src="/images/admin/icon_eventEdit.png" class="icon-event-edit">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

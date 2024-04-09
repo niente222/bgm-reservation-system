@@ -1,5 +1,6 @@
 
 import * as common from '../../common.js';
+import * as constants from '../../constants.js';
 
 var eventList;
 
@@ -63,7 +64,6 @@ function getEventList() {
 }
 
 function addEventListRow(eventListData) {
-
     removeAllEventRow();
 
     const eventListBoard = document.querySelector('.event-list-board');
@@ -71,73 +71,92 @@ function addEventListRow(eventListData) {
     for (const data of eventListData) {
         const eventRow = document.createElement('div');
         eventRow.className = 'event-row';
-    
+
+        const urlArea = document.createElement('div');
+        urlArea.className = 'url-area';
+
+        const inputUrl = document.createElement('input');
+        inputUrl.type = 'text';
+        inputUrl.id = `event-url-id-${data.event_id}`;
+        inputUrl.className = `event-url-text`;
+        inputUrl.value = constants.originURL + '/reservation/reserve/' + data.event_id;
+        inputUrl.disabled = true;
+        urlArea.appendChild(inputUrl);
+
+        const urlCopyButton = document.createElement('div');
+        urlCopyButton.className = 'copy-url-button';
+        urlArea.appendChild(urlCopyButton);
+
+        urlCopyButton.addEventListener('click', () => {
+            common.copyText(`event-url-id-${data.event_id}`);
+        });
+
+        const mainArea = document.createElement('div');
+        mainArea.className = 'main-area';
+
         const eventInfo = document.createElement('div');
         eventInfo.className = 'event-info';
 
         eventInfo.addEventListener('click', () => {
-            // ページ遷移
             window.location.href = `/admin/eventDashboard/${data.event_id}`;
         });
-    
+
         const eventInfoColumnLeft = document.createElement('div');
         eventInfoColumnLeft.className = 'event-info-column-left';
-    
+
         const eventTitle = document.createElement('div');
         eventTitle.className = 'event-title';
         const titleP = document.createElement('p');
         titleP.textContent = data.event_title;
         eventTitle.appendChild(titleP);
-    
+
         const eventPeriod = document.createElement('div');
         eventPeriod.className = 'event-period';
         const periodP = document.createElement('p');
-        periodP.textContent = common.convertDBDateToYYYYMMDD(data.start_date) + ' ～ ' + common.convertDBDateToYYYYMMDD(data.end_date);
+        periodP.textContent = `${common.convertDBDateToYYYYMMDD(data.start_date)} ～ ${common.convertDBDateToYYYYMMDD(data.end_date)}`;
         eventPeriod.appendChild(periodP);
-    
+
         eventInfoColumnLeft.appendChild(eventTitle);
         eventInfoColumnLeft.appendChild(eventPeriod);
-    
+
         const eventInfoColumnRight = document.createElement('div');
         eventInfoColumnRight.className = 'event-info-column-right';
-    
+
         const reservationCountTitle = document.createElement('div');
         const reservationCountTitleP = document.createElement('p');
         reservationCountTitleP.textContent = '予約数';
         reservationCountTitle.appendChild(reservationCountTitleP);
-    
+
         const reservationCount = document.createElement('div');
         const reservationCountP = document.createElement('p');
-        
-        reservationCountP.textContent = data.reservation_count + '件';
+        reservationCountP.textContent = `${data.reservation_count}件`;
         reservationCount.appendChild(reservationCountP);
-    
+
         eventInfoColumnRight.appendChild(reservationCountTitle);
         eventInfoColumnRight.appendChild(reservationCount);
-    
+
         eventInfo.appendChild(eventInfoColumnLeft);
         eventInfo.appendChild(eventInfoColumnRight);
-    
-        eventRow.appendChild(eventInfo);
-    
+
+        mainArea.appendChild(eventInfo);
+
         const eventEdit = document.createElement('div');
         eventEdit.className = 'event-edit';
 
         eventEdit.addEventListener('click', () => {
-            // ページ遷移
             window.location.href = `/admin/eventMake/edit/${data.event_id}`;
         });
 
-        // <img>タグを作成し、src属性に画像のパスを設定
         const editImage = document.createElement('img');
         editImage.src = "/images/admin/icon_eventEdit.png";
         editImage.className = "icon-event-edit";
 
-        // <img>タグを<a>タグの中に挿入
         eventEdit.appendChild(editImage);
-    
-        eventRow.appendChild(eventEdit);
-    
+        mainArea.appendChild(eventEdit);
+
+        eventRow.appendChild(urlArea);
+        eventRow.appendChild(mainArea);
+
         eventListBoard.appendChild(eventRow);
     }
 }

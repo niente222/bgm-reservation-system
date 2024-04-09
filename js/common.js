@@ -172,3 +172,15 @@ export function convertToSlashSeparatedDate(dateStr) {
   }
   throw new Error('日付はyyyymmdd形式である必要があります');
 }
+
+export function copyText(elementId) {
+  // テキストフィールドを取得
+  var textToCopy = document.getElementById(elementId);
+
+  // テキストを選択
+  textToCopy.select();
+  textToCopy.setSelectionRange(0, 99999); // モバイルデバイス用に選択範囲を広げる
+
+  // 選択したテキストをクリップボードにコピー
+  document.execCommand("copy");
+}
