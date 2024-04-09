@@ -174,6 +174,10 @@ window.onload = function() {
 
     //以下はイベント編集画面の処理
     if (mode === 'edit'){
+        //タイトルとH1とボタンの文言を編集画面用に書き換え
+        document.title = 'イベント編集ページ';
+        document.getElementById('pege-headline').textContent = 'イベント編集ページ';
+        document.getElementById('event-make-button').textContent = '予約を更新する';
         init(eventId_urlpram);
     }
 }
@@ -212,14 +216,12 @@ async function init(eventId) {
 
         setEventInfo(eventData);
 
-        // 編集画面の場合は予約データも取得
-        if (mode === 'edit') {
-            beforeUpdateEventTitle = eventData.eventData[0].event_title;
+        // 予約データも取得
+        beforeUpdateEventTitle = eventData.eventData[0].event_title;
+        const reservedData = await getReserve(eventId);
+        calendarController.setReservedData(reservedData);
+        calendarController.setNotificationBadge();
 
-            const reservedData = await getReserve(eventId);
-            calendarController.setReservedData(reservedData);
-            calendarController.setNotificationBadge();
-        }
     } catch (error) {
         console.error('Error during initialization:', error);
     }

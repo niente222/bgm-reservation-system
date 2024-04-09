@@ -19,9 +19,9 @@ export function addFormRowReceptionTime() {
     // 内容を追加
     newRow.innerHTML = `
     <div class="input-fields add-row">
-        <input type="time" class="default-start-reception-time">
+        <input type="time" class="default-start-reception-time" value="00:00">
         <p class="tilde">～</p>
-        <input type="time" class="default-end-reception-time">
+        <input type="time" class="default-end-reception-time" value="00:00">
     </div>
     `;
 
@@ -77,9 +77,9 @@ export function addFormRowIndividualDayOfWeek() {
             <option value="6">土</option>
             <option value="0">日</option>
         </select>
-        <input type="time" class="individual-day-of-week-start-reception-time">
+        <input type="time" class="individual-day-of-week-start-reception-time" value="00:00">
         <p class="tilde">～</p>
-        <input type="time" class="individual-day-of-week-end-reception-time">
+        <input type="time" class="individual-day-of-week-end-reception-time" value="00:00">
     `;
 
     // ここでイベントリスナーを追加する
@@ -156,9 +156,9 @@ export function addFormRowIndividualDate() {
     // 内容を追加
     div.innerHTML = `
         <input type="date" class="input-individual-date">
-        <input type="time" class="individual-date-start-reception-time">
+        <input type="time" class="individual-date-start-reception-time" value="00:00">
         <p class="tilde">～</p>
-        <input type="time" class="individual-date-end-reception-time">
+        <input type="time" class="individual-date-end-reception-time" value="00:00">
     `;
 
     // ここでイベントリスナーを追加する

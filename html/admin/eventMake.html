@@ -13,7 +13,7 @@
     <body>
         <header></header>
 
-        <h1>イベント作成ページ</h1>
+        <h1 id="pege-headline">イベント作成ページ</h1>
         <div class="contents">
             <div class="form-area">
                 <div class="form event-title">
@@ -80,9 +80,9 @@
                         <p class="form-title">受付時間</p>
                         <div>
                             <div class="input-fields">
-                                <input type="time" class="default-start-reception-time" >
+                                <input type="time" class="default-start-reception-time" value="00:00">
                                 <p class="tilde">～</p>
-                                <input type="time" class="default-end-reception-time">
+                                <input type="time" class="default-end-reception-time" value="00:00">
                                 <button class="remove-row-default-reception-time-button remove-row-button">×</button>
                             </div>
                             <div class="error-message"></div>
@@ -109,9 +109,9 @@
                                         <option value="6">土</option>
                                         <option value="0">日</option>
                                     </select>
-                                    <input type="time" class="individual-day-of-week-start-reception-time">
+                                    <input type="time" class="individual-day-of-week-start-reception-time" value="00:00">
                                     <p class="tilde">～</p>
-                                    <input type="time" class="individual-day-of-week-end-reception-time">
+                                    <input type="time" class="individual-day-of-week-end-reception-time" value="00:00">
                                 </div>
                                 <div class="error-message"></div>
                             </div>
@@ -126,9 +126,9 @@
                             <div class="input-fields not-flex">
                                 <div class="input-row">
                                     <input type="date" class="input-individual-date">
-                                    <input type="time" class="individual-date-start-reception-time">
+                                    <input type="time" class="individual-date-start-reception-time" value="00:00">
                                     <p class="tilde">～</p>
-                                    <input type="time" class="individual-date-end-reception-time">
+                                    <input type="time" class="individual-date-end-reception-time" value="00:00">
                                 </div>
                                 <div class="error-message"></div>
                             </div>
