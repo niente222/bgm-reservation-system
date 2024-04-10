@@ -2,6 +2,7 @@
 
 .body{
     padding: 0 15%;
+    min-height: 65vh;
 }
 
 #event-make-button-at-list {
