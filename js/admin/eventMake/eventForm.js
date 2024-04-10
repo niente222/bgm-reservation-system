@@ -1,5 +1,6 @@
 import * as calendarController from '../../calendar.js';
 import * as common from '../../common.js';
+import * as validation from '../../validation.js';
 import * as constants from '../../constants.js';
 import * as reservationDataController from './reservationData.js';
 
@@ -512,6 +513,9 @@ export function getDowReceptionTime(eventId) {
         const endTime = row.querySelector('.individual-day-of-week-end-reception-time').value;
         const isDefaultRow = row.classList.contains('form-initial-row') ? 1 : 0;// 一行目はデフォルト行として登録
 
+        //開始時間、終了時間が00:00ならその行を無視する 登録もしない
+        if(startTime == '00:00' && endTime == '00:00') return;
+
         // もし開始時間と終了時間が存在すれば配列に追加
         if (startTime && endTime) {
             dowReceptionTimes.push({
@@ -542,6 +546,9 @@ export function getDateReceptionTime(eventId) {
         const startTime = row.querySelector('.individual-date-start-reception-time').value;
         const endTime = row.querySelector('.individual-date-end-reception-time').value;
 
+        //開始時間、終了時間が00:00ならその行を無視する 登録もしない
+        if(startTime == '00:00' && endTime == '00:00') return;
+
         // もし開始時間と終了時間が存在すれば配列に追加
         if (startTime && endTime) {
             dateReceptionTimes.push({
@@ -568,6 +575,11 @@ export function getExclusionDate(eventId) {
 
         // 各行から開始時間と終了時間を取得
         const date = row.querySelector('.input-individual-exclusion-date').value;
+
+        // 一行目の日付が未入力ならその行は無視する 登録もしない
+        if(row.classList.contains('form-initial-row')){
+            if(validation.isInputEmpty(date)) return;
+        }
 
         // もし日付が存在すれば配列に追加
         if (date) {

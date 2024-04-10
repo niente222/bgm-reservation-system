@@ -675,6 +675,9 @@ function validateDowReceptionTime(){
         const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
         let errorMessageList = [];
 
+        //開始時間、終了時間が00:00ならその行を無視する 登録もしない
+        if(startTime == '00:00' && endTime == '00:00') return;
+
         //曜日Idチェック
         // 未入力チェック、曜日チェック
         if(validation.isInvalidDowId(dowId)){
@@ -732,6 +735,9 @@ function validateDateReceptionTime(){
         const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
         let errorMessageList = [];
 
+        //開始時間、終了時間が00:00ならその行を無視する 登録もしない
+        if(startTime == '00:00' && endTime == '00:00') return;
+
         //未入力チェック 日付フォーマットチェック
         if(validation.isInputEmpty(date)){
             errorMessageList.push(constants.createErrorMessageInputEmpty());
@@ -788,6 +794,11 @@ function validateExclusionDate(){
         const date = row.querySelector('.input-individual-exclusion-date').value;
         const errorMessageForm = row.querySelector('.error-message') || row.nextElementSibling;
         let errorMessageList = [];
+
+        // 一行目の日付が未入力ならその行は無視する 登録もしない
+        if(row.classList.contains('form-initial-row')){
+            if(validation.isInputEmpty(date)) return;
+        }
 
         //未入力チェック 日付フォーマットチェック
         if(validation.isInputEmpty(date)){
