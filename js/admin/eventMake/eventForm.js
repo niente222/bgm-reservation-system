@@ -256,6 +256,10 @@ export function addFormRowIndividualExclusionDate() {
     deleteButton.addEventListener('click', function() {
         // 削除処理など
         formContainer.removeChild(newRow);
+        
+        //プレビューカレンダーを更新
+        reservationDataController.updateReservationData();
+        calendarController.updatePreviewCalendar();
     });
 
     // 行に要素を追加

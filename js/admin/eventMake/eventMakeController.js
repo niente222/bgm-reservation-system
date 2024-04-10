@@ -229,6 +229,9 @@ async function init(eventId) {
         calendarController.setReservedData(reservedData);
         calendarController.setNotificationBadge();
 
+        reservationDataController.updateReservationData();
+        calendarController.updatePreviewCalendar();
+
     } catch (error) {
         console.error('Error during initialization:', error);
     }
