@@ -81,7 +81,6 @@ input[type="time"]{
 }
 
 .day-toggle {
-    background-color: #E4EFFF;
     cursor:pointer;
     text-align: center;
     line-height: 40px;
@@ -90,9 +89,10 @@ input[type="time"]{
     margin: 5px;
     border: none;
     border-radius: 25px;
-    box-shadow:  2px 2px 3px #5b6066,
-             -2px -2px 3px #ffffff;
-    transition-duration: 0.2s;
+    background-color: #E4EFFF;
+    color: #AFAFAF;
+    box-shadow: inset 2px 2px 3px #5b6066,
+            inset -2px -2px 3px #ffffff;
 }
 
 .day-toggle-label {
@@ -100,10 +100,10 @@ input[type="time"]{
 }
 
 .day-toggle-off {
-    background-color: #E4EFFF;
-    color: #AFAFAF;
-    box-shadow: inset 2px 2px 3px #5b6066,
-            inset -2px -2px 3px #ffffff;
+    color: #555;
+    box-shadow:  2px 2px 3px #5b6066,
+             -2px -2px 3px #ffffff;
+    transition-duration: 0.2s;
 }
 
 .add-row-button {

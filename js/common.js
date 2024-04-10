@@ -175,9 +175,31 @@ export function convertToSlashSeparatedDate(dateStr) {
 }
 
 
+//クリックイベント発火
+export function clickEvent(form){
+  // 'change' イベントを手動で作成
+  var event = new Event('click', {
+    'bubbles': true,
+    'cancelable': true
+  });
 
+  // イベントを input 要素にディスパッチ
+  form.dispatchEvent(event);
+}
 
-//
+//チェンジイベント発火
+export function changeEvent(form){
+  // 'change' イベントを手動で作成
+  var event = new Event('change', {
+    'bubbles': true,
+    'cancelable': true
+  });
+
+  // イベントを input 要素にディスパッチ
+  form.dispatchEvent(event);
+}
+
+// クリックで要素のテキストをクリップボードにコピー
 export function setEventURLText(eventId) {
   const eventURLText = document.querySelector('.event-url-text');
   eventURLText.id = 'event-url-id-' + eventId;

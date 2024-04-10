@@ -179,6 +179,15 @@ window.onload = function() {
         }
     });
 
+    //以下はイベント登録画面の処理
+    if (mode === 'new'){
+        const sundayToggle = document.getElementById('day-toggle-0');
+        const saturdayToggle = document.getElementById('day-toggle-6');
+
+        common.clickEvent(sundayToggle);
+        common.clickEvent(saturdayToggle);
+    }
+
     //以下はイベント編集画面の処理
     if (mode === 'edit'){
         //タイトルとH1とボタンの文言を編集画面用に書き換え

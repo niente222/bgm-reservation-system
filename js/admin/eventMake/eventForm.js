@@ -286,14 +286,7 @@ export function setPeriodStartDate(startDate) {
     const form = document.getElementById('input-period-start-date')
     form.value = startDate;
 
-    // 'change' イベントを手動で作成
-    var event = new Event('change', {
-        'bubbles': true,
-        'cancelable': true
-    });
-
-    // イベントを input 要素にディスパッチ
-    form.dispatchEvent(event);
+    common.changeEvent(form);
 }
 
 export function setPeriodEndDate(endDate) {
@@ -301,13 +294,7 @@ export function setPeriodEndDate(endDate) {
     form.value = endDate;
 
     // 'change' イベントを手動で作成
-    var event = new Event('change', {
-        'bubbles': true,
-        'cancelable': true
-    });
-
-    // イベントを input 要素にディスパッチ
-    form.dispatchEvent(event);
+    common.changeEvent(form);
 }
 
 export function setReservationSlotTime(reservationSlotTime) {
@@ -322,13 +309,7 @@ export function setDayToggle(offDayTogglesStr) {
         const dayToggle = document.getElementById('day-toggle-' + i);
 
         if(offDayToggles[i] == 0){
-            var event = new Event('click', {
-                'bubbles': true,
-                'cancelable': true
-            });
-        
-            // イベントを dayToggle 要素にディスパッチ
-            dayToggle.dispatchEvent(event);
+            common.clickEvent(dayToggle);
         }
     }
 }
@@ -598,7 +579,6 @@ export function getExclusionDate(eventId) {
 }
 
 //入力エラーメッセージ付与
-
 export function errorEventTitle(errorMessageList){
 
 }

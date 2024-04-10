@@ -53,12 +53,7 @@ function getEventList() {
         console.log(JSON.stringify(eventList));
 
         // 開催前ボタンをクリック
-        var event = new Event('click', {
-            'bubbles': true,
-            'cancelable': true
-        });
-        document.getElementById('before-event-button').dispatchEvent(event);
-
+        common.clickEvent(document.getElementById('before-event-button'));
         })
       .catch(error => console.error('Error:', error));
 }
