@@ -3,7 +3,7 @@
 export const weeks = ['日', '月', '火', '水', '木', '金', '土']
 
 //URL
-export const originURL = 'http://162.43.27.122:3000';
+export const originURL = 'https://bgmrs.net';
 
 //エラーメッセージ
 export const createErrorMessageInputEmpty = () => `必須項目です`;
