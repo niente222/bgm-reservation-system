@@ -25,6 +25,14 @@ window.onload = function() {
     init();
 
     common.setEventURLText(eventId_urlpram);
+
+    document.getElementById('to-list-button').addEventListener('click', () => {
+        window.location.href = '/admin/eventList';
+    });
+
+    document.getElementById('to-list-button-bottom').addEventListener('click', () => {
+        window.location.href = '/admin/eventList';
+    });
 }
 
 async function init() {

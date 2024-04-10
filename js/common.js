@@ -189,12 +189,12 @@ export function setEventURLText(eventId) {
 
   // 新しいイベントリスナーを設定
   copyButton.clickHandler = function() {
-      copyText('event-url-id-' + eventId);
+      copyText('event-url-id-' + eventId, this);
   };
   copyButton.addEventListener('click', copyButton.clickHandler);
 }
 
-export function copyText(elementId) {
+export function copyText(elementId, copyButton) {
   const textToCopy = document.getElementById(elementId);
 
   if (textToCopy) {
@@ -207,6 +207,13 @@ export function copyText(elementId) {
         navigator.clipboard.writeText(textToCopy.value)
             .then(() => {
                 console.log('テキストがクリップボードにコピーされました。');
+
+                copyButton.textContent = 'OK!'; // テキストを 'OK!' に変更
+
+                // 2秒後にテキストを 'COPY' に戻す
+                setTimeout(() => {
+                  copyButton.textContent = 'COPY';
+                }, 2000); // 2000ミリ秒 = 2秒
             })
             .catch(err => {
                 console.error('クリップボードにコピーできませんでした:', err);

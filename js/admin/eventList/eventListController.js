@@ -85,10 +85,11 @@ function addEventListRow(eventListData) {
 
         const urlCopyButton = document.createElement('div');
         urlCopyButton.className = 'copy-url-button';
+        urlCopyButton.textContent = 'COPY';
         urlArea.appendChild(urlCopyButton);
 
         urlCopyButton.addEventListener('click', () => {
-            common.copyText(`event-url-id-${data.event_id}`);
+            common.copyText(`event-url-id-${data.event_id}`, urlCopyButton);
         });
 
         const mainArea = document.createElement('div');
