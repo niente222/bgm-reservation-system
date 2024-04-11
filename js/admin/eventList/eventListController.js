@@ -109,7 +109,7 @@ function addEventListRow(eventListData) {
         const eventPeriod = document.createElement('div');
         eventPeriod.className = 'event-period';
         const periodP = document.createElement('p');
-        periodP.textContent = `${common.convertDBDateToYYYYMMDD(data.start_date)} ～ ${common.convertDBDateToYYYYMMDD(data.end_date)}`;
+        periodP.textContent = `${common.formatDateSlashNoPadding(data.start_date)} ～ ${common.formatDateSlashNoPadding(data.end_date)}`;
         eventPeriod.appendChild(periodP);
 
         eventInfoColumnLeft.appendChild(eventTitle);

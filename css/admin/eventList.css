@@ -116,6 +116,10 @@
     outline-offset: -2px;
 }
 
+.event-title {
+    font-weight: bold;
+}
+
 .event-edit{
     width: 10%;
     margin-top: 15px;

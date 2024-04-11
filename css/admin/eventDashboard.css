@@ -37,6 +37,8 @@
     margin-block-start: 0;
     margin-block-end: 0;
     font-size: 32px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .reservation-board {
@@ -123,6 +125,13 @@
 
 .reserver-remarks {
     font-size: 14px;
+}
+
+#preview-header-event-title {
+    font-weight: bold;
+    font-size: 40px;
+    margin-block-start: 5px;
+    margin-block-end: 20px;
 }
 
 .url-area-label{
