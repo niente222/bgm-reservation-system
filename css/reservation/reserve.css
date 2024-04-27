@@ -180,8 +180,9 @@ h1 {
 }
 
 .form.remark textarea {
-    width: 320px;
+    width: 295p;
     height: 170px;
+    padding: 15px;
 }
 
 @media(max-width:767px){
@@ -205,6 +206,16 @@ h1 {
     .reservation-slot-area {
         margin: auto;
         min-width: 95%;
+    }
+
+    .reservation-slot-list {
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: inherit;
+    }
+
+    .reservation-slot-cell {
+        width: 75%;
     }
 
     .form-area {
