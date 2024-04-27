@@ -230,4 +230,8 @@ h1 {
         flex-direction: column;
         align-items: center;
     }
+
+    .form.form.remark textarea {
+        width: 310px;
+    }
 }
