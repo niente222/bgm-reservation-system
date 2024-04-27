@@ -184,7 +184,7 @@ h1 {
     height: 170px;
 }
 
-@media(max-width:800px){
+@media(max-width:767px){
     .contents {
         flex-direction: column-reverse;
     }
