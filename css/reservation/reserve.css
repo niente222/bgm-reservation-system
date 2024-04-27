@@ -187,6 +187,13 @@ h1 {
 @media(max-width:767px){
     .contents {
         flex-direction: column-reverse;
+        width: 95%;
+        padding: 0;
+    }
+
+    #reservation-slot-board {
+        width: 95%;
+        margin: auto
     }
     
     .preview-area {
@@ -196,6 +203,16 @@ h1 {
     }
 
     .reservation-slot-area {
-        margin-right: 0;
+        margin: auto;
+        min-width: 95%;
+    }
+
+    .form-area {
+        width: 95%;
+    }
+
+    .form {
+        flex-direction: column;
+        align-items: center;
     }
 }
